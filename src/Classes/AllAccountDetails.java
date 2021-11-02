@@ -54,10 +54,10 @@ public class AllAccountDetails extends DataBaseHandler{
 
 	public static void main(String[] args) {
 		Account l1 = new Account("zongwei2","1234",2);
-		Account l2 = new Account("Minion1","1234",1);
-		Account l3 = new Account("Minion2","1234",1);
-		Account l4 = new Account("Minion3","1234",1);
-		Account l5 = new Account("Minion4","1234",1);
+		Account l2 = new Account("minion1","1234",1);
+		Account l3 = new Account("minion2","1234",1);
+		Account l4 = new Account("minion3","1234",1);
+		Account l5 = new Account("minion4","1234",1);
 
 		Account arr[] = {l1,l2,l3, l4,l5};
 		List<Account> ll = Arrays.asList(arr);

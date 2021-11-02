@@ -89,9 +89,9 @@ public class Menu extends DataBaseHandler{
 
     
     public static void main(String[] args) {
-		MenuItem m1 = new MenuItem("rice", "fried rice", 4);
-		MenuItem arr[] = {m1};
+		MenuItem m1 = new MenuItem("rice that is fragantly fried with shrimps", "fried rice", 4);
         MenuItem d1 = new MenuItem("less sugar","Coffee",3);
+        MenuItem arr[] = {m1,d1};
 
         ArrayList<MenuItem>  promo1 = new ArrayList<MenuItem>();
         promo1.add(m1);

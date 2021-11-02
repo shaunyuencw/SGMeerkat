@@ -10,7 +10,7 @@ public class PromoItems implements Serializable{
     private double price;
     private String desc;
 
-    PromoItems(ArrayList<MenuItem> promoitems,String desc, double price, String name){
+    public PromoItems(ArrayList<MenuItem> promoitems,String desc, double price, String name){
         this.promoitems = promoitems;
         this.desc = desc;
         this.price = price;

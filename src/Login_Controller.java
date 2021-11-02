@@ -15,13 +15,11 @@ public class Login_Controller {
         for (Object pass: loginList){
            
             Account p = (Account) pass;
-            System.out.println("Username in database"+p.getUsername());
-            System.out.println("Entered Username" +tobeChecked.getUsername());
 
-            if (p.getUsername() == tobeChecked.getUsername())
+            if (p.getUsername().equals(tobeChecked.getUsername()) && p.getPassword().equals(tobeChecked.getPassword()) && p.getDomain()==tobeChecked.getDomain())
                     return true;
             
         }
-        return true;
+        return false;
     }
 }
