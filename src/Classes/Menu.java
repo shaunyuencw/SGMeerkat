@@ -53,13 +53,13 @@ public class Menu implements DataBaseHandler{
 
     public void displayMenu(){
         for (int i = 0; i < menu_keys.size(); i++){
-            System.out.println("(" + (i+1) + ") " + menu_map.get(menu_keys.get(i)).getName());
+            System.out.println("(" + (i+1) + ") " + menu_map.get(menu_keys.get(i)).getName() + " - $" + menu_map.get(menu_keys.get(i)).getPrice());
         }
     }
 
     public void displayPromos(){
         for (int i = 0; i < promo_keys.size(); i++){
-            System.out.println("(" + (i+1) + ") " + promo_map.get(promo_keys.get(i)).getName());
+            System.out.println("(" + (i+1) + ") " + promo_map.get(promo_keys.get(i)).getName() + " - $" + promo_map.get(promo_keys.get(i)).getPrice());
         }
     }
 
@@ -72,7 +72,7 @@ public class Menu implements DataBaseHandler{
             System.out.println("---------- Menu ----------");
             for (int i = 0; i < menu_keys.size(); i++){
                 MenuItem menuItem = menu_map.get(menu_keys.get(i));
-                System.out.println("(" + (i+1) + ") " + menuItem.getName());
+                System.out.println("(" + (i+1) + ") " + menuItem.getName() + " - $" + menuItem.getPrice());
                 System.out.println("- " + menuItem.getDesc());
             }
             System.out.println("------------------------------");
@@ -85,7 +85,7 @@ public class Menu implements DataBaseHandler{
             System.out.println("---------- Promo Sets ----------");
             for (int j = 0; j < promo_keys.size(); j++){
                 PromoItems promoItem = promo_map.get(promo_keys.get(j));
-                System.out.println("(" + (j+1) + ") " + promoItem.getName() + ": $" + promoItem.getPrice());
+                System.out.println("(" + (j+1) + ") " + promoItem.getName() + " - $" + promoItem.getPrice());
                 HashMap<String, MenuItem> promoItems = promo_map.get(promoItem.getName().toLowerCase()).getPromoItems();
                 for (String menuItem : promoItems.keySet()){
                     System.out.println("- " + menuItem);
