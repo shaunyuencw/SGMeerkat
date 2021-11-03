@@ -2,13 +2,12 @@ package Classes;
 
 import java.io.*;
 import java.util.*;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
-public class Menu extends DataBaseHandler{
+public class Menu implements DataBaseHandler{
     
     private HashMap<String, MenuItem> menu_map;
     private HashMap<String, PromoItems> promo_map;
+
     public Menu(){
         menu_map = new HashMap<String, MenuItem>();
         promo_map = new HashMap<String, PromoItems>();
@@ -16,6 +15,14 @@ public class Menu extends DataBaseHandler{
 
     public HashMap<String, MenuItem> getMenu(){
         return menu_map;
+    }
+
+    public void updateMenu(HashMap<String, MenuItem> newMenu){
+        this.menu_map = newMenu;
+    }
+
+    public void updatePromoMenu(HashMap<String, PromoItems> newPromoMenu){
+        this.promo_map = newPromoMenu;
     }
 
     public HashMap<String, PromoItems> getPromo(){
@@ -30,8 +37,14 @@ public class Menu extends DataBaseHandler{
 		this.promo_map = promo;
 	}
 
-    public void serializeToFile() {
+    public void displayMenu(){
+        for (String menu_itemKey : menu_map.keySet()){
+            MenuItem temp = menu_map.get(menu_itemKey);
+            System.out.println(temp.getName());
+        }
+    }
 
+    public void serializeToFile() {
         // ? serialize menu to menu.dat
         try {      
             File menu_file = new File("menu.dat");
@@ -91,7 +104,7 @@ public class Menu extends DataBaseHandler{
         // ? get menu from menu.dat
         try {
             File promo_file = new File("promo.dat");
-            ObjectInputStream input = new ObjectInputStream(new GZIPInputStream(new FileInputStream(promo_file)));
+            ObjectInputStream input = new ObjectInputStream(new FileInputStream(promo_file));
 
             //Reads the first object in
             Object readObject = input.readObject();

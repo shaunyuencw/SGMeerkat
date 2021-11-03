@@ -1,9 +1,7 @@
 package Classes;
 
-public abstract class DataBaseHandler {
+interface DataBaseHandler {
 
-        public void serializeToFile(){}
-        
-        public void deserializeFromFile() {}
-    
+        public void serializeToFile();
+        public void deserializeFromFile();
 }

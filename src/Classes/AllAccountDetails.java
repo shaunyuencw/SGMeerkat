@@ -4,11 +4,12 @@ import java.io.*;
 import java.util.*;
 
 
-public class AllAccountDetails extends DataBaseHandler{
+public class AllAccountDetails implements DataBaseHandler{
 
     private List<Account> AccountList;
 
     public AllAccountDetails(){
+		
 	}
     
     public List<Account> getAccounts(){
@@ -18,8 +19,6 @@ public class AllAccountDetails extends DataBaseHandler{
     public void setAccounts(List<Account> lst){
 		this.AccountList = lst;
 	}
-
-
 
     public void serializeToFile(){
 		FileOutputStream fos = null;

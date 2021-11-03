@@ -11,11 +11,13 @@ public class RRPSS_Login_Boundary {
 
         Scanner sc = new Scanner(System.in);
 
-        DataBaseHandler acccount_db = new AllAccountDetails();
-        DataBaseHandler menu_db = new Menu();
-        acccount_db.deserializeFromFile();
-        menu_db.deserializeFromFile();
-        Login_Controller loginController = new Login_Controller(((AllAccountDetails) acccount_db).getAccounts());
+        Menu menu = new Menu();
+        AllAccountDetails accounts = new AllAccountDetails();
+        
+
+        accounts.deserializeFromFile();
+        menu.deserializeFromFile();
+        Login_Controller loginController = new Login_Controller(((AllAccountDetails) accounts).getAccounts());
 
         System.out.println("Log in Domain: ");
         System.out.println("1. Staff");
@@ -46,11 +48,45 @@ public class RRPSS_Login_Boundary {
                         // ? StaffBoundaryClass
                     } 
                     else {
-                         // ? AdminBoundaryClass
-                         AdminBoundary adminBoundary = new AdminBoundary(((Menu) menu_db).getMenu(), ((Menu) menu_db).getPromo());
-                         adminBoundary.printOptions();
+                         // ? Admin features
+                         do {
+                            AdminBoundary.displayOptions();
+                            int ch = sc.nextInt();
+                            sc.nextLine();
+                            if (ch == 0) {
+                                break;
+                            }
+                            switch (ch) {
+                            case 1:
+                                // Adding items to menu
+                                menu.updateMenu(AdminBoundary.addMenuItem(menu.getMenu()));
+                                break;
+
+                            case 2:
+                                // Removing items from menu
+                                menu.updateMenu(AdminBoundary.removeMenuItem(menu.getMenu()));
+                                break;
+
+                            case 3:
+                                // Create new Promo set
+                                menu.updatePromoMenu(AdminBoundary.createNewPromo(menu.getMenu(), menu.getPromo()));
+                                break;
+
+                            case 4:
+                                // Delete a promo set
+                                menu.updatePromoMenu(AdminBoundary.removePromo(menu.getMenu(), menu.getPromo()));
+                                break;
+
+                            case 5:
+                                AdminBoundary.viewMenu(menu.getMenu(), menu.getPromo());
+                                break;
+
+                            default:
+                                System.out.println("Invalid choice");
+                            }
+                
+                        } while (true);
                     }
-                    break;
                 }
             }
             
@@ -60,7 +96,7 @@ public class RRPSS_Login_Boundary {
             }
         }
         sc.close();
-        menu_db.serializeToFile();
+        menu.serializeToFile();
         
     }
 }
