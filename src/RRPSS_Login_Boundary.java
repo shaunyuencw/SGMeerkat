@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 import Classes.*;
 
@@ -28,6 +28,7 @@ public class RRPSS_Login_Boundary {
 
         while(flg){
             System.out.print("Select an option: (0 to stop) ");
+            
             int num= sc.nextInt();
 
             if (num == 0) break;
@@ -59,7 +60,8 @@ public class RRPSS_Login_Boundary {
 
                 }
 
-
+              db2.serializeToFile();
+               
 
 
 
@@ -70,6 +72,9 @@ public class RRPSS_Login_Boundary {
 
 
         }
-    }
+    }           
+            
+            
+            db2.serializeToFile();
 }
 }

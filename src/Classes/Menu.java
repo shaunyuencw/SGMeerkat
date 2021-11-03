@@ -6,7 +6,7 @@ import java.text.ParseException;
 
 public class Menu extends DataBaseHandler{
     
-    private ArrayList menuList;
+    private ArrayList<MenuItem> menuList;
     private ArrayList promotionSets;
     public Menu(){};
 
@@ -29,6 +29,7 @@ public class Menu extends DataBaseHandler{
     public void serializeToFile() {
         try {
             if (menuList.size()!=0) {
+               
                 FileOutputStream fileOut = new FileOutputStream("menu.dat");
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(menuList);
