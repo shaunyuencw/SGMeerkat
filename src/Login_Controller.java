@@ -4,9 +4,9 @@ import Classes.*;
 
 public class Login_Controller {
    
-    private List loginList;
+    private List<Account> loginList;
 
-    public Login_Controller(List loginData){
+    public Login_Controller(List<Account> loginData){
         this.loginList = loginData;
     }
 

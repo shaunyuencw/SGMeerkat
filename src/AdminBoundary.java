@@ -1,6 +1,5 @@
 
 import java.util.*;
-import java.text.ParseException;
 
 import Classes.*;
 
@@ -175,10 +174,9 @@ public class AdminBoundary {
                 System.out.println(i + ": " + m.getname());
                 i++;
             }
-            Scanner sc2 = new Scanner(System.in);
 
             while (true) {
-                String gg = sc2.nextLine();
+                String gg = sc.nextLine();
 
                 if (gg.equalsIgnoreCase("N"))
                     break;
@@ -210,7 +208,6 @@ public class AdminBoundary {
             }
 
         }
-
     }
 
     public void removePromo() {

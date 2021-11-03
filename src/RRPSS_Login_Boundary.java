@@ -61,7 +61,7 @@ public class RRPSS_Login_Boundary {
                 continue;
             }
         }
-
+        sc.close();
         db2.serializeToFile();
     }
 }

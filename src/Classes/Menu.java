@@ -2,19 +2,18 @@ package Classes;
 
 import java.io.*;
 import java.util.*;
-import java.text.ParseException;
 
 public class Menu extends DataBaseHandler{
     
     private ArrayList<MenuItem> menuList;
-    private ArrayList promotionSets;
+    private ArrayList<PromoItems> promotionSets;
     public Menu(){};
 
-    public ArrayList getmenu(){
+    public ArrayList<MenuItem> getmenu(){
         return menuList;
     }
 
-    public ArrayList getpromo(){
+    public ArrayList<PromoItems> getpromo(){
         return promotionSets;
     }
 
@@ -55,7 +54,7 @@ public class Menu extends DataBaseHandler{
         }
     }
 
-
+    @SuppressWarnings("unchecked")
     public void deserializeFromFile() {
         ArrayList<MenuItem> Details = null;
         try {

@@ -6,12 +6,12 @@ import java.util.*;
 
 public class AllAccountDetails extends DataBaseHandler{
 
-    private List AccountList;
+    private List<Account> AccountList;
 
     public AllAccountDetails(){
 	}
     
-    public List getAccounts(){
+    public List<Account> getAccounts(){
 		return AccountList;
 	}
 
@@ -35,14 +35,15 @@ public class AllAccountDetails extends DataBaseHandler{
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void deserializeFromFile(){
-		List oDetails = null;
+		List<Account> oDetails = null;
 		FileInputStream fis = null;
 		ObjectInputStream in = null;
 		try {
 			fis = new FileInputStream("password.dat");
 			in = new ObjectInputStream(fis);
-			oDetails = (List) in.readObject();
+			oDetails = (List<Account>) in.readObject();
 			in.close();
 		} catch (IOException ex) {
 			ex.printStackTrace();
