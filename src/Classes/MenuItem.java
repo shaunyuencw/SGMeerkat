@@ -13,15 +13,15 @@ public class MenuItem implements Serializable{
         this.price = price;
     }
 
-    public String getdesc(){
+    public String getDesc(){
         return this.desc;
     }
 
-    public String getname(){
+    public String getName(){
         return this.name;
     }
 
-    public Double getprice(){
+    public Double getPrice(){
         return this.price;
     }
 

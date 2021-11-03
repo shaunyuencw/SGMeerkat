@@ -59,8 +59,9 @@ public class AllAccountDetails extends DataBaseHandler{
 		Account l3 = new Account("minion2","1234",1);
 		Account l4 = new Account("minion3","1234",1);
 		Account l5 = new Account("minion4","1234",1);
+		Account l6 = new Account("a", "a", 2);
 
-		Account arr[] = {l1,l2,l3, l4,l5};
+		Account arr[] = {l1, l2, l3, l4, l5, l6};
 		List<Account> ll = Arrays.asList(arr);
 		DataBaseHandler db = new AllAccountDetails();
 		((AllAccountDetails)db).setAccounts(ll);

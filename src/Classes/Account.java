@@ -45,9 +45,7 @@ public class Account implements Serializable{
         else
             return false;
     }
-
-    
-	}
+}
 
 
 

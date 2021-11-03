@@ -12,9 +12,9 @@ public class RRPSS_Login_Boundary {
         Scanner sc = new Scanner(System.in);
 
         DataBaseHandler acccount_db = new AllAccountDetails();
-        DataBaseHandler db2 = new Menu();
+        DataBaseHandler menu_db = new Menu();
         acccount_db.deserializeFromFile();
-        db2.deserializeFromFile();
+        menu_db.deserializeFromFile();
         Login_Controller loginController = new Login_Controller(((AllAccountDetails) acccount_db).getAccounts());
 
         System.out.println("Log in Domain: ");
@@ -47,10 +47,8 @@ public class RRPSS_Login_Boundary {
                     } 
                     else {
                          // ? AdminBoundaryClass
-                         AdminBoundary adminBoundary = new AdminBoundary(((Menu) db2).getmenu(), ((Menu) db2).getpromo());
+                         AdminBoundary adminBoundary = new AdminBoundary(((Menu) menu_db).getMenu(), ((Menu) menu_db).getPromo());
                          adminBoundary.printOptions();
-                        
-
                     }
                     break;
                 }
@@ -62,6 +60,7 @@ public class RRPSS_Login_Boundary {
             }
         }
         sc.close();
-        db2.serializeToFile();
+        menu_db.serializeToFile();
+        
     }
 }

@@ -5,31 +5,31 @@ import java.io.Serializable;
 
 public class PromoItems implements Serializable{
     
-    private ArrayList<MenuItem> promoitems;
+    private HashMap<String, MenuItem> promo_map;
     private String name;
     private double price;
     private String desc;
 
-    public PromoItems(ArrayList<MenuItem> promoitems,String desc, double price, String name){
-        this.promoitems = promoitems;
+    public PromoItems(HashMap<String, MenuItem> promo_map, String name, String desc, double price){
+        this.promo_map = promo_map;
         this.desc = desc;
         this.price = price;
         this.name = name;
     }
 
-    public ArrayList<MenuItem> getpromoitems(){
-        return promoitems;
+    public HashMap<String, MenuItem> getPromoItems(){
+        return promo_map;
     }
 
-    public String getdesc(){
+    public String getDesc(){
         return this.desc;
     }
 
-    public String getname(){
+    public String getName(){
         return this.name;
     }
 
-    public Double getprice(){
+    public Double getPrice(){
         return this.price;
     }
 

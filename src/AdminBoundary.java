@@ -9,22 +9,31 @@ import Classes.*;
 public class AdminBoundary {
 
     private Scanner sc;
-    private ArrayList<MenuItem> menu;
-    private ArrayList<PromoItems> promomenu;
+    private HashMap<String, MenuItem> menu;
+    private HashMap<String, PromoItems> promo_menu;
 
-    public AdminBoundary(ArrayList<MenuItem> menu, ArrayList<PromoItems> promomenu) {
+    public AdminBoundary(HashMap<String, MenuItem> menu, HashMap<String, PromoItems> promo_menu) {
         this.sc = new Scanner(System.in);
         this.menu = menu;
-        this.promomenu = promomenu;
+        this.promo_menu = promo_menu;
+    }
+
+    public void displayMenu(){
+        for (String menu_itemKey : menu.keySet()){
+            MenuItem temp = menu.get(menu_itemKey);
+            System.out.println(temp.getName());
+        }
     }
 
     public void printOptions() {
         
         // KIV
-        // System.out.println("6. Add Staff");
-        // System.out.println("7. Remove Staff");
+        // TODO Add Account
+        // System.out.println("7. Add Account");
+        // TODO Remove Account
+        // System.out.println("8. Remove Account");
         do {
-            System.out.println(promomenu.size());
+            System.out.println(promo_menu.size());
             System.out.println("-------------------\n    Admin Menu     \n-------------------");
             System.out.println("1. Add Item to Menu");
             System.out.println("2. Remove Item from Menu");
@@ -64,6 +73,38 @@ public class AdminBoundary {
         } while (true);
     }
 
+    public void viewMenu() {
+
+        if (menu.size() == 0){
+            System.out.println("Menu is empty :(");
+        }
+
+        else {
+            System.out.println("---------- Menu ----------");
+            for (String menuItemKey : menu.keySet()){
+                MenuItem menuItem = menu.get(menuItemKey);
+                System.out.println(menuItem.getName() + ": $" + menuItem.getPrice());
+                System.out.println(menuItem.getDesc());
+            }
+            System.out.println("------------------------------");
+        }
+
+        if (promo_menu.size() == 0){
+            System.out.println("Promo menu is empty :(");
+        }
+        else {
+            System.out.println("---------- Promo Sets ----------");
+            for (String promoItemKey : promo_menu.keySet()){
+                PromoItems promoItem = promo_menu.get(promoItemKey);
+                System.out.println(promoItem.getName() + ": $" + promoItem.getPrice());
+                HashMap<String, MenuItem> promoItems = promo_menu.get(promoItem.getName()).getPromoItems();
+                for (String menuItem : promoItems.keySet()){
+                    System.out.println("- " + menuItem);
+                }
+            }
+        }
+    }
+
     public void addMenuItem() {
 
         System.out.println("---------------Adding a new MenuItem---------------");
@@ -74,41 +115,12 @@ public class AdminBoundary {
         System.out.println("Enter the price of new item:");
         double price = sc.nextDouble();
 
-        boolean exist = false;
-        for (Object pass : menu) {
-            MenuItem m = (MenuItem) pass;
-            if (m.getname() == name) {
-                System.out.println("Another item with the same name already exists");
-                exist = true;
-            }
-
+        if (!menu.containsKey(name.toLowerCase())){
+            menu.put(name, new MenuItem(desc, name, price));
         }
-
-        if (exist == false) {
-            MenuItem newitem = new MenuItem(desc, name, price);
-            menu.add(newitem);
-            System.out.println("Menu item added");
+        else{
+            System.out.println("Another item with the same name already exists");
         }
-
-    }
-
-    public void viewMenu() {
-        System.out.println("-------------\n         Menu:\n-------------");
-        for (int i = 0; i < menu.size(); i++) {
-            System.out.println((i + 1) + ": " + menu.get(i).getname() + "------ $" + menu.get(i).getprice());
-            System.out.println(menu.get(i).getdesc());
-        }
-        System.out.println(
-                "-----------------------------------------\n    Promotion Sets:\n------------------------------------------");
-        for (int i = 0; i < promomenu.size(); i++) {
-            System.out.println((i + 1) + ": " + promomenu.get(i).getname() + "------ $" + promomenu.get(i).getprice());
-            System.out.println(promomenu.get(i).getdesc());
-            for (int y = 0; y < promomenu.get(i).getpromoitems().size(); y++) {
-                System.out.println("-" + promomenu.get(i).getpromoitems().get(y).getname());
-            }
-            System.out.println("--------------------------------------------");
-        }
-
     }
 
     public void removeMenuItem() {
@@ -116,28 +128,16 @@ public class AdminBoundary {
         System.out.println("---------------Removing a new MenuItem---------------");
         System.out.println("Enter the item name to remove:");
 
-        boolean removed = false;
-        MenuItem m1 = null;
-
         while (true) {
             String name = sc.nextLine();
             if (name.equalsIgnoreCase("N"))
                 break;
 
-            for (Object pass : menu) {
-                MenuItem m = (MenuItem) pass;
-                if (m.getname().equalsIgnoreCase(name)) {
-                    m1 = m;
-                    removed = true;
-                }
+            if (!menu.containsKey(name.toLowerCase())){
+                menu.remove(name);
             }
-
-            if (removed == false) {
-                System.out.println("Item does not exist try again (N to quit)");
-            } else {
-                menu.remove(m1);
-                System.out.println(m1.getname() + " removed Successfully");
-                break;
+            else{
+                System.out.println("No such items exist");
             }
         }
     }
@@ -151,62 +151,37 @@ public class AdminBoundary {
         String desc = sc.nextLine();
         System.out.println("Enter the price of new set:");
         double price = sc.nextDouble();
-        ArrayList<MenuItem> newpromo = new ArrayList<MenuItem>();
-        boolean added = false; // check if anything was successfully added
 
-        boolean exist = false; // check if the name of the promo already exist
-        for (Object pass : promomenu) {
-            PromoItems p = (PromoItems) pass;
-            if (p.getname() == name) {
-                System.out.println("Another item with the same name already exists");
-                exist = true;
-            }
-        }
 
-        if (exist == false) {
-
+        if (!promo_menu.containsKey(name)){
+            HashMap<String, MenuItem> newPromo_map = new HashMap<String, MenuItem>();
+            
             System.out.println("Enter the MenuItems to include in the set: (N to terminate)");
             System.out.println("-------------------------------------------");
 
-            int i = 1;
-            for (Object pass2 : menu) {
-                MenuItem m = (MenuItem) pass2;
-                System.out.println(i + ": " + m.getname());
-                i++;
-            }
-
-            while (true) {
-                String gg = sc.nextLine();
-
-                if (gg.equalsIgnoreCase("N"))
+            displayMenu();
+            
+            do {
+                String temp_menuItemKey = sc.next();
+                if (temp_menuItemKey.equals("N")){
                     break;
-                else {
-                    MenuItem newpromoitem = null;
-
-                    boolean valid = false; // check if the new item to be added to the promo exist
-                    for (Object pass2 : menu) {
-                        MenuItem m = (MenuItem) pass2;
-                        if (gg.equalsIgnoreCase(m.getname())) {
-                            newpromoitem = m;
-                            valid = true;
-                        }
-                    }
-
-                    if (valid) {
-                        newpromo.add(newpromoitem);
-                        System.out.println("Item added to promo");
-                        System.out.println("Add another Item (N to quit)");
-                        added = true;
-                    } else
-                        System.out.println("item does not exist, try again (N to quit)");
                 }
-            }
 
-            if (added) {
-                System.out.println("Promo Set " + name + " Created");
-                promomenu.add(new PromoItems(newpromo, desc, price, name));
-            }
+                if (menu.containsKey(temp_menuItemKey.toLowerCase())){
+                    newPromo_map.put(temp_menuItemKey, menu.get(temp_menuItemKey));
 
+                    System.out.println(temp_menuItemKey + " added to " + name + " promo.");
+                }
+                else{
+                    System.out.println("No such menu item.");
+                }
+            } while(true);
+
+            promo_menu.put(name,  new PromoItems(newPromo_map, name, desc, price));
+            System.out.println("Promo item " + name + " created.");
+        }
+        else{
+            System.out.println("Promo Item already exists");
         }
     }
 
@@ -215,30 +190,12 @@ public class AdminBoundary {
         System.out.println("---------------Removing a Promotion---------------");
         System.out.println("Enter the promotion name to remove:");
 
-        boolean removed = false;
-        PromoItems m1 = null;
-
-        while (true) {
-            String name = sc.nextLine();
-
-            if (name.equalsIgnoreCase("N"))
-                break;
-
-            for (Object pass : promomenu) {
-                PromoItems m = (PromoItems) pass;
-                if (m.getname().equalsIgnoreCase(name)) {
-                    m1 = m;
-                    removed = true;
-                }
-            }
-
-            if (removed == false) {
-                System.out.println("Item does not exist try again (N to quit)");
-            } else {
-                promomenu.remove(m1);
-                System.out.println(m1.getname() + " removed Successfully");
-                break;
-            }
+        String promoToRemove = sc.next();
+        if (promo_menu.containsKey(promoToRemove)){
+            promo_menu.remove(promoToRemove);
+        }
+        else{
+            System.out.println("No such promo item.");
         }
     }
 
