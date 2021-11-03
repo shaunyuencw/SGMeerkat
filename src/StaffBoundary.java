@@ -15,6 +15,7 @@ public class StaffBoundary {
         System.out.println("4. Cancel item from Order");
         System.out.println("5. Print Order Invoice");
         System.out.println("6. View Order");
+        System.out.println("7. View Menu");
 
         System.out.println("----------------------------------------");
         System.out.println("Enter choice (Staff): (Enter 0 to stop)");
@@ -43,4 +44,6 @@ public class StaffBoundary {
     public static void viewOrder(){
         // TODO viewOrder
     } 
+
+    
 }

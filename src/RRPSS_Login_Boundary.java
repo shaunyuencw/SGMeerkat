@@ -85,6 +85,11 @@ public class RRPSS_Login_Boundary {
                                     StaffBoundary.viewOrder();
                                     break;
 
+                                case 7:
+                                    //view menu
+                                    menu.viewMenu();
+                                    break;
+
                                 default:
                                     System.out.println("Invalid Options");
                                     break; 
