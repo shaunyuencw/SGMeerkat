@@ -46,7 +46,51 @@ public class RRPSS_Login_Boundary {
                 else {
                     if (num == 1) {
                         // ? StaffBoundaryClass
-                        menu.resetDat();
+                        while (true){
+                            StaffBoundary.printOptions();
+                            int ch = sc.nextInt();
+                            sc.nextLine();
+                            if (ch == 0){
+                                break;
+                            }
+    
+                            switch(ch){
+                               case 1:
+                                    // Create Reservation
+                                    StaffBoundary.createReservation();
+                                    break;
+
+                                case 2:
+                                    // Remove Reservation
+                                    StaffBoundary.removeReservation();
+                                    break;
+
+                                case 3:
+                                    // Create order
+                                    StaffBoundary.createOrder();
+                                    break;
+
+                                case 4:
+                                    // Cancel item from Order
+                                    StaffBoundary.cancelOrder();
+                                    break;
+                                
+                                case 5:
+                                    // Print Order invoice
+                                    StaffBoundary.printInvoice();
+                                    break;
+
+                                case 6:
+                                    // View Order
+                                    StaffBoundary.viewOrder();
+                                    break;
+
+                                default:
+                                    System.out.println("Invalid Options");
+                                    break; 
+                            }
+                
+                        }
                     } 
                     else {
                          // ? Admin features
