@@ -10,12 +10,6 @@ public class AdminBoundary {
     public AdminBoundary() {
     }
 
-    public static void displayMenu(HashMap<String, MenuItem> menu){
-        for (String menu_itemKey : menu.keySet()){
-            System.out.println(menu_itemKey);
-        }
-    }
-
     public static void displayOptions() {
         System.out.println("-------------------\n    Admin Menu     \n-------------------");
         System.out.println("1. Add Item to Menu");
@@ -28,7 +22,9 @@ public class AdminBoundary {
         
     }
 
-    public static void viewMenu(HashMap<String, MenuItem> menu, HashMap<String, PromoItems> promo_menu) {
+    public static void viewMenu(Menu menuObj) {
+        HashMap<String, MenuItem> menu = menuObj.getMenu();
+        HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
         if (menu.size() == 0){
             System.out.println("Menu is empty :(");
         }
@@ -60,7 +56,9 @@ public class AdminBoundary {
     }
 
     @SuppressWarnings("resource")
-    public static HashMap<String, MenuItem> addMenuItem(HashMap<String, MenuItem> menu) {
+    public static HashMap<String, MenuItem> addMenuItem(Menu menuObj) {
+        HashMap<String, MenuItem> menu = menuObj.getMenu();
+        HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
         Scanner sc = new Scanner(System.in);
         String name = "";
         System.out.println("---------------Adding a new MenuItem---------------");
@@ -86,7 +84,9 @@ public class AdminBoundary {
     }
 
     @SuppressWarnings("resource")
-    public static HashMap<String, MenuItem> removeMenuItem(HashMap<String, MenuItem> menu) {
+    public static HashMap<String, MenuItem> removeMenuItem(Menu menuObj) {
+        HashMap<String, MenuItem> menu = menuObj.getMenu();
+        HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
         Scanner sc = new Scanner(System.in);
         System.out.println("---------------Removing a new MenuItem---------------");
         System.out.println("Enter the item name to remove:");
@@ -108,8 +108,10 @@ public class AdminBoundary {
     }
 
     @SuppressWarnings("resource")
-    public static HashMap<String, PromoItems> createNewPromo(HashMap<String, MenuItem> menu, HashMap<String, PromoItems> promo_menu) {
+    public static HashMap<String, PromoItems> createNewPromo(Menu menuObj) {
         Scanner sc = new Scanner(System.in);
+        HashMap<String, MenuItem> menu = menuObj.getMenu();
+        HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
         String name = "";
 
         System.out.println("---------------Adding a new Promotion set---------------");
@@ -135,7 +137,7 @@ public class AdminBoundary {
         System.out.println("Enter the MenuItems to include in the set: (N to terminate)");
         System.out.println("-------------------------------------------");
 
-        displayMenu(menu);
+        menuObj.displayMenu();
         
         do {
             String temp_menuItemKey = sc.nextLine();
@@ -168,7 +170,9 @@ public class AdminBoundary {
     }
 
     @SuppressWarnings("resource")
-    public static HashMap<String, PromoItems> removePromo(HashMap<String, MenuItem> menu, HashMap<String, PromoItems> promo_menu) {
+    public static HashMap<String, PromoItems> removePromo(Menu menuObj) {
+        HashMap<String, MenuItem> menu = menuObj.getMenu();
+        HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
         Scanner sc = new Scanner(System.in);
         String promoToRemove = "";
         System.out.println("---------------Removing a Promotion---------------");

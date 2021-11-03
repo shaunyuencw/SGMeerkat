@@ -44,6 +44,37 @@ public class Menu implements DataBaseHandler{
         }
     }
 
+    public void viewMenu() {
+        if (menu_map.size() == 0){
+            System.out.println("Menu is empty :(");
+        }
+
+        else {
+            System.out.println("---------- Menu ----------");
+            for (String menuItemKey : menu_map.keySet()){
+                MenuItem menuItem = menu_map.get(menuItemKey);
+                System.out.println(menuItem.getName() + ": $" + menuItem.getPrice());
+                System.out.println(menuItem.getDesc());
+            }
+            System.out.println("------------------------------");
+        }
+
+        if (promo_map.size() == 0){
+            System.out.println("Promo menu is empty :(");
+        }
+        else {
+            System.out.println("---------- Promo Sets ----------");
+            for (String promoItemKey : promo_map.keySet()){
+                PromoItems promoItem = promo_map.get(promoItemKey);
+                System.out.println(promoItem.getName() + ": $" + promoItem.getPrice());
+                HashMap<String, MenuItem> promoItems = promo_map.get(promoItem.getName().toLowerCase()).getPromoItems();
+                for (String menuItem : promoItems.keySet()){
+                    System.out.println("- " + menuItem);
+                }
+            }
+        }
+    }
+
     public void serializeToFile() {
         // ? serialize menu to menu.dat
         try {      

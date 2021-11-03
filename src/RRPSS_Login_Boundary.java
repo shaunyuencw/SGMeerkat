@@ -59,26 +59,26 @@ public class RRPSS_Login_Boundary {
                             switch (ch) {
                             case 1:
                                 // Adding items to menu
-                                menu.updateMenu(AdminBoundary.addMenuItem(menu.getMenu()));
+                                menu.updateMenu(AdminBoundary.addMenuItem(menu));
                                 break;
 
                             case 2:
                                 // Removing items from menu
-                                menu.updateMenu(AdminBoundary.removeMenuItem(menu.getMenu()));
+                                menu.updateMenu(AdminBoundary.removeMenuItem(menu));
                                 break;
 
                             case 3:
                                 // Create new Promo set
-                                menu.updatePromoMenu(AdminBoundary.createNewPromo(menu.getMenu(), menu.getPromo()));
+                                menu.updatePromoMenu(AdminBoundary.createNewPromo(menu));
                                 break;
 
                             case 4:
                                 // Delete a promo set
-                                menu.updatePromoMenu(AdminBoundary.removePromo(menu.getMenu(), menu.getPromo()));
+                                menu.updatePromoMenu(AdminBoundary.removePromo(menu));
                                 break;
 
                             case 5:
-                                AdminBoundary.viewMenu(menu.getMenu(), menu.getPromo());
+                                menu.viewMenu();
                                 break;
 
                             default:
