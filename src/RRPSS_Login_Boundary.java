@@ -11,70 +11,57 @@ public class RRPSS_Login_Boundary {
 
         Scanner sc = new Scanner(System.in);
 
-        DataBaseHandler db = new AllAccountDetails();
+        DataBaseHandler acccount_db = new AllAccountDetails();
         DataBaseHandler db2 = new Menu();
-        DataBaseHandler db3 = new Menu();
-        db.deserializeFromFile();
+        acccount_db.deserializeFromFile();
         db2.deserializeFromFile();
-        db3.deserializeFromFile();
-        Login_Controller loginController = new Login_Controller(((AllAccountDetails)db).getAccounts());
-        
-       
+        Login_Controller loginController = new Login_Controller(((AllAccountDetails) acccount_db).getAccounts());
+
         System.out.println("Log in Domain: ");
         System.out.println("1. Staff");
         System.out.println("2. Admin");
 
-        boolean flg = true;
-
-        while(flg){
+        while (true) {
             System.out.print("Select an option: (0 to stop) ");
             
-            int num= sc.nextInt();
+            int num = sc.nextInt();
 
-            if (num == 0) break;
+            if (num == 0){
+                break;
+            }
 
-            if (num !=1 && num != 2) {
+            else if (num == 1 || num == 2){
+                System.out.print("Network username or new username: ");
+                String userName = sc.next();
+                System.out.print("Password: ");
+                String password = sc.next();
+
+                boolean logInTry = loginController.checkPassword(userName, password, num);
+
+                if (logInTry == false) {
+                    System.out.println("Incorrect password/ username/ domain details.");
+                } 
+                else {
+                    if (num == 1) {
+                        // ? StaffBoundaryClass
+                    } 
+                    else {
+                         // ? AdminBoundaryClass
+                         AdminBoundary adminBoundary = new AdminBoundary(((Menu) db2).getmenu(), ((Menu) db2).getpromo());
+                         adminBoundary.printOptions();
+                        
+
+                    }
+                    break;
+                }
+            }
+            
+            else{
                 System.out.println("Invalid input");
                 continue;
             }
-
-            System.out.print("Network username or new username: ");
-            String userName = sc.next();
-            System.out.print("Password: ");
-            String password = sc.next();
-
-            boolean logInTry = loginController.checkPassword(userName, password, num);
-
-            if (logInTry == false){
-                System.out.println("Incorrect password/ username/ domain details.");
-            }
-            else{
-                flg = false;
-                if (num == 2){
-                     AdminBoundary adminBoundary = new AdminBoundary(((Menu)db2).getmenu(),((Menu)db3).getpromo());
-                     adminBoundary.printOptions();
-                }
-                else{
-
-                    //StaffBoundaryClass
-
-                }
-
-              db2.serializeToFile();
-               
-
-
-
-
-
-
-
-
-
         }
-    }           
-            
-            
-            db2.serializeToFile();
-}
+
+        db2.serializeToFile();
+    }
 }

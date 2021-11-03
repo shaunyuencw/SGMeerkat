@@ -20,18 +20,19 @@ public class AdminBoundary {
     }
 
     public void printOptions() {
-        System.out.println(promomenu.size());
-        System.out.println("-------------------\n    Admin Menu     \n-------------------");
-        System.out.println("1. Add Item to Menu");
-        System.out.println("2. Remove Item from Menu");
-        System.out.println("3. Create new Promotion Set");
-        System.out.println("4. Remove Promotion Set");
-        System.out.println("5. Edit Menu");
-        System.out.println("6. View Menu");
+        
         // KIV
         // System.out.println("6. Add Staff");
         // System.out.println("7. Remove Staff");
-        while (true) {
+        do {
+            System.out.println(promomenu.size());
+            System.out.println("-------------------\n    Admin Menu     \n-------------------");
+            System.out.println("1. Add Item to Menu");
+            System.out.println("2. Remove Item from Menu");
+            System.out.println("3. Create new Promotion Set");
+            System.out.println("4. Remove Promotion Set");
+            System.out.println("5. Edit Menu");
+            System.out.println("6. View Menu");
             System.out.println("----------------------------------------");
             System.out.println("Enter choice (Admin): (Enter 0 to stop)");
             int ch = sc.nextInt();
@@ -61,7 +62,7 @@ public class AdminBoundary {
                 System.out.println("Invalid choice");
             }
 
-        }
+        } while (true);
     }
 
     public void addMenuItem() {
