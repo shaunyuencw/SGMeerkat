@@ -7,10 +7,14 @@ public class Menu implements DataBaseHandler{
     
     private HashMap<String, MenuItem> menu_map;
     private HashMap<String, PromoItems> promo_map;
+    private List<String> menu_keys;
+    private List<String> promo_keys;
 
     public Menu(){
         menu_map = new HashMap<String, MenuItem>();
         promo_map = new HashMap<String, PromoItems>();
+        menu_keys = new ArrayList<String>();
+        promo_keys = new ArrayList<String>();
     };
 
     public HashMap<String, MenuItem> getMenu(){
@@ -19,10 +23,20 @@ public class Menu implements DataBaseHandler{
 
     public void updateMenu(HashMap<String, MenuItem> newMenu){
         this.menu_map = newMenu;
+        menu_keys = new ArrayList<String>(menu_map.keySet());
     }
 
     public void updatePromoMenu(HashMap<String, PromoItems> newPromoMenu){
         this.promo_map = newPromoMenu;
+        promo_keys = new ArrayList<String>(promo_map.keySet());
+    }
+
+    public String getMenu_key(int index){
+        return menu_keys.get(index);
+    }
+
+    public String getPromo_key(int index){
+        return promo_keys.get(index);
     }
 
     public HashMap<String, PromoItems> getPromo(){
@@ -38,9 +52,8 @@ public class Menu implements DataBaseHandler{
 	}
 
     public void displayMenu(){
-        for (String menu_itemKey : menu_map.keySet()){
-            MenuItem temp = menu_map.get(menu_itemKey);
-            System.out.println(temp.getName());
+        for (int i = 0; i < menu_keys.size(); i++){
+            System.out.println("(" + (i+1) + ") " + menu_map.get(menu_keys.get(i)).getName());
         }
     }
 
@@ -51,10 +64,10 @@ public class Menu implements DataBaseHandler{
 
         else {
             System.out.println("---------- Menu ----------");
-            for (String menuItemKey : menu_map.keySet()){
-                MenuItem menuItem = menu_map.get(menuItemKey);
-                System.out.println(menuItem.getName() + ": $" + menuItem.getPrice());
-                System.out.println(menuItem.getDesc());
+            for (int i = 0; i < menu_keys.size(); i++){
+                MenuItem menuItem = menu_map.get(menu_keys.get(i));
+                System.out.println("(" + (i+1) + ") " + menuItem.getName());
+                System.out.println("- " + menuItem.getDesc());
             }
             System.out.println("------------------------------");
         }
@@ -64,9 +77,9 @@ public class Menu implements DataBaseHandler{
         }
         else {
             System.out.println("---------- Promo Sets ----------");
-            for (String promoItemKey : promo_map.keySet()){
-                PromoItems promoItem = promo_map.get(promoItemKey);
-                System.out.println(promoItem.getName() + ": $" + promoItem.getPrice());
+            for (int j = 0; j < promo_keys.size(); j++){
+                PromoItems promoItem = promo_map.get(promo_keys.get(j));
+                System.out.println("(" + (j+1) + ") " + promoItem.getName() + ": $" + promoItem.getPrice());
                 HashMap<String, MenuItem> promoItems = promo_map.get(promoItem.getName().toLowerCase()).getPromoItems();
                 for (String menuItem : promoItems.keySet()){
                     System.out.println("- " + menuItem);
@@ -122,6 +135,8 @@ public class Menu implements DataBaseHandler{
             if(!(readObject instanceof HashMap)) throw new IOException("Data is not a hashmap");
             this.menu_map = (HashMap<String, MenuItem>) readObject;
 
+            menu_keys = new ArrayList<String>(menu_map.keySet());
+
             // Prints out everything in the map.
             // for(String key : menu_map.keySet()) {
             //     System.out.println(key + ": " + menu_map.get(key));
@@ -144,6 +159,8 @@ public class Menu implements DataBaseHandler{
             if(!(readObject instanceof HashMap)) throw new IOException("Data is not a hashmap");
             this.promo_map = (HashMap<String, PromoItems>) readObject;
 
+            promo_keys = new ArrayList<String>(promo_map.keySet());
+
             // Prints out everything in the map.
             // for(String key : promo_map.keySet()) {
             //     System.out.println(key + ": " + promo_map.get(key));
@@ -153,39 +170,4 @@ public class Menu implements DataBaseHandler{
             System.out.println(e.getMessage());
         }
     }
-    
-    public static void main(String[] args) {
-        HashMap<String, MenuItem> menuMap = new HashMap<String, MenuItem>();
-        
-        MenuItem m1 = new MenuItem("rice that is fragantly fried with shrimps", "fried rice", 4);
-        MenuItem m2 = new MenuItem("less sugar","Coffee",3);
-
-        menuMap.put(m1.getName().toLowerCase(), m1);
-        menuMap.put(m2.getName().toLowerCase(), m2);
-
-        HashMap<String, PromoItems> promo_map = new HashMap<String, PromoItems>();
-
-
-
-        PromoItems p1 = new PromoItems(menuMap, "Fried Rice Set", "special lunch set", 6);
-        promo_map.put(p1.getName().toLowerCase(), p1);
-
-
-		DataBaseHandler db2 = new Menu();       
-		db2.serializeToFile();
-        System.out.println(((Menu)db2).getPromo().size());
-
-	}
-
-
-
-
-
-
-
-    
-    
-	
-
-
 }

@@ -22,43 +22,10 @@ public class AdminBoundary {
         
     }
 
-    public static void viewMenu(Menu menuObj) {
-        HashMap<String, MenuItem> menu = menuObj.getMenu();
-        HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
-        if (menu.size() == 0){
-            System.out.println("Menu is empty :(");
-        }
-
-        else {
-            System.out.println("---------- Menu ----------");
-            for (String menuItemKey : menu.keySet()){
-                MenuItem menuItem = menu.get(menuItemKey);
-                System.out.println(menuItem.getName() + ": $" + menuItem.getPrice());
-                System.out.println(menuItem.getDesc());
-            }
-            System.out.println("------------------------------");
-        }
-
-        if (promo_menu.size() == 0){
-            System.out.println("Promo menu is empty :(");
-        }
-        else {
-            System.out.println("---------- Promo Sets ----------");
-            for (String promoItemKey : promo_menu.keySet()){
-                PromoItems promoItem = promo_menu.get(promoItemKey);
-                System.out.println(promoItem.getName() + ": $" + promoItem.getPrice());
-                HashMap<String, MenuItem> promoItems = promo_menu.get(promoItem.getName().toLowerCase()).getPromoItems();
-                for (String menuItem : promoItems.keySet()){
-                    System.out.println("- " + menuItem);
-                }
-            }
-        }
-    }
-
     @SuppressWarnings("resource")
     public static HashMap<String, MenuItem> addMenuItem(Menu menuObj) {
         HashMap<String, MenuItem> menu = menuObj.getMenu();
-        HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
+        //HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
         Scanner sc = new Scanner(System.in);
         String name = "";
         System.out.println("---------------Adding a new MenuItem---------------");
@@ -86,7 +53,7 @@ public class AdminBoundary {
     @SuppressWarnings("resource")
     public static HashMap<String, MenuItem> removeMenuItem(Menu menuObj) {
         HashMap<String, MenuItem> menu = menuObj.getMenu();
-        HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
+        //HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
         Scanner sc = new Scanner(System.in);
         System.out.println("---------------Removing a new MenuItem---------------");
         System.out.println("Enter the item name to remove:");
@@ -139,22 +106,34 @@ public class AdminBoundary {
 
         menuObj.displayMenu();
         
-        do {
+        while(true) {
             String temp_menuItemKey = sc.nextLine();
             if (temp_menuItemKey.equals("N")){
                 break;
             }
-            System.out.println(temp_menuItemKey.toLowerCase());
-            if (menu.containsKey(temp_menuItemKey.toLowerCase())){
-                newPromo_map.put(temp_menuItemKey.toLowerCase(), menu.get(temp_menuItemKey));
 
-                System.out.println(temp_menuItemKey + " added to " + name + " promo.");
+            try{
+                if (menu.containsKey(temp_menuItemKey.toLowerCase())){
+                    newPromo_map.put(temp_menuItemKey.toLowerCase(), menu.get(temp_menuItemKey));
+    
+                    System.out.println(temp_menuItemKey + " added to " + name + " promo.");
+                }
+                // Check if such a index key exist
+                else if (menu.containsKey(menuObj.getMenu_key(Integer.parseInt(temp_menuItemKey) - 1))){
+                    temp_menuItemKey = menuObj.getMenu_key(Integer.parseInt(temp_menuItemKey) - 1);
+                    newPromo_map.put(temp_menuItemKey.toLowerCase(), menu.get(temp_menuItemKey));
+    
+                    System.out.println(temp_menuItemKey + " added to " + name + " promo.");
+                }
+                else{
+                    System.out.println("No such menu item.");
+                }
             }
-            else{
+
+            catch (Exception e){
                 System.out.println("No such menu item.");
             }
-
-        } while(true);
+        }
 
         if (newPromo_map.size() != 0){
             PromoItems newPromo_item = new PromoItems(newPromo_map, name, desc, price);
@@ -171,7 +150,7 @@ public class AdminBoundary {
 
     @SuppressWarnings("resource")
     public static HashMap<String, PromoItems> removePromo(Menu menuObj) {
-        HashMap<String, MenuItem> menu = menuObj.getMenu();
+        //HashMap<String, MenuItem> menu = menuObj.getMenu();
         HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
         Scanner sc = new Scanner(System.in);
         String promoToRemove = "";
