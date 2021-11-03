@@ -46,6 +46,7 @@ public class RRPSS_Login_Boundary {
                 else {
                     if (num == 1) {
                         // ? StaffBoundaryClass
+                        menu.resetDat();
                     } 
                     else {
                          // ? Admin features

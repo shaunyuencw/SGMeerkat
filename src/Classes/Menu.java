@@ -57,6 +57,12 @@ public class Menu implements DataBaseHandler{
         }
     }
 
+    public void displayPromos(){
+        for (int i = 0; i < promo_keys.size(); i++){
+            System.out.println("(" + (i+1) + ") " + promo_map.get(promo_keys.get(i)).getName());
+        }
+    }
+
     public void viewMenu() {
         if (menu_map.size() == 0){
             System.out.println("Menu is empty :(");
@@ -120,6 +126,37 @@ public class Menu implements DataBaseHandler{
         }
     }
 
+    public void resetDat(){
+        // ? serialize menu to menu.dat
+        try {      
+            File menu_file = new File("menu.dat");
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(menu_file));
+
+            output.writeObject("");
+            output.flush();
+            output.close();
+
+            System.out.println("Menu resetted.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // ? serialize menu to menu.dat
+        try {      
+            File promo_file = new File("promo.dat");
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(promo_file));
+
+            output.writeObject("");
+            output.flush();
+            output.close();
+
+            System.out.println("Promo menu resetted.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     @SuppressWarnings("unchecked")
     public void deserializeFromFile() {

@@ -46,31 +46,34 @@ public class AdminBoundary {
         System.out.println("Enter the price of new item:");
         double price = sc.nextDouble();
 
-        menu.put(name.toLowerCase(), new MenuItem(desc, name, price));
+        menu.put(name.toLowerCase(), new MenuItem(name, desc, price));
         return menu;
     }
 
     @SuppressWarnings("resource")
     public static HashMap<String, MenuItem> removeMenuItem(Menu menuObj) {
+        menuObj.displayMenu();
         HashMap<String, MenuItem> menu = menuObj.getMenu();
         //HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
         Scanner sc = new Scanner(System.in);
-        System.out.println("---------------Removing a new MenuItem---------------");
+        System.out.println("---------------Removing a MenuItem---------------");
         System.out.println("Enter the item name to remove:");
 
-        while (true) {
-            String name = sc.nextLine();
-            if (name.equalsIgnoreCase("N"))
-                break;
+        String nameToRemove = sc.nextLine();
 
-            if (!menu.containsKey(name.toLowerCase())){
-                menu.remove(name);
-            }
-            else{
-                System.out.println("No such items exist");
-            }
-            
+        if (menu.containsKey(nameToRemove.toLowerCase())){
+            menu.remove(nameToRemove);
+            System.out.println(nameToRemove + " removed.");
         }
+        else if (menu.containsKey(menuObj.getMenu_key(Integer.parseInt(nameToRemove) - 1))){
+            nameToRemove = menuObj.getMenu_key(Integer.parseInt(nameToRemove) - 1);
+            menu.remove(nameToRemove);
+            System.out.println(nameToRemove + " removed.");
+        }
+        else{
+            System.out.println("No such items exist");
+        }
+            
         return menu;
     }
 
@@ -155,17 +158,23 @@ public class AdminBoundary {
         Scanner sc = new Scanner(System.in);
         String promoToRemove = "";
         System.out.println("---------------Removing a Promotion---------------");
-        while (true){
-            System.out.println("Enter the promotion name to remove:");
-            promoToRemove = sc.next();
-            if (!promo_menu.containsKey(promoToRemove.toLowerCase())){
-                System.out.println("No such promo item.");
-            }
-            else{
-                break;
-            }
+        menuObj.displayPromos();
+
+        System.out.println("Enter the promotion name to remove:");
+        promoToRemove = sc.next();
+        if (promo_menu.containsKey(promoToRemove.toLowerCase())){
+            promo_menu.remove(promoToRemove.toLowerCase());
+            System.out.println(promoToRemove + " removed.");
         }
-        promo_menu.remove(promoToRemove.toLowerCase());
+        else if (promo_menu.containsKey(menuObj.getPromo_key(Integer.parseInt(promoToRemove) - 1))){
+            promoToRemove = menuObj.getPromo_key(Integer.parseInt(promoToRemove) - 1);
+            promo_menu.remove(promoToRemove.toLowerCase());
+            System.out.println(promoToRemove + " removed.");
+        }
+        else{
+            System.out.println("No such promo item.");
+        }
+        
         return promo_menu;
     }
 
