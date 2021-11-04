@@ -2,10 +2,11 @@ package Classes;
 
 import java.util.*;
 import java.time.LocalDateTime;
+import java.io.*;
 
 // ! NOT CONFIRMED
 
-public class OrderList {
+public class OrderList implements DataBaseHandler {
     private ArrayList<Order> order_list;
     private String staff_name;
     private String dineTime;
@@ -33,6 +34,42 @@ public class OrderList {
         return this.order_list;
     }
 
+    public void serializeToFile() {
+        // ? serialize menu to menu.dat
+        try {      
+            File order_file = new File("orders.dat");
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(order_file));
+
+            output.writeObject(order_file);
+            output.flush();
+            output.close();
+
+            System.out.println("orders updated.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void deserializeFromFile() {
+        // ? get menu from menu.dat
+        try {
+            File order_file = new File("orders.dat");
+            ObjectInputStream input = new ObjectInputStream(new FileInputStream(order_file));
+
+            //Reads the first object in
+            Object readObject = input.readObject();
+            input.close();
+        
+            if(!(readObject instanceof ArrayList)) throw new IOException("Data is not a Arraylist");
+            this.order_list = (ArrayList<Order>) readObject;
+            
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public static void main(String[] args) {
 
         OrderList order_list = new OrderList("zw");
