@@ -1,8 +1,8 @@
 package Classes;
 
-//import java.util.*;
+import java.util.*;
 
-// ! NOT CONFIRMED
+//
 public class Table {
     private static final double GST_CHARGE = 0.07; // in percentage
     private static final double SERVICE_CHARGE = 0.10; // in percentage
@@ -10,17 +10,26 @@ public class Table {
     private int table_id;
     private int num_seats;
     private boolean occupied;
-    private boolean reserved;
-    private OrderList order_list;
+    private HashMap<String, Boolean> reservationMap;
 
-    public Table(int table_id, int num_seats, String staff_name){
+    public Table(int table_id, int num_seats){
         this.table_id = table_id;
         this.num_seats = num_seats;
 
         // Table is not occupied nor reserved on init
         this.occupied = false;
-        this.reserved = false;
-        this.order_list = new OrderList(staff_name);
+        reservationMap = new HashMap<String, Boolean>();
+        
+        // Restaurant opening hours is 8am - 8pm
+        for (int i = 8; i < 12; i++){
+            reservationMap.put(i + "am", false);
+        }
+
+        reservationMap.put("12pm", false);
+        
+        for (int i = 1; i <= 8; i++){
+            reservationMap.put(i + "pm", false);
+        }
     }
 
     public int getTable_id() {
@@ -40,26 +49,15 @@ public class Table {
     }
 
     public void reserve(){
-        if (this.reserved == false){
-            this.reserved = true;
-        }
-        else{
-            System.out.println("Table " + this.table_id + " is not reserved.");
-        }
+        
     }
 
     public boolean isReserved() {
-        return this.reserved;
+        return false;
     }
 
     public void seatGuest(String staff_name){
-        if (!this.occupied){
-            this.occupied = true;
-            this.order_list = new OrderList(staff_name);
-        }
-        else{
-            System.out.println("Table " + this.table_id + " is already occupied.");
-        }
+
     }
 
     public boolean isOccupied(){
@@ -68,7 +66,7 @@ public class Table {
 
     public void printInvoice(){
         // TODO Some calculation and output
-        System.out.println(order_list.getTotalPrice() * (1 + GST_CHARGE + SERVICE_CHARGE));
+        //System.out.println(order_list.getTotalPrice() * (1 + GST_CHARGE + SERVICE_CHARGE));
         this.occupied = false;
     }
 }
