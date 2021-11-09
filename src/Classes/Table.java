@@ -66,7 +66,7 @@ public class Table {
 
     public void printInvoice(){
         // TODO Some calculation and output
-        System.out.println(order_list.getTotalPrice() * (1 + GST_CHARGE + SERVICE_CHARGE));
+        //System.out.println(order_list.getTotalPrice() * (1 + GST_CHARGE + SERVICE_CHARGE));
         this.occupied = false;
     }
 }
