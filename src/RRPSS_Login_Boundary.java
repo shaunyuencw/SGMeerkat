@@ -12,7 +12,6 @@ public class RRPSS_Login_Boundary {
     public static void main(String[] args) {
         // Ah Huang was here!
         Scanner sc = new Scanner(System.in);
-
         Menu menu = new Menu();
         AllAccountDetails accounts = new AllAccountDetails();
         
@@ -26,7 +25,7 @@ public class RRPSS_Login_Boundary {
         System.out.println("2. Admin");
 
         while (true) {
-            System.out.print("Select an option: (0 to stop) ");
+            System.out.print("Enter EmployeeID(0 to stop) ");
             
             int num = sc.nextInt();
 
