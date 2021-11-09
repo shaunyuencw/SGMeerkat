@@ -5,6 +5,41 @@ import Classes.*;
 public class StaffBoundary {
     private ArrayList<Table> all_tables;
 
+    public String ahHuangFunction(){
+        // TODO
+        String time;
+        int timeInt, hrs, mins;
+        Scanner sc = new Scanner(System.in);
+
+        // No more walk in after 7.30pm
+        System.out.println("Please enter current time (0800 - 1929): ");
+        try {
+            time = sc.next();
+            timeInt = Integer.parseInt(time);
+            System.out.println(timeInt);
+            hrs = timeInt/100;
+            mins = timeInt%100;
+
+            // Check
+            if (hrs < 8 || hrs > 19 || mins < 0 || mins > 59) {
+                System.out.println("Time exceeded!");
+            } else {
+                if (hrs != 19 && mins >= 30) {
+                    hrs++;
+                } else {
+                    System.out.println("Time exceeded!");
+                }
+            }
+
+            return Integer.toString(hrs);
+
+        } catch(Exception e) {
+            System.out.println("Wrong format!");
+        }
+
+        return "";
+    }
+
     public void openRestaurant(){
         all_tables = new ArrayList<Table>(); 
         int tid_counter = 1;
