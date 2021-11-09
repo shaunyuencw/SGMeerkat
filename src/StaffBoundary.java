@@ -1,12 +1,8 @@
-//import java.util.*;
-//import Classes.*;
+import java.util.*;
+import Classes.*;
+
 
 public class StaffBoundary {
-
-    public StaffBoundary() {
-
-    }
-
     /*
         1. Menu Management
         2. Order Management
@@ -26,37 +22,96 @@ public class StaffBoundary {
         14 Print Sales report
     */
 
-    public static void printOptions() {
-        System.out.println("-------------------\n    Staff Menu     \n-------------------");
-        
+    public static void main(String[] args) {
 
-        System.out.println("----------------------------------------");
-        System.out.println("Enter choice (Staff): (Enter 0 to stop)");
-    }
+        Menu menu = new Menu();
+        menu.deserializeFromFile();
+        AllStaff allStaff = new AllStaff();
+        allStaff.deserializeFromFile();
+        List<Staff> staffs = allStaff.getstaffList();
 
-    public static void createReservation(){
-        // TODO createReservation()
-    }
+        Scanner sc = new Scanner(System.in);
+        boolean login = false;
+        System.out.println("Good Morning Please Enter StaffID");
 
-    public static void removeReservation(){
-        // TODO removeReservation()
-    }
+        while(true)
+        {
+            System.out.println("Enter a valid StaffID");
+            int in = sc.nextInt();
 
-    public static void createOrder(){
-        // TODO createOrder()
-    }
+            for (Object pass: staffs){
 
-    public static void cancelOrder(){
-        // TODO cancelOrder
-    }
+                Staff s = (Staff) pass;
+                if (s.getEmployeeID() == in)
+                    login = true;
+            }
 
-    public static void printInvoice(){
-        // TODO printInvoice
-    }
+            if(login)
+                break;
+        }
 
-    public static void viewOrder(){
-        // TODO viewOrder
-    } 
 
+        while(true)
+        {
+            RRPSS.printOptions();
     
+            int ch = sc.nextInt();
+            sc.nextLine();
+            if (ch == 0) {
+                break;
+            }
+
+            switch(ch){
+                case 1:
+                //1. Menu Management
+            
+                     break;
+
+                 case 2:
+                 //2. Order Management
+                     
+                     break;
+
+                 case 3:
+                 //3. Reservation Management
+                   
+                     break;
+
+                 case 4:
+                 //4. Reports   
+                    
+                 default:
+                     System.out.println("Invalid Options");
+                     break; 
+             }
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+    }
+
 }

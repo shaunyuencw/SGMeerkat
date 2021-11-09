@@ -7,7 +7,35 @@ import Classes.*;
 /**
  * RRPSS_Login_Boundary
  */
-public class RRPSS_Login_Boundary {
+public class RRPSS {
+
+    public static void printOptions(){
+        System.out.println("-----------------------------------");
+        System.out.println("1. Menu Management");
+        System.out.println("2. Order Management");
+        System.out.println("3. Reservation Management");
+        System.out.println("4. Reports");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public static void main(String[] args) {
         // Ah Huang was here!
