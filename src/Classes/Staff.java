@@ -22,6 +22,10 @@ public class Staff {
         return staffName;
     }
 
+    public int getEmployeeID(){
+        return this.employeeID;
+    }
+
 
 
     
