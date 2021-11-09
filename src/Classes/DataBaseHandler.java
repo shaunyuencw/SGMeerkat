@@ -1,6 +1,6 @@
 package Classes;
 
-interface DataBaseHandler {
+interface DatabaseHandler {
 
         public void serializeToFile();
         public void deserializeFromFile();

@@ -10,7 +10,7 @@ import Classes.Staff.JobTitle;
  * AllStaff 
  * this class is a container class containing all staff info
  */
-public class AllStaff implements DataBaseHandler {
+public class AllStaff implements DatabaseHandler {
     private List<Staff> staffList;
 
     public AllStaff(){}
@@ -63,7 +63,7 @@ public class AllStaff implements DataBaseHandler {
 
 		Staff arr[] = {s1,s2};
 		List<Staff> ll = Arrays.asList(arr);
-		DataBaseHandler db = new AllStaff();
+		DatabaseHandler db = new AllStaff();
 		((AllStaff)db).setStaff(ll);
 		db.serializeToFile();
 		System.out.println(ll.size() + "Added");

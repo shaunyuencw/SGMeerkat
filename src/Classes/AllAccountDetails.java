@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 
-public class AllAccountDetails implements DataBaseHandler{
+public class AllAccountDetails implements DatabaseHandler{
 
     private List<Account> AccountList;
 
@@ -63,7 +63,7 @@ public class AllAccountDetails implements DataBaseHandler{
 
 		Account arr[] = {l1, l2, l3, l4, l5, l6,l7};
 		List<Account> ll = Arrays.asList(arr);
-		DataBaseHandler db = new AllAccountDetails();
+		DatabaseHandler db = new AllAccountDetails();
 		((AllAccountDetails)db).setAccounts(ll);
 		db.serializeToFile();
 		System.out.println(ll.size());

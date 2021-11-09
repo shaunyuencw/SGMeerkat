@@ -4,7 +4,7 @@ import java.util.*;
 import java.time.LocalDateTime;
 import java.io.*;
 
-public class OrderList implements DataBaseHandler {
+public class OrderList implements DatabaseHandler {
     private ArrayList<Order> order_list;
     private String staff_name;
     private String dineTime;

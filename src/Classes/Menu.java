@@ -3,7 +3,7 @@ package Classes;
 import java.io.*;
 import java.util.*;
 
-public class Menu implements DataBaseHandler{
+public class Menu implements DatabaseHandler{
     
     private HashMap<String, MenuItem> menu_map;
     private HashMap<String, PromoItems> promo_map;
