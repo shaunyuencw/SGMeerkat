@@ -3,6 +3,23 @@ import Classes.*;
 
 
 public class StaffBoundary {
+    private ArrayList<Table> all_tables;
+
+    public void openRestaurant(){
+        all_tables = new ArrayList<Table>(); 
+        int tid_counter = 1;
+        int[] num_of_each = {5, 4, 3, 2, 1};
+    
+        for (int i = 2; i <= 10; i += 2){
+            for (int j = num_of_each[i/2 - 1]; j > 0; j--){
+                Table t = new Table(tid_counter, i);
+                tid_counter++;
+                all_tables.add(t);
+            }
+        }
+    
+    
+    }
     /*
         1. Menu Management
         2. Order Management
@@ -23,7 +40,7 @@ public class StaffBoundary {
     */
 
     public static void main(String[] args) {
-
+        StaffBoundary staffBoundary = new StaffBoundary();
         Menu menu = new Menu();
         menu.deserializeFromFile();
         AllStaff allStaff = new AllStaff();
@@ -32,7 +49,11 @@ public class StaffBoundary {
 
         Scanner sc = new Scanner(System.in);
         boolean login = false;
-        System.out.println("Good Morning Please Enter StaffID");
+
+        staffBoundary.openRestaurant();
+        System.out.println("There are " + staffBoundary.all_tables.size() + " tables.");
+        
+        System.out.println("Good Morning, please enter your StaffID");
 
         while(true)
         {
@@ -64,6 +85,23 @@ public class StaffBoundary {
             switch(ch){
                 case 1:
                 //1. Menu Management
+                System.out.println("-----------------------------------");
+                System.out.println("1. Create Menu Item");
+                System.out.println("2. Delete Menu Item");
+                System.out.println("3. Update Menu Item");
+                System.out.println("4. Create Promo Item");
+                System.out.println("5. Delete Promo Item");
+                System.out.println("6. Update Promo Item");
+                System.out.println("-----------------------------------");
+
+                int ch2 = sc.nextInt();
+
+                switch(ch2)
+                {
+
+                }
+
+
             
                      break;
 
@@ -113,5 +151,15 @@ public class StaffBoundary {
 
 
     }
+
+
+
+
+
+
+/* 
+    openRestaurant() will initialize the following: 
+    5 2-seats, 4 4-seats, 3 6-seats, 2 8-seats, 1 10-seats
+*/
 
 }

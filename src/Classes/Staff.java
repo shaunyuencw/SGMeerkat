@@ -1,6 +1,8 @@
 package Classes;
 
-public class Staff {
+import java.io.Serializable;
+
+public class Staff implements Serializable {
 
     public enum Gender{M,F};
     public enum JobTitle{CASHIER,WAITER,MANAGER};

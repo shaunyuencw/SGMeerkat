@@ -47,12 +47,11 @@ public class AllStaff implements DataBaseHandler {
 			in = new ObjectInputStream(fis);
 			staffDetails = (List<Staff>) in.readObject();
 			in.close();
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		} catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
-		}
+		} catch (Exception e){
+            e.printStackTrace();
+        }
 		this.staffList = staffDetails;
+        System.out.println(staffList.size());
 
     }
 
@@ -66,7 +65,7 @@ public class AllStaff implements DataBaseHandler {
 		DataBaseHandler db = new AllStaff();
 		((AllStaff)db).setStaff(ll);
 		db.serializeToFile();
-		System.out.println(ll.size());
+		System.out.println(ll.size() + "Added");
 	}
 
 
