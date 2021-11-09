@@ -2,7 +2,6 @@ package Classes;
 
 import java.util.*;
 
-//
 public class Table {
     private static final double GST_CHARGE = 0.07; // in percentage
     private static final double SERVICE_CHARGE = 0.10; // in percentage
@@ -66,7 +65,7 @@ public class Table {
 
     public void printInvoice(){
         // TODO Some calculation and output
-        //System.out.println(order_list.getTotalPrice() * (1 + GST_CHARGE + SERVICE_CHARGE));
+        System.out.println(GST_CHARGE + SERVICE_CHARGE);
         this.occupied = false;
     }
 }

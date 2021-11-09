@@ -99,17 +99,20 @@ public class StaffBoundary {
                 case 7:
                     menu.viewMenu();
                     break;
+                case 8:
+                    break; 
                 default: {
+                    // TODO Reask for sub options
                     System.out.println("Invalid Options");
                     break;
                 }
                 }
             case 2:
-            //TODO Order MAnagement
+            //TODO Order Management -> displayOptions
                 break;
 
             case 3:
-            //TODO Reservation Management
+            //TODO Reservation Management -> displayOptions
                 break;
 
             case 4:
@@ -120,6 +123,7 @@ public class StaffBoundary {
 
         }
         
+        sc.close();
         menu.serializeToFile();
     }
 

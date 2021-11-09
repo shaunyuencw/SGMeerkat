@@ -38,6 +38,7 @@ public class AllStaff implements DataBaseHandler {
 
     }
 
+	@SuppressWarnings("unchecked")
     public void deserializeFromFile(){
         List<Staff> staffDetails = null;
 		FileInputStream fis = null;

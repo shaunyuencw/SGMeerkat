@@ -1,9 +1,4 @@
 package Classes;
-import java.util.*;
-
-import Classes.*;
-import Classes.MenuItem.Type;
-
 import java.io.Serializable;
 
 public class MenuItem implements Serializable{
@@ -21,7 +16,6 @@ public class MenuItem implements Serializable{
         this.type = type;
     }
 
-
     public String getDesc(){
         return this.desc;
     }
@@ -34,5 +28,11 @@ public class MenuItem implements Serializable{
         return this.price;
     }
 
+    public Type getType(){
+        return this.type;
+    }
 
+    public void setType(Type type){
+        this.type = type;
+    }
 }

@@ -4,8 +4,6 @@ import java.util.*;
 import java.time.LocalDateTime;
 import java.io.*;
 
-// ! NOT CONFIRMED
-
 public class OrderList implements DataBaseHandler {
     private ArrayList<Order> order_list;
     private String staff_name;

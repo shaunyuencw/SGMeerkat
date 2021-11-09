@@ -25,7 +25,8 @@ public class RRPSS {
         System.out.println("4. Create Promo Item");
         System.out.println("5. Delete Promo Item");
         System.out.println("6. Update Promo Item");
-        System.out.println("7. ViewMenu");
+        System.out.println("7. View Menu");
+        System.out.println("8. Return to main menu");
         System.out.println("-----------------------------------");
     }
 
@@ -190,12 +191,7 @@ public class RRPSS {
             System.out.println(promoToRemove + " removed.");
         }
         else{
-            System.out.println("No such
-        else if (promo_menu.containsKey(menuObj.getPromo_key(Integer.parseInt(promoToRemove) - 1))){
-            promoToRemove = menuObj.getPromo_key(Integer.parseInt(promoToRemove) - 1);
-            promo_menu.remove(promoToRemove.toLowerCase());
-            System.out.println(promoToRemove + " removed.");
-        } promo item.");
+            System.out.println("Promo item does not exist");
         }
         
         return promo_menu;
