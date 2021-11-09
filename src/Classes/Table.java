@@ -13,8 +13,6 @@ public class Table {
     private boolean reserved;
     private OrderList order_list;
 
-    // TODO 
-
     public Table(int table_id, int num_seats, String staff_name){
         this.table_id = table_id;
         this.num_seats = num_seats;

@@ -7,15 +7,28 @@ public class StaffBoundary {
 
     }
 
+    /*
+        1. Menu Management
+        2. Order Management
+        3. Reservation Management
+        4. Reports
+
+        1.1 - 3 CUD menu_items
+        1.4 - 6 CUD promo_items
+
+        2.1 Seat guest -> (Create order)
+        2.2-3 UD items in order
+        
+        3.1 Create Reservation
+        3.2 - 3 RD Reservation
+        12 Check if table is available
+        13 Print Order invoice (Order will be closed)
+        14 Print Sales report
+    */
+
     public static void printOptions() {
         System.out.println("-------------------\n    Staff Menu     \n-------------------");
-        System.out.println("1. Create Reservation");
-        System.out.println("2. Remove Rervation");
-        System.out.println("3. Order");
-        System.out.println("4. Cancel item from Order");
-        System.out.println("5. Print Order Invoice");
-        System.out.println("6. View Order");
-        System.out.println("7. View Menu");
+        
 
         System.out.println("----------------------------------------");
         System.out.println("Enter choice (Staff): (Enter 0 to stop)");
