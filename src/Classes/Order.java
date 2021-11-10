@@ -1,8 +1,10 @@
 package Classes;
 
+import java.io.Serializable;
+
 // ! NOT CONFIRMED
 
-public class Order {
+public class Order implements Serializable, DatabaseHandler {
     private MenuItem menuItem;
     private PromoItems promoItems;
     private boolean is_promo;
@@ -50,5 +52,17 @@ public class Order {
             System.out.println("Mismatch");
             return null;
         }
+    }
+
+    
+    public void serializeToFile() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    
+    public void deserializeFromFile() {
+        // TODO Auto-generated method stub
+        
     }
 }

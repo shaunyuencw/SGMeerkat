@@ -75,44 +75,88 @@ public class StaffBoundary {
             switch (ch) {
             case 1:
                 // 1. Menu Management
-                RRPSS.printMenuOptions();
-                int ch2 = sc.nextInt();
-                switch (ch2) {
+                outerwhile: while (true) {
+                    RRPSS.printMenuOptions();
+                    int ch2 = sc.nextInt();
+                    switch (ch2) {
+                    case 1:
+                        menu.updateMenu(RRPSS.addMenuItem(menu));
+                        break;
+                    case 2:
+                        menu.updateMenu(RRPSS.removeMenuItem(menu));
+                        break;
+                    case 3:
+                        // TODO EDIT MENU
+                        break;
+                    case 4:
+                        menu.updatePromoMenu(RRPSS.createNewPromo(menu));
+                        break;
+                    case 5:
+                        menu.updatePromoMenu(RRPSS.removePromo(menu));
+                        break;
+                    case 6:
+                        // TODO EDIT PROMO
+                        break;
+                    case 7:
+                        menu.viewMenu();
+                        break;
+                    case 8:
+                        break outerwhile;
+                    default: {
+                        System.out.println("Invalid Options ");
+                        break;
+                    }
+                    }
+                }
+                break;
+
+            case 2:
+            RRPSS.printOrderOptions();
+            int ch3 = sc.nextInt();
+
+            switch(ch3)
+            {
                 case 1:
-                    menu.updateMenu(RRPSS.addMenuItem(menu));
+                    //TODO Order (Each Order should contain a list of menuitems and promoitems, Change the order class)
                     break;
                 case 2:
-                    menu.updateMenu(RRPSS.removeMenuItem(menu));
+                    //TODO Remove item from Order
                     break;
-                case 3:
-                    // TODO EDIT MENU
+                case 3: 
+                    //TODO View Order
                     break;
-                case 4:
-                    menu.updatePromoMenu(RRPSS.createNewPromo(menu));
+                case 4: 
+                    //TODO Calculate the total bill and Print Order Invoice(closing the order)
                     break;
-                case 5:
-                    menu.updatePromoMenu(RRPSS.removePromo(menu));
-                    break;
-                case 6:
-                    // TODO EDIT PROMO
-                    break;
-                case 7:
-                    menu.viewMenu();
-                    break;
-                case 8:
-                    break; 
-                default: {
-                    // TODO Reask for sub options
+                default:{
+                    // TODO Reask for sub options(ZW)
                     System.out.println("Invalid Options");
                     break;
                 }
-                }
-            case 2:
-            //TODO Order Management -> displayOptions
+            }
                 break;
 
             case 3:
-            //TODO Reservation Management -> displayOptions
+                RRPSS.printReservationOptions();
+                int ch4 = sc.nextInt();
+                switch(ch4){
+                    case 1:
+                        //TODO Create Reservation
+                        break;
+                    case 2:
+                        //TODO Remove Reservation
+                        break;
+                    case 3:
+                        //TODO View Reservation
+                        break;
+                    default:{
+                         // TODO Reask for sub options(ZW)
+                         System.out.println("Invalid Options");
+                        break;
+                    }
+                      
+
+                }
                 break;
 
             case 4:
