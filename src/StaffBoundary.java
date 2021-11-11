@@ -117,6 +117,7 @@ public class StaffBoundary {
 
     public static void main(String[] args) {
         StaffBoundary staffBoundary = new StaffBoundary();
+        Staff s1 = null;
         Menu menu = new Menu();
         menu.deserializeFromFile();
         AllStaff allStaff = new AllStaff();
@@ -134,10 +135,12 @@ public class StaffBoundary {
         while (true) {
             System.out.println("Enter a valid StaffID");
             int in = sc.nextInt();
+            
 
             for (Object pass : staffs) {
                 Staff s = (Staff) pass;
                 if (s.getEmployeeID() == in)
+                    s1 = s;
                     login = true;
             }
 
@@ -199,6 +202,15 @@ public class StaffBoundary {
             switch(ch3)
             {
                 case 1:
+                   
+                    System.out.println("Enter Table Number:");
+                    int ch4 = sc.nextInt();
+                    Order order = new Order(s1,ch4);
+
+                    
+                    //TODO CHECK TABLE IF OCCUPIED TO PREVENT MODIFYING CLOSED ORDERS
+                    
+
                     //TODO Order (Each Order should contain a list of menuitems and promoitems, Change the order class)
                     break;
                 case 2:

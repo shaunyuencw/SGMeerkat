@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.*;
 
 public class Menu implements DatabaseHandler{
-    
     private HashMap<String, MenuItem> menu_map;
     private HashMap<String, PromoItems> promo_map;
     private List<String> menu_keys;
@@ -95,6 +94,7 @@ public class Menu implements DatabaseHandler{
     }
 
     public void serializeToFile() {
+         
         // ? serialize menu to menu.dat
         try {      
             File menu_file = new File("menu.dat");
