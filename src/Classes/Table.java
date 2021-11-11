@@ -53,10 +53,30 @@ public class Table {
         return false; // Failed to put in a reservation.
     }
 
+    public String getReservedName(float timeSlot){
+        if (reservationMap.get(timeSlot) != null){
+            System.out.println(reservationMap.get(timeSlot));
+            return reservationMap.get(timeSlot);
+        }
+
+        System.out.println("NOTHING");
+        return null;
+    }
+
     public boolean isReserved(float timeSlot) {
         if (reservationMap.get(timeSlot) != null){
             return true; 
         }
+        return false;
+    }
+
+    public boolean removeReservation(float timeSlot){
+        if (reservationMap.get(timeSlot) != null){
+            reservationMap.put(timeSlot, null);
+            return true;
+        }
+
+        System.out.println("Mismatched...");
         return false;
     }
 
@@ -72,5 +92,27 @@ public class Table {
         // TODO Some calculation and output
         System.out.println(GST_CHARGE + SERVICE_CHARGE);
         this.occupied = false;
+    }
+
+    private String showFullTime(float timeslot){
+        int hrs = (int) (timeslot / 1);
+        float mins = timeslot % 1;
+        
+        String fullTime = ((hrs < 10)? "0" + hrs : String.valueOf(hrs)) + ((mins == 0.5) ? "30" : "00");
+        return fullTime;
+    }
+
+    public void showReservations() {  
+        int reservationCount = 0;
+        for (float key : reservationMap.keySet()){
+            if (reservationMap.get(key) != null){
+                String fullTime = showFullTime(key);
+                System.out.printf("Reservation for %s at %s\n", reservationMap.get(key), fullTime);
+                reservationCount++;
+            }
+        }
+        if (reservationCount == 0){
+            System.out.println("No reservations for this table.");
+        }
     }
 }
