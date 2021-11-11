@@ -9,7 +9,7 @@ public class Table {
     private int table_id;
     private int num_seats;
     private boolean occupied;
-    private HashMap<String, Boolean> reservationMap;
+    private HashMap<Integer, String> reservationMap;
 
     public Table(int table_id, int num_seats){
         this.table_id = table_id;
@@ -17,17 +17,12 @@ public class Table {
 
         // Table is not occupied nor reserved on init
         this.occupied = false;
-        reservationMap = new HashMap<String, Boolean>();
+        reservationMap = new HashMap<Integer, String>();
         
-        // Restaurant opening hours is 8am - 8pm
-        for (int i = 8; i < 12; i++){
-            reservationMap.put(i + "am", false);
-        }
-
-        reservationMap.put("12pm", false);
-        
-        for (int i = 1; i <= 8; i++){
-            reservationMap.put(i + "pm", false);
+        // Restaurant opening hours is 8am - 8pm, but last reservation is 7pm
+        for (int i = 8; i < 20; i++){
+            
+            reservationMap.put(i, null);
         }
     }
 

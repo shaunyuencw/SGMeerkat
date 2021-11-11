@@ -46,8 +46,8 @@ public class RRPSS {
         System.out.println("3. ViewOrder");
         System.out.println("4. Print Order Invoice (this will close the order)");
         System.out.println("-----------------------------------");
-
     }
+    
     @SuppressWarnings("resource")
     public static HashMap<String, MenuItem> addMenuItem(Menu menuObj) {
         HashMap<String, MenuItem> menu = menuObj.getMenu();
