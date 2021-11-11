@@ -1,5 +1,7 @@
 package Classes;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Table {
@@ -97,5 +99,24 @@ public class Table {
         // TODO Some calculation and output
         System.out.println(GST_CHARGE + SERVICE_CHARGE);
         this.occupied = false;
+    }
+
+    public int cleanupReservations(String cleanupDate) {
+        int reservationCleared = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        for (String reserveKey : reservationMap.keySet()) {
+            Reservation toCheck = reservationMap.get(reserveKey);
+            try{
+                if (sdf.parse(toCheck.getReservationDate()).before(sdf.parse(cleanupDate))){
+                    reservationMap.remove(reserveKey);
+                    reservationCleared++;
+                }
+            }
+            catch (ParseException e){
+                System.out.println("Something went wrong");
+            }
+        }
+
+        return reservationCleared;
     }
 }

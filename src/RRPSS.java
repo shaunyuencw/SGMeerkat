@@ -18,6 +18,7 @@ public class RRPSS {
         System.out.println("1. Create Reservation");
         System.out.println("2. Remove Reservation");
         System.out.println("3. View Reservation");
+        System.out.println("4. Cleanup Reservations");
         System.out.println("-----------------------------------");
 
 

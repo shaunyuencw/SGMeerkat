@@ -228,6 +228,20 @@ public class StaffBoundary {
         return -1; // Return allocation table, - 1 if no tables available
     }
 
+    public void cleanupReservations(){
+        String date = inputDate();
+        int reservationsCleared = 0;
+
+        System.out.println("Cleaning up reservations before " + date);
+
+        for (int tableid : all_tables.keySet()){
+            Table tempTable = all_tables.get(tableid);
+            reservationsCleared += tempTable.cleanupReservations(date);
+        }
+
+        System.out.printf("%d old reservations cleared. \n", reservationsCleared);
+    }
+
     public void print_allTables(){
         boolean hasReservation = false;
         Table temp;
@@ -371,6 +385,9 @@ public class StaffBoundary {
                         break;
                     case 3:
                         staffBoundary.print_allTables();
+                        break;
+                    case 4:
+                        staffBoundary.cleanupReservations();
                         break;
                     default:{
                          // TODO Reask for sub options(ZW)
