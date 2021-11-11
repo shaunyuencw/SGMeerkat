@@ -16,10 +16,6 @@ public class Menu implements DatabaseHandler{
         promo_keys = new ArrayList<String>();
     };
 
-    public HashMap<String, MenuItem> getMenu(){
-        return menu_map;
-    }
-
     public void addMenuItem() {
         HashMap<String, MenuItem> menu = this.getMenu();
         // HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
@@ -202,6 +198,10 @@ public class Menu implements DatabaseHandler{
 
     public String getPromo_key(int index){
         return promo_keys.get(index);
+    }
+
+    public HashMap<String, MenuItem> getMenu(){
+        return menu_map;
     }
 
     public HashMap<String, PromoItems> getPromo(){
