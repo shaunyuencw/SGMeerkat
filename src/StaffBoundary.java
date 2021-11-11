@@ -9,6 +9,8 @@ public class StaffBoundary {
      * 6-seats, 2 8-seats, 1 10-seats
      */
 
+     // Sugiantooooooooooooooooooooooooooooooooooooooooooo
+
     public void reserveTable(){
         // This method will get infomation required from the user to make a reservation
         // name, numPax, and the timeslot of their reservation. 

@@ -14,6 +14,7 @@ public class RRPSS {
         System.out.println("2. Order Management");
         System.out.println("3. Reservation Management");
         System.out.println("4. Reports");
+        System.out.println("0. Exit RRPSS");
         System.out.println("-----------------------------------");
     }
 
