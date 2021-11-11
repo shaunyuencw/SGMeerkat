@@ -6,6 +6,7 @@ import java.io.Serializable;
 // ! NOT CONFIRMED
 
 public class Order implements Serializable, DatabaseHandler {
+    private static final long serialVersionUID = 1L;
     private ArrayList<MenuItem> menuItems; 
     private ArrayList<PromoItems> promoItems ;
     private Staff staff;

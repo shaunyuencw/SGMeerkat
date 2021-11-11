@@ -2,6 +2,7 @@ package Classes;
 import java.io.Serializable;
 
 public class MenuItem implements Serializable{
+    private static final long serialVersionUID = 1L;
     public enum Type{MAIN,DRINKS,DESSERT}
 
     private String desc;

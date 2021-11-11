@@ -3,7 +3,7 @@ package Classes;
 import java.io.Serializable;
 
 public class Staff implements Serializable {
-
+    private static final long serialVersionUID = 1L;
     public enum Gender{M,F};
     public enum JobTitle{CASHIER,WAITER,MANAGER};
 
