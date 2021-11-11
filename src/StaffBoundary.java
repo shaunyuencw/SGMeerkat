@@ -161,8 +161,14 @@ public class StaffBoundary {
 
         while (true) {
             System.out.println("Enter a valid StaffID");
-            int in = sc.nextInt();
-            
+            int in;
+
+            try{
+                in = sc.nextInt();
+            } catch (Exception e){
+                sc.nextLine();
+                continue;
+            }
 
             for (Object pass : staffs) {
                 Staff s = (Staff) pass;
