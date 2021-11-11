@@ -148,9 +148,11 @@ public class StaffBoundary {
 
     public static void main(String[] args) {
         StaffBoundary staffBoundary = new StaffBoundary();
-        Staff s1 = null;
+        Staff curStaff = null;
         Menu menu = new Menu();
         menu.deserializeFromFile();
+        OrderList orderList = new OrderList();
+        orderList.deserializeFromFile();
         AllStaff allStaff = new AllStaff();
         allStaff.deserializeFromFile();
         List<Staff> staffs = allStaff.getstaffList();
@@ -173,7 +175,7 @@ public class StaffBoundary {
             for (Object pass : staffs) {
                 Staff s = (Staff) pass;
                 if (s.getEmployeeID() == in){
-                    s1 = s;
+                    curStaff = s;
                     login = true;
                 }
             }
@@ -233,37 +235,8 @@ public class StaffBoundary {
                 break;
 
             case 2:
-            RRPSS.printOrderOptions();
-            int ch3 = sc.nextInt();
 
-            switch(ch3)
-            {
-                case 1:
-                   
-                    //System.out.println("Enter Table Number:");
-                    //int ch4 = sc.nextInt();
-                    //Order order = new Order(s1,ch4);
-                    
-                    //TODO CHECK TABLE IF OCCUPIED TO PREVENT MODIFYING CLOSED ORDERS
-                    
-
-                    //TODO Order (Each Order should contain a list of menuitems and promoitems, Change the order class)
-                    break;
-                case 2:
-                    //TODO Remove item from Order
-                    break;
-                case 3: 
-                    //TODO View Order
-                    break;
-                case 4: 
-                    //TODO Calculate the total bill and Print Order Invoice(closing the order)
-                    break;
-                default:{
-                    // TODO Reask for sub options(ZW)
-                    System.out.println("Invalid Options");
-                    break;
-                }
-            }
+                orderList.createNewOrder(menu, curStaff);
                 break;
 
             case 3:
@@ -291,7 +264,7 @@ public class StaffBoundary {
                 break;
 
             case 4:
-            //TODO Sales Report
+                //TODO Sales Report
                 break;
 
             }
@@ -300,6 +273,7 @@ public class StaffBoundary {
         
         sc.close();
         menu.serializeToFile();
+        orderList.serializeToFile();
     }
 
 
