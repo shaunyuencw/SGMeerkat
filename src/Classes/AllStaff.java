@@ -52,8 +52,7 @@ public class AllStaff implements DatabaseHandler {
             e.printStackTrace();
         }
 		this.staffList = staffDetails;
-        System.out.println(staffList.size());
-
+        //	System.out.println(staffList.size());
     }
 
 

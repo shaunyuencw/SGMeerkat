@@ -9,7 +9,7 @@ public class Table {
     private int table_id;
     private int num_seats;
     private boolean occupied;
-    private HashMap<Integer, String> reservationMap;
+    private HashMap<Float, String> reservationMap;
 
     public Table(int table_id, int num_seats){
         this.table_id = table_id;
@@ -17,12 +17,14 @@ public class Table {
 
         // Table is not occupied nor reserved on init
         this.occupied = false;
-        reservationMap = new HashMap<Integer, String>();
+        reservationMap = new HashMap<Float, String>();
         
         // Restaurant opening hours is 8am - 8pm, but last reservation is 7pm
-        for (int i = 8; i < 20; i++){
-            
+
+        float i = 8;
+        while (i <= 19.5){
             reservationMap.put(i, null);
+            i += 0.5;
         }
     }
 
@@ -42,11 +44,19 @@ public class Table {
         this.num_seats = num_seats;
     }
 
-    public void reserve(){
-        
+    public boolean reserve(float timeSlot, String reservationName){
+        if (reservationMap.get(timeSlot) == null){
+            reservationMap.put(timeSlot, reservationName);
+            return true; // Successfully put in a reseravation.
+        }
+
+        return false; // Failed to put in a reservation.
     }
 
-    public boolean isReserved() {
+    public boolean isReserved(float timeSlot) {
+        if (reservationMap.get(timeSlot) != null){
+            return true; 
+        }
         return false;
     }
 

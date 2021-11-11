@@ -9,21 +9,23 @@ public class StaffBoundary {
      * 6-seats, 2 8-seats, 1 10-seats
      */
 
-    public int reserveTable(){
-        // This 
+    public void reserveTable(){
+        // This method will get infomation required from the user to make a reservation
+        // name, numPax, and the timeslot of their reservation. 
         String time;
-        int timeInt, hrs, mins;
+        int timeInt, hrs = 0, mins = 0;
         boolean validReservation = false;
         String reserveName;
+        String reserveTime;
+        float reserveTimeFloat;
         int reservePax;
 
         System.out.println("Can I get a name for the reservation?: ");
-        reserveName = sc.nextLine();
+        reserveName = sc.next();
         while (true){
             System.out.println("How many persons will be dining? (Max 10): ");
             try {
                 reservePax = sc.nextInt();
-                sc.nextLine();
 
                 if (reservePax < 0 || reservePax > 10){
                     System.out.println("We do not have a table that sits that number of guest.");
@@ -38,7 +40,6 @@ public class StaffBoundary {
             }
         }
         
-        // No more walk in after 7.30pm
         do {
             System.out.println("What time would you like your reservation to be? (Hourly Slots 24hours clock): ");
             try {
@@ -60,36 +61,67 @@ public class StaffBoundary {
                 }
                 else {
                     validReservation = true;
-                    if (mins >= 30) {
+
+                    if (hrs == 19 && mins > 30){
+                        validReservation = false;
+                        System.out.println("We are not longer taking reservation at that time.");
+                    }
+
+                    if (mins >= 46) {
                         hrs++;
-                        if (hrs > 19){
-                            validReservation = false;
-                            System.out.println("We are not longer taking reservation at that time.");
-                        }
-                    }     
-                    
-                    if (mins != 0){
-                        System.out.printf("We only allow reservations at XX00, your reservation will be booked at ");
-                        if (hrs < 10)   System.out.printf("0" + hrs + "00.\n");
-                        else            System.out.printf(hrs + "00.\n");
+                    } else if (mins >= 16 && mins <= 45){
+                        mins = 30;
+                    } else if (mins > 0 && mins <= 15){
+                        mins = 0;
                     }
                 }
-
-                if (validReservation){
-                    // TODO get next available table that a) is not booked, b) is not occupied
-                    System.out.printf("Table i (size %d) booked under the name %s for ", reservePax, reserveName);
-                    if (hrs < 10)   System.out.printf("0" + hrs + "00.\n");
-                    else            System.out.printf(hrs + "00.\n");
-                    return hrs;
-                }
-
-            } catch(Exception e) {
+            }
+            catch (Exception e){
                 System.out.println("Invalid time value...");
             }
         } while (!validReservation);
 
-        return -1;
+        if (validReservation){
+            reserveTime = ((hrs < 10)? "0"+hrs : String.valueOf(hrs)) + ((mins == 0)? "00" : String.valueOf(mins));
+            System.out.printf(reserveTime + ".\n");
+            reserveTimeFloat = (float) (hrs + ((mins == 30)? 0.5 : 0));
+
+            // TODO get next available table that a) is not booked, b) is not occupied
+            int tableReserved = reservationAllocator(reserveName, reservePax, reserveTimeFloat);
+            if (tableReserved != -1){
+                // Successful reservation
+                System.out.printf("Table %d (size %d) booked under the name %s for ", tableReserved, reservePax, reserveName);
+                System.out.println(reserveTimeFloat);
+            }
+            else{
+                System.out.println("No table matched to fit your reservation.");
+            }
+        }
     }
+
+    public int reservationAllocator(String reserveName, int reservePax, float reserveTimeslot) {
+        
+        Table tempTable;
+        for (int i = 0; i < all_tables.size(); i++){
+            tempTable = all_tables.get(i);
+            if (tempTable.getNum_seats() >= reservePax && !tempTable.isReserved(reserveTimeslot)){
+                tempTable.reserve(reserveTimeslot, reserveName);
+                return tempTable.getTable_id();
+            }
+        }
+
+        return -1; // Return allocation talbe, - 1 if no tables available
+    }
+
+    public void print_allTables(){
+        Table temp;
+        for (int i = 0; i < all_tables.size(); i++){
+            temp = all_tables.get(i);
+
+            System.out.printf("Table id: %d, size: %d\n", temp.getTable_id(), temp.getNum_seats());
+        }
+    }
+
 
     public void openRestaurant() {
         all_tables = new ArrayList<Table>();
@@ -125,10 +157,6 @@ public class StaffBoundary {
         List<Staff> staffs = allStaff.getstaffList();
 
         boolean login = false;
-        System.out.printf("%d\n", staffBoundary.reserveTable());
-
-        staffBoundary.openRestaurant();
-        System.out.println("There are " + staffBoundary.all_tables.size() + " tables.");
 
         System.out.println("Good Morning, please enter your StaffID");
 
@@ -147,6 +175,9 @@ public class StaffBoundary {
             if (login)
                 break;
         }
+
+        staffBoundary.openRestaurant(); // Initialize tables
+        //staffBoundary.print_allTables();
 
         while (true) {
             RRPSS.printOptions();
@@ -236,6 +267,7 @@ public class StaffBoundary {
                 switch(ch4){
                     case 1:
                         //TODO Create Reservation
+                        staffBoundary.reserveTable();
                         break;
                     case 2:
                         //TODO Remove Reservation
