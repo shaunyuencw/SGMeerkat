@@ -1,6 +1,5 @@
 package Classes;
 import java.util.*;
-import java.io.*;
 import java.io.Serializable;
 
 // ! NOT CONFIRMED
@@ -8,7 +7,7 @@ import java.io.Serializable;
 public class Order implements Serializable, DatabaseHandler {
     private static final long serialVersionUID = 1L;
     private ArrayList<MenuItem> menuItems; 
-    private ArrayList<PromoItems> promoItems ;
+    private ArrayList<PromoItems> promoItems;
     private Staff staff;
     private int tableno;
     private double total;
