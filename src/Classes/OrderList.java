@@ -1,20 +1,18 @@
 package Classes;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
 import java.util.*;
-import java.time.LocalDateTime;
 import java.io.*;
 
 public class OrderList implements DatabaseHandler {
     private ArrayList<Order> orderList;
+
+    private static Scanner sc = new Scanner(System.in);
 
     public OrderList(){
         orderList = new ArrayList<>();
     }
 
     public void createNewOrder(Menu menu, Staff curStaff, int tableNo, int noOfCust){
-        Scanner sc = new Scanner(System.in);
         Order newOrder = new Order(curStaff, tableNo, noOfCust);
         int selection;
         while(true){
