@@ -224,7 +224,7 @@ public class StaffBoundary {
                     case 7:
                         menu.viewMenu();
                         break;
-                    case 8:
+                    case 0:
                         break outerwhile;
                     default: {
                         System.out.println("Invalid Options ");
@@ -235,7 +235,6 @@ public class StaffBoundary {
                 break;
 
             case 2:
-
                 orderList.createNewOrder(menu, curStaff);
                 break;
 
@@ -264,7 +263,7 @@ public class StaffBoundary {
                 break;
 
             case 4:
-                //TODO Sales Report
+                System.out.println("");
                 break;
 
             }

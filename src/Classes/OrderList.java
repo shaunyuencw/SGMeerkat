@@ -15,11 +15,11 @@ public class OrderList implements DatabaseHandler {
 
     public void createNewOrder(Menu menu, Staff curStaff){
         Scanner sc = new Scanner(System.in);
-        System.out.println("WHAT TABLE NO(NEED SHAUNS CODE, FOR NOW JUST TYPE): ");
-        int tableNo = sc.nextInt();
-        System.out.println("WHAT CUSTOMER ID(NEED TO IMPLEMENT CUST CLASS, FOR NOW JUST TYPE): ");
-        int custId = sc.nextInt();
-        Order newOrder = new Order(curStaff, tableNo, custId);
+        System.out.println("Welcome, table for: ");
+        int noOfCust = sc.nextInt();
+        // TODO GET TABLE ID FROM NUMBER OF CUST
+        int tableNo = 1;
+        Order newOrder = new Order(curStaff, tableNo, noOfCust);
         int selection;
         while(true){
             System.out.println("---------------Select Order Options---------------");
@@ -37,6 +37,7 @@ public class OrderList implements DatabaseHandler {
                         System.out.println("Enter the Ala Carte to include in the order: (N to terminate)");
                         System.out.println("-------------------------------------------");
                         menu.displayMenu();
+                        sc.nextLine();
                         while (true) {
                             String temp_menuItemKey = sc.nextLine();
                             if (temp_menuItemKey.equals("N")) {
@@ -63,6 +64,7 @@ public class OrderList implements DatabaseHandler {
                             System.out.println("Enter the Ala Carte to be removed from the order: (N to terminate)");
                             System.out.println("-------------------------------------------");
                             newOrder.displayMenu();
+                            sc.nextLine();
                             while (true) {
                                 String temp_menuItemKey = sc.nextLine();
                                 if (temp_menuItemKey.equals("N")) {
@@ -83,6 +85,7 @@ public class OrderList implements DatabaseHandler {
                         System.out.println("Enter the Set Package to include in the order: (N to terminate)");
                         System.out.println("-------------------------------------------");
                         menu.displayPromos();
+                        sc.nextLine();
                         while (true) {
                             String temp_menuItemKey = sc.nextLine();
                             if (temp_menuItemKey.equals("N")) {
@@ -109,6 +112,7 @@ public class OrderList implements DatabaseHandler {
                             System.out.println("Enter the Set Package to be removed from the order: (N to terminate)");
                             System.out.println("-------------------------------------------");
                             newOrder.displayPromos();
+                            sc.nextLine();
                             while (true) {
                                 String temp_menuItemKey = sc.nextLine();
                                 if (temp_menuItemKey.equals("N")) {
@@ -129,7 +133,6 @@ public class OrderList implements DatabaseHandler {
                         newOrder.viewOrder();
                         break;
                     case 6:
-                        // Add newOrder into the list
                         newOrder.printOrderInvoice();
                         orderList.add(newOrder);
                         return;

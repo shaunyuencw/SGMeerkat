@@ -35,17 +35,8 @@ public class RRPSS {
         System.out.println("4. Create Promo Item");
         System.out.println("5. Delete Promo Item");
         System.out.println("6. Update Promo Item");
-        System.out.println("7. ViewMenu");
-        System.out.println("8. Exit Menu Options");
-        System.out.println("-----------------------------------");
-    }
-
-    public static void printOrderOptions(){
-        System.out.println("-------Select Order Options--------");
-        System.out.println("1. Order");
-        System.out.println("2. Remove Item From Order");
-        System.out.println("3. ViewOrder");
-        System.out.println("4. Print Order Invoice (this will close the order)");
+        System.out.println("7. View Menu");
+        System.out.println("0. Exit Menu Options");
         System.out.println("-----------------------------------");
     }
     

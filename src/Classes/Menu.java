@@ -117,7 +117,7 @@ public class Menu implements DatabaseHandler{
         System.out.println("-------------------------------------------");
 
         this.displayMenu();
-
+        sc.nextLine();
         while (true) {
             String temp_menuItemKey = sc.nextLine();
             if (temp_menuItemKey.equals("N")) {

@@ -8,7 +8,8 @@ public class Order implements Serializable {
     private ArrayList<MenuItem> menuItems;
     private ArrayList<PromoItems> promoItems ;
     private Staff staff;
-    private int customerId;
+    private int noOfCust;
+    private boolean membership;
     private LocalDate dineDate;
     private LocalTime dineTime;
     private int tableNo;
@@ -16,14 +17,15 @@ public class Order implements Serializable {
     private double gst = 0.07;
     private double serviceCharge = 0.1;
 
-    public Order(Staff staff, int tableNo, int customerId){
+    public Order(Staff staff, int tableNo, int noOfCust){
         this.staff = staff;
         this.tableNo = tableNo;
-        this.customerId = customerId;
-        menuItems = new ArrayList<>();
-        promoItems = new ArrayList<>();
+        this.noOfCust = noOfCust;
+        this.menuItems = new ArrayList<>();
+        this.promoItems = new ArrayList<>();
         this.dineDate = LocalDate.now();
         this.dineTime = LocalTime.now();
+        this.membership = false;
         this.total = 0;
     }
     
@@ -79,36 +81,44 @@ public class Order implements Serializable {
     }
 
     public void printOrderInvoice(){
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Do you have membership? (Y/N): ");
+        String isMembership = sc.nextLine();
+        if (isMembership.equals("Y")){
+            this.membership = true;
+        }
+
         System.out.println("----------------SGMeerkat Receipt-------------------");
-        System.out.printf("Server: %-15s Date: %-15s \n", staff.getStaffName(), dineDate);
-        System.out.printf("Table: %-16s Time: %-15s \n", tableNo, dineTime);
+        System.out.printf("Server: %-15s Date: %-18s \n", staff.getStaffName(), dineDate);
+        System.out.printf("Table: %-16s Time: %-18s \n", tableNo, dineTime);
+        System.out.printf("                   Client: %s \n", noOfCust);
         System.out.println("----------------------------------------------------");
         if(menuItems!=null)
         {
             for (int i = 0; i < menuItems.size(); i++){
-                System.out.printf("1 %-15s %20.2f \n", menuItems.get(i).getName(), menuItems.get(i).getPrice());
+                System.out.printf("1 %-15s %25.2f \n", menuItems.get(i).getName(), menuItems.get(i).getPrice());
             }
         }
         if(promoItems!=null)
         {
             for (int i = 0; i < promoItems.size(); i++){
-                System.out.printf("1 %-15s %20.2f \n", promoItems.get(i).getName(), promoItems.get(i).getPrice());
+                System.out.printf("1 %-15s %25.2f \n", promoItems.get(i).getName(), promoItems.get(i).getPrice());
             }
         }
         System.out.println("----------------------------------------------------");
-        System.out.printf("Subtotal: %28.2f \n", this.total);
-        System.out.printf("10%% Service charge: %18.2f \n", this.serviceCharge * this.total);
-        System.out.printf("7%% GST: %30.2f \n", this.gst * this.total);
-        System.out.printf("TOTAL: %31.2f \n", this.total * (1 + this.serviceCharge + this.gst));
+        if(membership){
+            System.out.printf("10%% Membership discount: %18.2f \n", this.total * 0.1);
+            this.total *= 0.9;
+        }
+        System.out.printf("Subtotal: %33.2f \n", this.total);
+        System.out.printf("10%% Service charge: %23.2f \n", this.serviceCharge * this.total);
+        System.out.printf("7%% GST: %35.2f \n", this.gst * this.total);
+        this.total *= (1 + this.serviceCharge + this.gst);
+        System.out.printf("TOTAL: %36.2f \n", this.total);
         System.out.println("----------------------------------------------------");
     }
 
-    public ArrayList<MenuItem> getMenu(){
-        return menuItems;
-    }
-    public ArrayList<PromoItems> getPromo(){
-        return promoItems;
-    }
     public int getMenuSize() { return menuItems.size(); }
     public int getPromoSize() { return promoItems.size(); }
 
