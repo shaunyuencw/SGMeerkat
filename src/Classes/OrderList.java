@@ -13,12 +13,8 @@ public class OrderList implements DatabaseHandler {
         orderList = new ArrayList<>();
     }
 
-    public void createNewOrder(Menu menu, Staff curStaff){
+    public void createNewOrder(Menu menu, Staff curStaff, int tableNo, int noOfCust){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Welcome, table for: ");
-        int noOfCust = sc.nextInt();
-        // TODO GET TABLE ID FROM NUMBER OF CUST
-        int tableNo = 1;
         Order newOrder = new Order(curStaff, tableNo, noOfCust);
         int selection;
         while(true){

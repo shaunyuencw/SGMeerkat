@@ -235,7 +235,12 @@ public class StaffBoundary {
                 break;
 
             case 2:
-                orderList.createNewOrder(menu, curStaff);
+                // TODO ASK IF MADE RESERVATION?
+                System.out.println("Welcome, table for: ");
+                int noOfCust = sc.nextInt();
+                // TODO GET TABLE ID FROM NUMBER OF CUST
+                int tableNo = 1;
+                orderList.createNewOrder(menu, curStaff, tableNo, noOfCust);
                 break;
 
             case 3:
@@ -263,7 +268,7 @@ public class StaffBoundary {
                 break;
 
             case 4:
-                System.out.println("");
+                // TODO print revenue
                 break;
 
             }
