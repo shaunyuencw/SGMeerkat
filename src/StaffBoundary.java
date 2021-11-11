@@ -83,7 +83,6 @@ public class StaffBoundary {
 
         if (validReservation){
             reserveTime = ((hrs < 10)? "0"+hrs : String.valueOf(hrs)) + ((mins == 0)? "00" : String.valueOf(mins));
-            System.out.printf(reserveTime + ".\n");
             reserveTimeFloat = (float) (hrs + ((mins == 30)? 0.5 : 0));
 
             // TODO get next available table that a) is not booked, b) is not occupied
@@ -91,7 +90,7 @@ public class StaffBoundary {
             if (tableReserved != -1){
                 // Successful reservation
                 System.out.printf("Table %d (size %d) booked under the name %s for ", tableReserved, reservePax, reserveName);
-                System.out.println(reserveTimeFloat);
+                System.out.println(reserveTime);
             }
             else{
                 System.out.println("No table matched to fit your reservation.");
@@ -167,9 +166,10 @@ public class StaffBoundary {
 
             for (Object pass : staffs) {
                 Staff s = (Staff) pass;
-                if (s.getEmployeeID() == in)
+                if (s.getEmployeeID() == in){
                     s1 = s;
                     login = true;
+                }
             }
 
             if (login)
@@ -234,10 +234,9 @@ public class StaffBoundary {
             {
                 case 1:
                    
-                    System.out.println("Enter Table Number:");
-                    int ch4 = sc.nextInt();
-                    Order order = new Order(s1,ch4);
-
+                    //System.out.println("Enter Table Number:");
+                    //int ch4 = sc.nextInt();
+                    //Order order = new Order(s1,ch4);
                     
                     //TODO CHECK TABLE IF OCCUPIED TO PREVENT MODIFYING CLOSED ORDERS
                     

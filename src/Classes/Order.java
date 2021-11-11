@@ -35,17 +35,17 @@ public class Order implements Serializable, DatabaseHandler {
         System.out.println("----------------Receipt-------------------");
         if(menuItems!=null)
         {
-        for (int i = 0; i < menuItems.size(); i++){
-            System.out.println(menuItems.get(i).getName() + "------------" +menuItems.get(i).getPrice());
-        }
+            for (int i = 0; i < menuItems.size(); i++){
+                System.out.println(menuItems.get(i).getName() + "------------" +menuItems.get(i).getPrice());
+            }
         }
 
 
         if(promoItems!=null)
         {
-        for (int i = 0; i < promoItems.size(); i++){
-            System.out.println(promoItems.get(i).getName() + "------------" +promoItems.get(i).getPrice());
-        }
+            for (int i = 0; i < promoItems.size(); i++){
+                System.out.println(promoItems.get(i).getName() + "------------" +promoItems.get(i).getPrice());
+            }
         }
         System.out.println("-----------------------------------------");
         System.out.println("total:     " + this.total);
