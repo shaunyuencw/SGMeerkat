@@ -9,6 +9,8 @@ public class Menu implements DatabaseHandler{
     private List<String> menu_keys;
     private List<String> promo_keys;
 
+    private static Scanner sc = new Scanner(System.in);
+
     public Menu(){
         menu_map = new HashMap<String, MenuItem>();
         promo_map = new HashMap<String, PromoItems>();
@@ -19,7 +21,6 @@ public class Menu implements DatabaseHandler{
     public void addMenuItem() {
         HashMap<String, MenuItem> menu = this.getMenu();
         // HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
-        Scanner sc = new Scanner(System.in);
         String name = "";
         System.out.println("---------------Adding a new MenuItem---------------");
 
@@ -68,7 +69,6 @@ public class Menu implements DatabaseHandler{
         this.displayMenu();
         HashMap<String, MenuItem> menu = this.getMenu();
         // HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
-        Scanner sc = new Scanner(System.in);
         System.out.println("---------------Removing a MenuItem---------------");
         System.out.println("Enter the item name to remove:");
 
@@ -89,7 +89,6 @@ public class Menu implements DatabaseHandler{
     }
 
     public void createNewPromo() {
-        Scanner sc = new Scanner(System.in);
         HashMap<String, MenuItem> menu = this.getMenu();
         HashMap<String, PromoItems> promo_menu = this.getPromo();
         String name = "";
@@ -160,7 +159,6 @@ public class Menu implements DatabaseHandler{
     public void removePromo() {
         //HashMap<String, MenuItem> menu = menuObj.getMenu();
         HashMap<String, PromoItems> promo_menu = this.getPromo();
-        Scanner sc = new Scanner(System.in);
         String promoToRemove = "";
         System.out.println("---------------Removing a Promotion---------------");
         this.displayPromos();

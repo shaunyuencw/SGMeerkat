@@ -1,3 +1,4 @@
+import java.text.*;
 import java.util.*;
 
 import Classes.*;
@@ -24,19 +25,25 @@ public class StaffBoundary {
         }
     }
 
-    private String showFullTime(float timeslot){
-        int hrs = (int) (timeslot / 1);
-        float mins = timeslot % 1;
-        
-        String fullTime = ((hrs < 10)? "0" + hrs : String.valueOf(hrs)) + ((mins == 0.5) ? "30" : "00");
-        return fullTime;
+    public String inputDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String returnStr = "";
+
+        while(true){
+            System.out.println("Which date? (dd-MM-yyyy): ");
+            returnStr = sc.next();
+            try {
+                return (sdf.format(sdf.parse(returnStr)));
+            }
+            catch (ParseException e){
+                System.out.println("Invalid date format.");
+            }
+        }
     }
 
-    private float getRoundedTimeslot(){
+    private String getRoundedTimeslot(){
         String time;
         int timeInt, hrs = 0, mins = 0;
-        
-        float reserveTimeFloat;
 
         while(true) {
             System.out.println("What time? (Hourly Slots 24hours clock): ");
@@ -46,7 +53,7 @@ public class StaffBoundary {
 
                 if (timeInt == -1){
                     System.out.println("Going back to main menu...");
-                    return -1;
+                    return "invalid";
                 }
 
                 hrs = timeInt / 100;
@@ -82,20 +89,23 @@ public class StaffBoundary {
                 System.out.println("Invalid time value...");
             }         
         }
-        reserveTimeFloat = (float) (hrs + ((mins == 30)? 0.5 : 0));
 
-        return reserveTimeFloat;
+        return hrs + "" + mins;
     }
 
     private void reserveTable(){
         // This method will get infomation required from the user to make a reservation
         // name, numPax, and the timeslot of their reservation. 
-        String reserveName;
+        String reservationName, reservationContact;
+        String dateStr, reserveTimeslot;
         int reservePax;
-        float reserveTimeslot;
 
         System.out.println("Can I get a name for the reservation?: ");
-        reserveName = sc.next();
+        reservationName = sc.next();
+
+        System.out.println("Contact number for the reservation?: ");
+        reservationContact = sc.next();
+
         while (true){
             System.out.println("How many persons will be dining? (Max 10): ");
             try {
@@ -103,28 +113,34 @@ public class StaffBoundary {
 
                 if (reservePax < 0 || reservePax > 10){
                     System.out.println("We do not have a table that sits that number of guest.");
+                    continue;
                 }
-                else{
-                    if (reservePax % 2 == 1)    reservePax++;
-                    break;
-                }
+                break;
                 
             } catch (Exception e) {
                 System.out.println("Invalid input, only numbers allowed");
             }
         }
    
+        dateStr = inputDate();
         reserveTimeslot = getRoundedTimeslot();
 
-        if (reserveTimeslot != -1){
-            int tableReserved = reservationAllocator(reserveName, reservePax, reserveTimeslot);
+        String reserveKey = dateStr + "," + reserveTimeslot;
+
+        System.out.println("Date: " + dateStr + ", timeSlot: " + reserveTimeslot);
+
+        Reservation toReserve = new Reservation(dateStr, reserveTimeslot, reservationName.toLowerCase(), reservationContact, reservePax);
+
+        if (!reserveTimeslot.equals("invalid")){
+            System.out.println("DEBUG 1 " + reserveKey); // DEBUG 
+            int tableReserved = reservationAllocator(reserveKey, toReserve);
             if (tableReserved != -1){
                 // Successful reservation
                 Table tableView = all_tables.get(tableReserved);
-                System.out.printf("Table %d (size %d) booked under the name %s for ", tableView.getTable_id(), tableView.getNum_seats(), reserveName);
-                System.out.println(showFullTime(reserveTimeslot));
+                System.out.printf("Table %d (size %d) booked under the name %s for ", tableView.getTable_id(), tableView.getNum_seats(), reservationName);
+                System.out.println(dateStr + ", " + reserveTimeslot);
 
-                tableView.showReservations();
+                //tableView.showReservations();
             }
             else{
                 System.out.println("No table matched to fit your reservation.");
@@ -141,7 +157,7 @@ public class StaffBoundary {
         // name, numPax, and the timeslot of their reservation. 
         String reserveName;
         int reservedTableId;
-        float reserveTimeslot;
+        String dateStr, reserveTimeslot;
 
         System.out.println("Under what name was the reservation made under?: ");
         reserveName = sc.next();
@@ -167,47 +183,44 @@ public class StaffBoundary {
             }
         }
             
+        dateStr = inputDate();
         reserveTimeslot = getRoundedTimeslot();
 
-        
+        String reserveKey = dateStr + "," + reserveTimeslot;
 
-        if (reserveTimeslot != -1){
+        if (!reserveTimeslot.equals("invalid")){
             Table tempTable = all_tables.get(reservedTableId);
-            System.out.println("tableid is " + tempTable.getTable_id()); // DEBUG CHECK NULL
+            System.out.println("DEBUG 1 " + reserveKey);
+            if (tempTable.isReserved(reserveKey)){
+                Reservation toCheck = tempTable.getReservation(reserveKey);
 
-            if (tempTable.isReserved(reserveTimeslot)){
-                String checkReservedName = tempTable.getReservedName(reserveTimeslot);
-                if (checkReservedName.equals(reserveName)){
-                    if (tempTable.removeReservation(reserveTimeslot)){
+                System.out.printf("toCheckName: %s, reserveName: %s\n", toCheck.getCustomerName(), reserveName.toLowerCase()); //DEBUG 2
+                if (toCheck != null && toCheck.getCustomerName().equals(reserveName.toLowerCase())){
+                    // Reservation found, proceed to remove
+                    if (tempTable.removeReservation(reserveKey)){
                         System.out.println("Your reservation has been cancelled, hope to see you again in the future!");
+                        return;
                     }
-                    else{
-                        System.out.println("Something went wrong, please try again");
-                    }
-                }
-                else{
-                    System.out.println("Your reservation does not exist, please try again if you think there is a mistake.");
+
+                    System.out.println("Something went wrong, please try again... "); // Should never happen?
+                    return;
                 }
             }
-            else{
-                System.out.println("Your reservation does not exist, please try again if you think there is a mistake.");
-            }
-        }
-        else{
+            System.out.println("Your reservation does not exist, please try again if you think there is a mistake."); 
             return;
         }
     }
 
 
-    public int reservationAllocator(String reserveName, int reservePax, float reserveTimeslot) {
+    public int reservationAllocator(String reservationKey, Reservation toReserve) {
         // Finds the next available table for reservation, upsize table if needed.
         // Tables are assumed to be sorted.
         Table tempTable;
         for (int key : all_tables.keySet()){
             tempTable = all_tables.get(key);
             // System.out.printf("Table: %d, size: %d, reservePax: %d\n", key, tempTable.getNum_seats(), reservePax); //DEBUG
-            if (tempTable.getNum_seats() >= reservePax && !tempTable.isReserved(reserveTimeslot)){
-                tempTable.reserve(reserveTimeslot, reserveName.toLowerCase()); // Reservation name will always be lower case
+            if (tempTable.getNum_seats() >= toReserve.getNumPax() && !tempTable.isReserved(reservationKey)){
+                tempTable.reserve(reservationKey, toReserve); // Reservation name will always be lower case
                 return key;
             }
         }
@@ -216,13 +229,21 @@ public class StaffBoundary {
     }
 
     public void print_allTables(){
+        boolean hasReservation = false;
         Table temp;
         for (int key : all_tables.keySet()){
             temp = all_tables.get(key);
-            // System.out.println("key is " + key);
-            System.out.println("Table id: " + temp.getTable_id() + ", Size: " + temp.getNum_seats() + " seats.");
-            temp.showReservations();
-            System.out.println();
+            
+            if (temp.getNumberOfReservations() > 0){
+                System.out.printf("Table %d (%d seats)\n", temp.getTable_id(), temp.getNum_seats());
+                temp.showReservations();
+                System.out.println();
+                hasReservation = true;
+            }
+        }
+
+        if (!hasReservation){
+            System.out.println("No reservations :(");
         }
     }
     

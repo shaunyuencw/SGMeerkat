@@ -17,6 +17,8 @@ public class Order implements Serializable {
     private double gst = 0.07;
     private double serviceCharge = 0.1;
 
+    private static Scanner sc = new Scanner(System.in);
+
     public Order(Staff staff, int tableNo, int noOfCust){
         this.staff = staff;
         this.tableNo = tableNo;
@@ -81,8 +83,6 @@ public class Order implements Serializable {
     }
 
     public void printOrderInvoice(){
-        Scanner sc = new Scanner(System.in);
-
         System.out.println("Do you have membership? (Y/N): ");
         String isMembership = sc.nextLine();
         if (isMembership.equals("Y")){

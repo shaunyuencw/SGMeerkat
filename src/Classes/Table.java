@@ -9,7 +9,7 @@ public class Table {
     private int table_id;
     private int num_seats;
     private boolean occupied;
-    private HashMap<Float, String> reservationMap;
+    private HashMap<String, Reservation> reservationMap;
 
     public Table(int table_id, int num_seats){
         this.table_id = table_id;
@@ -17,15 +17,10 @@ public class Table {
 
         // Table is not occupied nor reserved on init
         this.occupied = false;
-        reservationMap = new HashMap<Float, String>();
+        reservationMap = new HashMap<String, Reservation>();
         
         // Restaurant opening hours is 8am - 8pm, but last reservation is 7pm
 
-        float i = 8;
-        while (i <= 19.5){
-            reservationMap.put(i, null);
-            i += 0.5;
-        }
     }
 
     public int getTable_id() {
@@ -44,40 +39,50 @@ public class Table {
         this.num_seats = num_seats;
     }
 
-    public boolean reserve(float timeSlot, String reservationName){
-        if (reservationMap.get(timeSlot) == null){
-            reservationMap.put(timeSlot, reservationName);
-            return true; // Successfully put in a reseravation.
+    public boolean reserve(String reserveKey, Reservation toReserve) {
+        if (!reservationMap.containsKey(reserveKey)){
+            reservationMap.put(reserveKey, toReserve);
+            return true;
         }
-
-        return false; // Failed to put in a reservation.
+        return false; // ! Something went wrong
     }
 
-    public String getReservedName(float timeSlot){
-        if (reservationMap.get(timeSlot) != null){
-            System.out.println(reservationMap.get(timeSlot));
-            return reservationMap.get(timeSlot);
+    public Reservation getReservation(String reserveKey) {
+        if (reservationMap.containsKey(reserveKey)){
+            return reservationMap.get(reserveKey);
         }
 
-        System.out.println("NOTHING");
-        return null;
+        return null; // ! Something went wrong...
     }
 
-    public boolean isReserved(float timeSlot) {
-        if (reservationMap.get(timeSlot) != null){
-            return true; 
-        }
-        return false;
-    }
-
-    public boolean removeReservation(float timeSlot){
-        if (reservationMap.get(timeSlot) != null){
-            reservationMap.put(timeSlot, null);
+    public boolean removeReservation(String reserveKey) {
+        if (reservationMap.containsKey(reserveKey)){
+            reservationMap.remove(reserveKey);
             return true;
         }
 
-        System.out.println("Mismatched...");
-        return false;
+        return false; // ! Something went wrong
+    }
+
+    public void showReservations(){
+        for (String key : reservationMap.keySet()){
+            Reservation reservation = reservationMap.get(key);
+            System.out.printf("ReserveKey: %s, Date: %s, Time: %s, Name: %s, Contact: %s, numPax: %d\n", key, reservation.getReservationDate()
+                            , reservation.getReservationTimeSlot(), reservation.getCustomerName(), reservation.getCustomerContact(), reservation.getNumPax());
+        }
+    }
+
+    public int getNumberOfReservations(){ 
+        return reservationMap.size();
+    }
+
+    public boolean isReserved(String reserveKey) {
+        if (reservationMap.containsKey(reserveKey)){
+            System.out.println(reserveKey + " is reserved!");
+            return true;
+        }
+
+        return false; // No such reservation.
     }
 
     public void seatGuest(String staff_name){
@@ -92,27 +97,5 @@ public class Table {
         // TODO Some calculation and output
         System.out.println(GST_CHARGE + SERVICE_CHARGE);
         this.occupied = false;
-    }
-
-    private String showFullTime(float timeslot){
-        int hrs = (int) (timeslot / 1);
-        float mins = timeslot % 1;
-        
-        String fullTime = ((hrs < 10)? "0" + hrs : String.valueOf(hrs)) + ((mins == 0.5) ? "30" : "00");
-        return fullTime;
-    }
-
-    public void showReservations() {  
-        int reservationCount = 0;
-        for (float key : reservationMap.keySet()){
-            if (reservationMap.get(key) != null){
-                String fullTime = showFullTime(key);
-                System.out.printf("Reservation for %s at %s\n", reservationMap.get(key), fullTime);
-                reservationCount++;
-            }
-        }
-        if (reservationCount == 0){
-            System.out.println("No reservations for this table.");
-        }
     }
 }
