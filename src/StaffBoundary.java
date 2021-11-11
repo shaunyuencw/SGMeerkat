@@ -9,8 +9,6 @@ public class StaffBoundary {
      * 6-seats, 2 8-seats, 1 10-seats
      */
 
-     // Sugiantooooooooooooooooooooooooooooooooooooooooooo
-
     public void reserveTable(){
         // This method will get infomation required from the user to make a reservation
         // name, numPax, and the timeslot of their reservation. 
@@ -198,19 +196,19 @@ public class StaffBoundary {
                     int ch2 = sc.nextInt();
                     switch (ch2) {
                     case 1:
-                        menu.updateMenu(RRPSS.addMenuItem(menu));
+                        menu.addMenuItem();
                         break;
                     case 2:
-                        menu.updateMenu(RRPSS.removeMenuItem(menu));
+                        menu.removeMenuItem();
                         break;
                     case 3:
                         // TODO EDIT MENU
                         break;
                     case 4:
-                        menu.updatePromoMenu(RRPSS.createNewPromo(menu));
+                        menu.createNewPromo();
                         break;
                     case 5:
-                        menu.updatePromoMenu(RRPSS.removePromo(menu));
+                        menu.removePromo();
                         break;
                     case 6:
                         // TODO EDIT PROMO
