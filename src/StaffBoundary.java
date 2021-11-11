@@ -3,45 +3,92 @@ import Classes.*;
 
 public class StaffBoundary {
     private ArrayList<Table> all_tables;
-
+    public static Scanner sc = new Scanner(System.in);
     /** 
      * openRestaurant() will initialize the following: 5 2-seats, 4 4-seats, 3
      * 6-seats, 2 8-seats, 1 10-seats
      */
 
-    public String ahHuangFunction(){
-        // TODO
+    public int reserveTable(){
+        // This 
         String time;
         int timeInt, hrs, mins;
-        Scanner sc = new Scanner(System.in);
+        boolean validReservation = false;
+        String reserveName;
+        int reservePax;
 
-        // No more walk in after 7.30pm
-        System.out.println("Please enter current time (0800 - 1929): ");
-        try {
-            time = sc.next();
-            timeInt = Integer.parseInt(time);
-            System.out.println(timeInt);
-            hrs = timeInt/100;
-            mins = timeInt%100;
+        System.out.println("Can I get a name for the reservation?: ");
+        reserveName = sc.nextLine();
+        while (true){
+            System.out.println("How many persons will be dining? (Max 10): ");
+            try {
+                reservePax = sc.nextInt();
+                sc.nextLine();
 
-            // Check
-            if (hrs < 8 || hrs > 19 || mins < 0 || mins > 59) {
-                System.out.println("Time exceeded!");
-            } else {
-                if (hrs != 19 && mins >= 30) {
-                    hrs++;
-                } else {
-                    System.out.println("Time exceeded!");
+                if (reservePax < 0 || reservePax > 10){
+                    System.out.println("We do not have a table that sits that number of guest.");
                 }
+                else{
+                    if (reservePax % 2 == 1)    reservePax++;
+                    break;
+                }
+                
+            } catch (Exception e) {
+                System.out.println("Invalid input, only numbers allowed");
             }
-
-            return Integer.toString(hrs);
-
-        } catch(Exception e) {
-            System.out.println("Wrong format!");
         }
+        
+        // No more walk in after 7.30pm
+        do {
+            System.out.println("What time would you like your reservation to be? (Hourly Slots 24hours clock): ");
+            try {
+                time = sc.next();
+                timeInt = Integer.parseInt(time);
 
-        return "";
+                hrs = timeInt / 100;
+                mins = timeInt % 100;
+
+                // Check
+                if (hrs < 0 || hrs > 23 || mins < 0 || mins > 59){
+                    System.out.println("Invalid time value...");
+                }
+                else if (hrs < 8) {
+                    System.out.println("We are not yet opened.");
+                } 
+                else if (hrs > 19){
+                    System.out.println("We are not longer taking reservation at that time.");
+                }
+                else {
+                    validReservation = true;
+                    if (mins >= 30) {
+                        hrs++;
+                        if (hrs > 19){
+                            validReservation = false;
+                            System.out.println("We are not longer taking reservation at that time.");
+                        }
+                    }     
+                    
+                    if (mins != 0){
+                        System.out.printf("We only allow reservations at XX00, your reservation will be booked at ");
+                        if (hrs < 10)   System.out.printf("0" + hrs + "00.\n");
+                        else            System.out.printf(hrs + "00.\n");
+                    }
+                }
+
+                if (validReservation){
+                    // TODO get next available table that a) is not booked, b) is not occupied
+                    System.out.printf("Table i (size %d) booked under the name %s for ", reservePax, reserveName);
+                    if (hrs < 10)   System.out.printf("0" + hrs + "00.\n");
+                    else            System.out.printf(hrs + "00.\n");
+                    return hrs;
+                }
+
+            } catch(Exception e) {
+                System.out.println("Invalid time value...");
+            }
+        } while (!validReservation);
+
+        return -1;
     }
 
     public void openRestaurant() {
@@ -76,8 +123,8 @@ public class StaffBoundary {
         allStaff.deserializeFromFile();
         List<Staff> staffs = allStaff.getstaffList();
 
-        Scanner sc = new Scanner(System.in);
         boolean login = false;
+        System.out.printf("%d\n", staffBoundary.reserveTable());
 
         staffBoundary.openRestaurant();
         System.out.println("There are " + staffBoundary.all_tables.size() + " tables.");
