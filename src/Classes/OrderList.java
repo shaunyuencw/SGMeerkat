@@ -67,20 +67,4 @@ public class OrderList implements DatabaseHandler {
             System.out.println(e.getMessage());
         }
     }
-    
-    public static void main(String[] args) {
-
-        OrderList order_list = new OrderList("zw");
-        ArrayList<Order> order_items = order_list.getOrderList();
-        
-        for (int i = 0; i < order_items.size(); i++){
-            if (!order_items.get(i).get_isPromo()){
-                System.out.println(order_items.get(i).getMenuItem().getName());
-            }
-            else{
-                System.out.println(order_items.get(i).getPromoItems().getName());
-            }
-        }
-
-    }
 }
