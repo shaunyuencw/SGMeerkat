@@ -12,10 +12,10 @@ public class Menu implements DatabaseHandler{
     private static Scanner sc = new Scanner(System.in);
 
     public Menu(){
-        menu_map = new HashMap<String, MenuItem>();
-        promo_map = new HashMap<String, PromoItems>();
-        menu_keys = new ArrayList<String>();
-        promo_keys = new ArrayList<String>();
+        menu_map = new HashMap<>();
+        promo_map = new HashMap<>();
+        menu_keys = new ArrayList<>();
+        promo_keys = new ArrayList<>();
     };
 
     public void addMenuItem() {
@@ -86,6 +86,12 @@ public class Menu implements DatabaseHandler{
         }
 
         updateMenu(menu);
+    }
+
+    public void editMenuItem(String selection){
+        String name = menu_keys.get(Integer.parseInt(selection)-1);
+        menu_map.remove(name);
+        addMenuItem();
     }
 
     public void createNewPromo() {
@@ -180,14 +186,22 @@ public class Menu implements DatabaseHandler{
         updatePromoMenu(promo_menu);
     }
 
+    public void editPromo(String selection){
+        String name = promo_keys.get(Integer.parseInt(selection)-1);
+        promo_map.remove(name);
+        createNewPromo();
+    }
+
     public void updateMenu(HashMap<String, MenuItem> newMenu){
         this.menu_map = newMenu;
         menu_keys = new ArrayList<String>(menu_map.keySet());
+        serializeToFile();
     }
 
     public void updatePromoMenu(HashMap<String, PromoItems> newPromoMenu){
         this.promo_map = newPromoMenu;
         promo_keys = new ArrayList<String>(promo_map.keySet());
+        serializeToFile();
     }
 
     public String getMenu_key(int index){
