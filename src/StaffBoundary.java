@@ -192,6 +192,7 @@ public class StaffBoundary {
                 
             } catch (Exception e) {
                 System.out.println("Invalid input, only numbers allowed");
+                
             }
         }
    
