@@ -5,13 +5,14 @@ import java.util.*;
 import java.io.Serializable;
 
 public class Order implements Serializable {
+    private static final long serialVersionUID = 1L;
     private ArrayList<MenuItem> menuItems;
     private ArrayList<PromoItems> promoItems ;
     private Staff staff;
     private int noOfCust;
     private boolean membership;
-    private LocalDate dineDate;
-    private LocalTime dineTime;
+    private String dineDate;
+    private String dineTime;
     private int tableNo;
     private double total;
     private double gst = 0.07;
@@ -75,10 +76,10 @@ public class Order implements Serializable {
         }
     }
 
-    public void printOrderInvoice(){
+    public void printOrderInvoice(String date, String time){
+        this.dineDate = date;
+        this.dineTime = time;
         this.total = getTotal();
-        this.dineDate = LocalDate.now();
-        this.dineTime = LocalTime.now();
         System.out.println("----------------SGMeerkat Receipt-------------------");
         System.out.printf("Server: %-15s Date: %-18s \n", staff.getStaffName(), dineDate);
         System.out.printf("Table: %-16s Time: %-18s \n", tableNo, dineTime);
@@ -112,6 +113,7 @@ public class Order implements Serializable {
     public int getMenuSize() { return menuItems.size(); }
     public int getPromoSize() { return promoItems.size(); }
     public void setMembership(boolean bool) { this.membership = bool; }
+    public String getDate() { return this.dineDate; }
 
     public double getTotal() {
         this.total = 0;

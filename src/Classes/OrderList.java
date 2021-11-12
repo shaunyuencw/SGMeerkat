@@ -1,16 +1,24 @@
 package Classes;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.*;
-// import java.io.*; // Not used
 
 public class OrderList {
     private HashMap<Integer, Order> orderList;
+    private HashMap<String, ArrayList<Order>> invoiceList;
     private AllMember memberList;
     private static Scanner sc = new Scanner(System.in);
 
     public OrderList(){
         orderList = new HashMap<>();
         memberList = new AllMember();
+        invoiceList = new HashMap<>();
     }
 
     public void createNewOrder(Staff curStaff, int tableNo, int noOfCust){
@@ -123,7 +131,7 @@ public class OrderList {
         newOrder.viewOrder();
     }
 
-    public void generateInvoice(int tableNo){
+    public void generateInvoice(int tableNo, String date, String time){
         Order newOrder = orderList.get(tableNo);
         System.out.println("Do you have membership? (Y/N): ");
         String isMembership = sc.nextLine();
@@ -144,9 +152,9 @@ public class OrderList {
                 newOrder.setMembership(true);
             }
         }
-        newOrder.printOrderInvoice();
-        // TODO change table no not occupied
-        // TODO create invoice
+        newOrder.printOrderInvoice(date, time);
+        storeInvoice(orderList.get(tableNo));
+        orderList.remove(tableNo);
     }
 
     public void viewAllOrder() {
@@ -156,6 +164,47 @@ public class OrderList {
         System.out.println("(0) Exit");
         for(int i = 0; i < orderList_keys.size(); i++){
             System.out.println("(" + (orderList_keys.get(i)) + ") Table " + orderList_keys.get(i));
+        }
+    }
+
+    public void storeInvoice(Order deletedOrder){
+        deserializeFromFile();
+        if(invoiceList.get(deletedOrder.getDate()) == null){
+            ArrayList<Order> orders = new ArrayList<>();
+            orders.add(deletedOrder);
+            invoiceList.put(deletedOrder.getDate(), orders);
+        } else {
+            invoiceList.get(deletedOrder.getDate()).add(deletedOrder);
+        }
+        serializeToFile();
+    }
+
+    public void serializeToFile() {
+        try {
+            File menu_file = new File("invoice.dat");
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(menu_file));
+
+            output.writeObject(invoiceList);
+            output.flush();
+            output.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deserializeFromFile() {
+        try {
+            File menu_file = new File("invoice.dat");
+            ObjectInputStream input = new ObjectInputStream(new FileInputStream(menu_file));
+
+            //Reads the first object in
+            Object readObject = input.readObject();
+            input.close();
+
+            this.invoiceList = (HashMap<String, ArrayList<Order>>) readObject;
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
 }

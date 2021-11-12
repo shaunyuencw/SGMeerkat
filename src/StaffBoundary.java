@@ -511,7 +511,7 @@ public class StaffBoundary {
         boolean hasReservation = false;
         char option;
 
-        System.out.println("Welcome to RRPSS!");
+        System.out.println("Welcome to SGMeerkat!");
         System.out.println("Do you have a reservation? (Y/N)");
         option = sc.next().charAt(0);
 
@@ -532,8 +532,6 @@ public class StaffBoundary {
             if (!hasReservation)
                 System.out.println("No tables available currently, try again later.");
         }
-
-
     }
 
     private void displayCurDateTime(){
@@ -564,7 +562,6 @@ public class StaffBoundary {
         StaffBoundary staffBoundary = new StaffBoundary();
         Menu menu = new Menu();
         menu.deserializeFromFile();
-        OrderList orderList = new OrderList();
         AllStaff allStaff = new AllStaff();
         allStaff.deserializeFromFile();
         List<Staff> staffs = allStaff.getstaffList();
@@ -597,7 +594,6 @@ public class StaffBoundary {
         }
 
         staffBoundary.openRestaurant(); // Initialize tables
-        staffBoundary.print_allTables(true);
 
         while (true) {
             staffBoundary.printOptions();
@@ -647,40 +643,39 @@ public class StaffBoundary {
                 break;
 
             case 2:
+                // Assign Table
+                // DORA
+                staffBoundary.welcomeGuest();
+                break;
+            case 3:
+                // Order Management
                 outerwhile: while(true) {
                     staffBoundary.printOrderOptions();
                     int ch3 = sc.nextInt();
                     int tableNo = 0;
                     switch (ch3) {
                         case 1:
-                        case 2:
-                            if(ch3 == 1){
-                                // DORA
-                                staffBoundary.welcomeGuest();
-                                
-                            } else {
-                                orderList.viewAllOrder();
-                                tableNo = sc.nextInt();
-                                if(tableNo == 0) break;
-                            }
+                            staffBoundary.orderList.viewAllOrder();
+                            tableNo = sc.nextInt();
+                            if(tableNo == 0) break;
                             innerwhile: while(true){
                                 staffBoundary.printNewOrderOptions();
                                 int ch31 = sc.nextInt();
                                 switch (ch31){
                                     case 1:
-                                        orderList.orderAlaCarte(menu, tableNo);
+                                        staffBoundary.orderList.orderAlaCarte(menu, tableNo);
                                         break;
                                     case 2:
-                                        orderList.removeAlaCarte(tableNo);
+                                        staffBoundary.orderList.removeAlaCarte(tableNo);
                                         break;
                                     case 3:
-                                        orderList.orderSetPackage(menu, tableNo);
+                                        staffBoundary.orderList.orderSetPackage(menu, tableNo);
                                         break;
                                     case 4:
-                                        orderList.removeSetPackage(tableNo);
+                                        staffBoundary.orderList.removeSetPackage(tableNo);
                                         break;
                                     case 5:
-                                        orderList.viewCurrentOrder(tableNo);
+                                        staffBoundary.orderList.viewCurrentOrder(tableNo);
                                         break;
                                     case 0:
                                         break innerwhile;
@@ -690,17 +685,18 @@ public class StaffBoundary {
                                 }
                             }
                             break;
-                        case 3:
-                            orderList.viewAllOrder();
+                        case 2:
+                            staffBoundary.orderList.viewAllOrder();
                             tableNo = sc.nextInt();
                             if(tableNo == 0) break;
-                            orderList.viewCurrentOrder(tableNo);
+                            staffBoundary.orderList.viewCurrentOrder(tableNo);
                             break;
-                        case 4:
-                            orderList.viewAllOrder();
+                        case 3:
+                            staffBoundary.orderList.viewAllOrder();
                             tableNo = sc.nextInt();
                             if(tableNo == 0) break;
-                            orderList.generateInvoice(tableNo);
+                            staffBoundary.orderList.generateInvoice(tableNo, staffBoundary.currentDate, staffBoundary.currentTime);
+                            staffBoundary.all_tables.get(tableNo).occupySwitch();
                             break;
                         case 0:
                             break outerwhile;
@@ -710,7 +706,8 @@ public class StaffBoundary {
                     }
                 }
                 break;
-            case 3:
+            case 4:
+                // Reservation Management
                 staffBoundary.printReservationOptions();
                 int ch4 = sc.nextInt();
                 switch(ch4){
@@ -741,11 +738,11 @@ public class StaffBoundary {
                 }
                 break;
 
-            case 4:
+            case 5:
                 // TODO print revenue
                 break;
 
-            case 5:
+            case 6:
                 staffBoundary.printCurrentDateTimeOptions();
                 int ch5 = sc.nextInt();
 
@@ -780,17 +777,16 @@ public class StaffBoundary {
         System.out.println("5. Delete Promo Item");
         System.out.println("6. Update Promo Item");
         System.out.println("7. View Menu");
-        System.out.println("0. Exit Menu Options");
+        System.out.println("0. Exit to Main");
         System.out.println("-----------------------------------");
     }
 
     public void printOrderOptions(){
         System.out.println("---------------Select Order Options---------------");
-        System.out.println("1. Create New Order");
-        System.out.println("2. Edit Order");
-        System.out.println("3. View Order");
-        System.out.println("4. Print Order Invoice (this will close the order)");
-        System.out.println("0. Exit Menu Options");
+        System.out.println("1. Create/Edit Order");
+        System.out.println("2. View Order");
+        System.out.println("3. Print Order Invoice (this will close the order)");
+        System.out.println("0. Exit to Main");
         System.out.println("--------------------------------------------------");
     }
 
@@ -801,7 +797,7 @@ public class StaffBoundary {
         System.out.println("3. Order Set Package");
         System.out.println("4. Remove Set Package");
         System.out.println("5. View Order");
-        System.out.println("0. Complete Order");
+        System.out.println("0. End Order");
         System.out.println("-----------------------------------");
     }
 
@@ -817,11 +813,12 @@ public class StaffBoundary {
     public void printOptions() {
         System.out.println("-----------------------------------");
         System.out.println("1. Menu Management");
-        System.out.println("2. Order Management");
-        System.out.println("3. Reservation Management");
-        System.out.println("4. Reports");
-        System.out.println("5. Change current date or time");
-        System.out.println("0. Exit RRPSS");
+        System.out.println("2. Assign Table");
+        System.out.println("3. Order Management");
+        System.out.println("4. Reservation Management");
+        System.out.println("5. Reports");
+        System.out.println("6. Change Current Date or Time");
+        System.out.println("0. Close Restaurant");
         System.out.println("-----------------------------------");
     }
 
@@ -830,7 +827,7 @@ public class StaffBoundary {
         System.out.println("1. Display current date and time");
         System.out.println("2. Change Date");
         System.out.println("3. Change Time");
-        System.out.println("0. Back to RRPSS");
+        System.out.println("0. Exit to Main");
         System.out.println("-----------------------------------");
     }
 
