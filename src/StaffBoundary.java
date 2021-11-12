@@ -10,7 +10,7 @@ public class StaffBoundary {
     private Staff curStaff = null;
     private OrderList orderList = new OrderList();
     private String currentDate = "12-11-2021";
-    private String currentTime = "1048";
+    private String currentTime = "1030";
 
     public static Scanner sc = new Scanner(System.in);
     /** 
@@ -224,7 +224,7 @@ public class StaffBoundary {
         }
     }
 
-    public int reservationAllocator(String reservationKey, Reservation toReserve) {
+    private int reservationAllocator(String reservationKey, Reservation toReserve) {
         // Finds the next available table for reservation, upsize table if needed.
         // Tables are assumed to be sorted.
         Table tempTable;
@@ -240,6 +240,45 @@ public class StaffBoundary {
         return -1; // Return allocation table, - 1 if no tables available
     }
 
+    // DORA2
+    private int walkinAllocator(){
+        int numPax = -1;
+
+        while (true){
+            try {
+                System.out.println("How many persons will be dining? (Max 10): ");
+                numPax = sc.nextInt();
+
+                if (numPax == -1 ){
+                    return -1; // Terminate allocation process
+                }
+
+                if (numPax < 0 || numPax > 10){
+                    System.out.println("We do not have a table that sits that number of guest.");
+                    continue;
+                }
+                break;
+            }
+            catch (Exception e){
+                System.out.println("Invalid input, only integers allowed.");
+            }
+        }
+
+        String reserveKey = currentDate + "," + getRoundedTimeslot(currentTime);
+
+        for (int tableid : all_tables.keySet()){ 
+            Table tempTable = all_tables.get(tableid);
+
+            if (!tempTable.isReserved(reserveKey) && !tempTable.isOccupied() && tempTable.getNum_seats() >= numPax){
+                // Table is not reserved, not occupied, and can fit the group.
+                orderList.createNewOrder(curStaff, tempTable.getTable_id(), numPax);
+                tempTable.occupySwitch();
+                return tempTable.getTable_id();
+            }
+        }
+
+        return -1; 
+    }
     
 
     public void cleanupReservations(){
@@ -256,27 +295,40 @@ public class StaffBoundary {
         System.out.printf("%d old reservations cleared. \n", reservationsCleared);
     }
 
-    public void print_allTables(){
-        boolean hasReservation = false;
-        Table temp;
-        for (int key : all_tables.keySet()){
-            temp = all_tables.get(key);
-            
-            if (temp.getNumberOfReservations() > 0){
-                System.out.printf("Table %d (%d seats)\n", temp.getTable_id(), temp.getNum_seats());
-                temp.showReservations();
-                System.out.println();
-                hasReservation = true;
+    public void print_allTables(boolean reservation){
+
+        if (reservation){
+            boolean hasReservation = false;
+            Table temp;
+            for (int key : all_tables.keySet()){
+                temp = all_tables.get(key);
+                
+                if (temp.getNumberOfReservations() > 0){
+                    System.out.printf("Table %d (%d seats)\n", temp.getTable_id(), temp.getNum_seats());
+                    temp.showReservations();
+                    System.out.println();
+                    hasReservation = true;
+                }
+            }
+
+            if (!hasReservation){
+                System.out.println("No reservations :(");
             }
         }
-
-        if (!hasReservation){
-            System.out.println("No reservations :(");
+        else{
+            Table temp;
+            for (int key : all_tables.keySet()){
+                temp = all_tables.get(key);
+                System.out.printf("Table %d (%d seats)\n", temp.getTable_id(), temp.getNum_seats());
+                if (temp.isOccupied()){
+                    System.out.println("Occupied");
+                }
+                else{
+                    System.out.println("Not Occupied");
+                }
+            }
         }
     }
-
-    // DIEGO
-
 
     // Checks the reservation and returns the table id if valid reservation, -1 if not.
     private int checkReservation(String action){
@@ -433,12 +485,8 @@ public class StaffBoundary {
         }
 
         else{
-            System.out.println("Its the wrong date of your reservation...");
-            
-            // ! Wrong date
+            System.out.println("Its the wrong date of your reservation..."); // ! Wrong date
         }
-        
-        
         return 1;
     }
 
@@ -458,40 +506,48 @@ public class StaffBoundary {
 		return totalMin1 - totalMin2;
     }
 
+    // DIEGO
     private void welcomeGuest() {
         int tableAssigned = -1;
-        char option;
         boolean hasReservation = false;
+        char option;
 
         System.out.println("Welcome to RRPSS!");
         System.out.println("Do you have a reservation? (Y/N)");
         option = sc.next().charAt(0);
 
         if (option == 'Y' || option == 'y'){
+            // check if reservation is legit
             tableAssigned = checkReservation("check");
-            if (tableAssigned != -1){
-                hasReservation = true;
-            }
-            else{
-                return;
-            }
-        }
-
-        if (!hasReservation){
-            // Guest does not have a reservtion, proceed too allocate
-            // TODO Ask how many people
+            hasReservation = true;
         }
         else{
+            // No reservation, get number of pax
+            tableAssigned = walkinAllocator();
+        }
+
+        if (tableAssigned != -1){
             System.out.println("Your table number is " +tableAssigned+ ", this way please.");
         }
+        else{
+            if (!hasReservation)
+                System.out.println("No tables available currently, try again later.");
+        }
+
+
+    }
+
+    private void displayCurDateTime(){
+        System.out.println("System date is " + this.currentDate + ", time is " + this.currentTime);
     }
 
     private void changeCurrentDate(){
-        // TODO Change this.currentDate
+        this.currentDate = inputDate();
     }
 
     private void changeCurrentTime(){
-        // TODO Change this.currentTime
+        System.out.println("What time?: ");
+        this.currentTime = sc.next();
     }
 
     /*
@@ -542,7 +598,7 @@ public class StaffBoundary {
         }
 
         staffBoundary.openRestaurant(); // Initialize tables
-        staffBoundary.print_allTables();
+        staffBoundary.print_allTables(true);
 
         while (true) {
             staffBoundary.printOptions();
@@ -670,10 +726,14 @@ public class StaffBoundary {
                         staffBoundary.checkReservation("remove");
                         break;
                     case 3:
-                        staffBoundary.print_allTables();
+                        // TODO print all reservation today.
+                        staffBoundary.print_allTables(true);
                         break;
                     case 4:
                         staffBoundary.cleanupReservations();
+                        break;
+                    case 5:
+                        staffBoundary.print_allTables(false);
                         break;
                     default:{
                         System.out.println("Invalid Options");
@@ -692,9 +752,12 @@ public class StaffBoundary {
 
                 switch(ch5){
                     case 1:
-                        staffBoundary.changeCurrentDate();
+                        staffBoundary.displayCurDateTime();
                         break;
                     case 2:
+                        staffBoundary.changeCurrentDate();
+                        break;
+                    case 3:
                         staffBoundary.changeCurrentTime();
                         break;
                 }
@@ -766,8 +829,9 @@ public class StaffBoundary {
 
     public void printCurrentDateTimeOptions(){
         System.out.println("-----------------------------------");
-        System.out.println("1. Change Date");
-        System.out.println("2. Change Time");
+        System.out.println("1. Display current date and time");
+        System.out.println("2. Change Date");
+        System.out.println("3. Change Time");
         System.out.println("0. Back to RRPSS");
         System.out.println("-----------------------------------");
     }
