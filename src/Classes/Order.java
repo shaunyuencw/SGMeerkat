@@ -80,21 +80,40 @@ public class Order implements Serializable {
         this.dineDate = date;
         this.dineTime = time;
         this.total = countSubTotal();
+        HashMap<MenuItem, Integer> menuItemCount = new HashMap<>();
+        HashMap<PromoItems, Integer> promoItemCount = new HashMap<>();
+        for(int i = 0; i < menuItems.size(); i++){
+            if(menuItemCount.containsKey(menuItems.get(i))){
+                menuItemCount.put(menuItems.get(i), menuItemCount.get(menuItems.get(i)) + 1);
+            } else {
+                menuItemCount.put(menuItems.get(i), 1);
+            }
+        }
+        for(int i = 0; i < promoItems.size(); i++){
+            if(promoItemCount.containsKey(promoItems.get(i))){
+                promoItemCount.put(promoItems.get(i), promoItemCount.get(promoItems.get(i)) + 1);
+            } else {
+                promoItemCount.put(promoItems.get(i), 1);
+            }
+        }
+        ArrayList<MenuItem> menuItemCount_keys = new ArrayList<>(menuItemCount.keySet());
+        ArrayList<PromoItems> promoItemCount_keys = new ArrayList<>(promoItemCount.keySet());
+
         System.out.println("----------------SGMeerkat Receipt-------------------");
         System.out.printf("Server: %-15s Date: %-18s \n", staff.getStaffName(), dineDate);
         System.out.printf("Table: %-16s Time: %-18s \n", tableNo, dineTime);
         System.out.printf("                   Client: %s \n", noOfCust);
         System.out.println("----------------------------------------------------");
-        if(menuItems!=null)
+        if(menuItemCount!=null)
         {
-            for (int i = 0; i < menuItems.size(); i++){
-                System.out.printf("1 %-15s %25.2f \n", menuItems.get(i).getName(), menuItems.get(i).getPrice());
+            for (int i = 0; i < menuItemCount_keys.size(); i++){
+                System.out.printf("%-2d x %-30s %7.2f \n", menuItemCount.get(menuItemCount_keys.get(i)), menuItemCount_keys.get(i).getName(), menuItemCount.get(menuItemCount_keys.get(i))*menuItemCount_keys.get(i).getPrice());
             }
         }
-        if(promoItems!=null)
+        if(promoItemCount!=null)
         {
-            for (int i = 0; i < promoItems.size(); i++){
-                System.out.printf("1 %-15s %25.2f \n", promoItems.get(i).getName(), promoItems.get(i).getPrice());
+            for (int i = 0; i < promoItemCount_keys.size(); i++){
+                System.out.printf("%-2d x %-30s %7.2f \n", promoItemCount.get(promoItemCount_keys.get(i)), promoItemCount_keys.get(i).getName(), promoItemCount.get(promoItemCount_keys.get(i))*promoItemCount_keys.get(i).getPrice());
             }
         }
         System.out.println("----------------------------------------------------");

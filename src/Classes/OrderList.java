@@ -259,7 +259,7 @@ public class OrderList {
         ArrayList<String> alaCartes_keys = new ArrayList<>(alaCartesItem.keySet());
         ArrayList<String> setPackages_keys = new ArrayList<>(setPackagesItem.keySet());
 
-        System.out.println("-----------------------------------------------------");
+        System.out.println("----------------------------------------------------------");
         System.out.print("Report Period: ");
         switch(choice){
             case "01":
@@ -301,38 +301,38 @@ public class OrderList {
             default:
                 System.out.print(choice);
         }
-        System.out.println("\n-----------------------------------------------------");
-        System.out.printf("%-5s %-25s %-10s %-10s\n", "Qty.", "Description", "Unit P.", "Total P.");
-        System.out.printf("%-5s %-25s %-10s %-10s\n", "", "MAIN", "", "");
+        System.out.println("\n----------------------------------------------------------");
+        System.out.printf("%-5s %-30s %-10s %-10s\n", "Qty.", "Description", "Unit P.", "Total P.");
+        System.out.printf("%-5s %-30s %-10s %-10s\n", "", "MAIN", "", "");
         for(i = 0; i < alaCartes_keys.size(); i++){
             if(alaCartesItem.get(alaCartes_keys.get(i)).getType() == MenuItem.Type.MAIN){
                 mItem = alaCartesItem.get(alaCartes_keys.get(i));
-                System.out.printf("%-5d %-25s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
+                System.out.printf("%-5d %-30s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
             }
         }
-        System.out.printf("%-5s %-25s %-10s %-10s\n", "", "DRINK", "", "");
+        System.out.printf("%-5s %-30s %-10s %-10s\n", "", "DRINK", "", "");
         for(i = 0; i < alaCartes_keys.size(); i++){
             if(alaCartesItem.get(alaCartes_keys.get(i)).getType() == MenuItem.Type.DRINKS){
                 mItem = alaCartesItem.get(alaCartes_keys.get(i));
-                System.out.printf("%-5d %-25s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
+                System.out.printf("%-5d %-30s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
             }
         }
-        System.out.printf("%-5s %-25s %-10s %-10s\n", "", "DESSERT", "", "");
+        System.out.printf("%-5s %-30s %-10s %-10s\n", "", "DESSERT", "", "");
         for(i = 0; i < alaCartes_keys.size(); i++){
             if(alaCartesItem.get(alaCartes_keys.get(i)).getType() == MenuItem.Type.DESSERT){
                 mItem = alaCartesItem.get(alaCartes_keys.get(i));
-                System.out.printf("%-5d %-25s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
+                System.out.printf("%-5d %-30s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
             }
         }
-        System.out.printf("%-5s %-25s %-10s %-10s\n", "", "SET PACKAGES", "", "");
+        System.out.printf("%-5s %-30s %-10s %-10s\n", "", "SET PACKAGES", "", "");
         for(i = 0; i < setPackages_keys.size(); i++){
             pItem = setPackagesItem.get(setPackages_keys.get(i));
-            System.out.printf("%-5d %-25s %-10.2f %-10.2f\n", setPackagesCount.get(pItem.getName()), pItem.getName(), pItem.getPrice(), setPackagesCount.get(pItem.getName())*pItem.getPrice());
+            System.out.printf("%-5d %-30s %-10.2f %-10.2f\n", setPackagesCount.get(pItem.getName()), pItem.getName(), pItem.getPrice(), setPackagesCount.get(pItem.getName())*pItem.getPrice());
         }
-        System.out.println("-----------------------------------------------------");
-        System.out.printf("%42s %-8d\n", "Total Membership Given: ", totalMemberGiven);
-        System.out.printf("%42s %-8.2f\n", "(Include GST & Service Charge) TOTAL: ", totalRevenue);
-        System.out.println("-----------------------------------------------------");
+        System.out.println("----------------------------------------------------------");
+        System.out.printf("%47s %-10d\n", "Total Membership Given: ", totalMemberGiven);
+        System.out.printf("%47s %-10.2f\n", "(Include GST & Service Charge) TOTAL: ", totalRevenue);
+        System.out.println("----------------------------------------------------------");
     }
 
     public void serializeToFile() {
