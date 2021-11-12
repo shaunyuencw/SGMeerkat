@@ -470,6 +470,7 @@ public class StaffBoundary {
                     // * Table is ready
                     // TODO chase previous guest away and seat new guest.
                     orderList.generateInvoice(tableToCheck.getTable_id(), currentDate, currentTime);
+                    tableToCheck.occupySwitch();
                     System.out.println("Your table is ready! :)");
                 }
                
