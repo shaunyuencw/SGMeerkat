@@ -38,8 +38,8 @@ public class Menu implements DatabaseHandler{
         do {
             System.out.println("Enter item type: ");
             System.out.println("1. Main");
-            System.out.println("2. Dessert");
-            System.out.println("3. Drinks");
+            System.out.println("2. Drinks");
+            System.out.println("3. Dessert");
             int typein = sc.nextInt();
             sc.nextLine();
             if (typein == 1) {
