@@ -65,7 +65,7 @@ public class AllStaff implements DatabaseHandler {
 		DatabaseHandler db = new AllStaff();
 		((AllStaff)db).setStaff(ll);
 		db.serializeToFile();
-		System.out.println(ll.size() + "Added");
+		System.out.println(ll.size() + " Added");
 	}
 
 
