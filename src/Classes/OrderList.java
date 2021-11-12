@@ -129,7 +129,10 @@ public class OrderList {
         String isMembership = sc.nextLine();
         if (isMembership.equals("Y")){
             if(memberList.checkIfMember()){
+                System.out.println("Membership confirmed, 10% discount will be given.");
                 newOrder.setMembership(true);
+            } else {
+                System.out.println("Membership not valid.");
             }
         } else if (newOrder.getTotal() >= 100) {
             System.out.println("You've spend more than $100 and is eligible to be a member.");
@@ -137,6 +140,7 @@ public class OrderList {
             String wantMembership = sc.nextLine();
             if(wantMembership.equals("Y")){
                 memberList.addNewMember();
+                System.out.println("Membership created, 10% discount will be given.");
                 newOrder.setMembership(true);
             }
         }

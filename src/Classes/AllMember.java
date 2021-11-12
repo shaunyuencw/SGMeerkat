@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AllMember {
-    private List<Member> memberList;
+    private ArrayList<Member> memberList;
     private static Scanner sc = new Scanner(System.in);
 
     public AllMember(){
@@ -24,7 +24,8 @@ public class AllMember {
         System.out.println("May i have your name: ");
         String memName = sc.nextLine();
         System.out.println("May i have your contact number: ");
-        int memContact = sc.nextInt();
+        long memContact = sc.nextLong();
+        sc.nextLine();
         for(int i = 0; i < memberList.size(); i++){
             Member checkMember = memberList.get(i);
             if(checkMember.getMemberName().equals(memName) && checkMember.getMemberContact() == memContact){
@@ -38,7 +39,8 @@ public class AllMember {
         System.out.println("May i have your name: ");
         String memName = sc.nextLine();
         System.out.println("May i have your contact number: ");
-        int memContact = sc.nextInt();
+        long memContact = sc.nextLong();
+        sc.nextLine();
         Member newMember = new Member(memName, memContact);
         memberList.add(newMember);
         this.serializeToFile();
@@ -52,8 +54,6 @@ public class AllMember {
             output.writeObject(memberList);
             output.flush();
             output.close();
-
-            System.out.println("Menu updated.");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,7 +69,6 @@ public class AllMember {
             Object readObject = input.readObject();
             input.close();
 
-            if(!(readObject instanceof HashMap)) throw new IOException("Data is not a hashmap");
             this.memberList = (ArrayList<Member>) readObject;
         } catch (Exception e){
             System.out.println(e.getMessage());
