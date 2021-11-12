@@ -1,8 +1,11 @@
 package Classes;
 
+import java.io.Serializable;
+
 //import java.util.*; // Not used
 
-public class Reservation {
+public class Reservation implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String reservationDate;
     private String timeSlot;
     private String customerName;

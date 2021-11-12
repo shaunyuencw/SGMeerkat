@@ -1,13 +1,6 @@
 package Classes;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.lang.reflect.Array;
+import java.io.*;
 import java.util.*;
 
 public class OrderList implements Serializable {
@@ -338,8 +331,8 @@ public class OrderList implements Serializable {
 
     public void serializeToFile() {
         try {
-            File menu_file = new File("invoice.dat");
-            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(menu_file));
+            File invoice_file = new File("invoice.dat");
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(invoice_file));
 
             output.writeObject(invoiceList);
             output.flush();
@@ -350,10 +343,11 @@ public class OrderList implements Serializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void deserializeFromFile() {
         try {
-            File menu_file = new File("invoice.dat");
-            ObjectInputStream input = new ObjectInputStream(new FileInputStream(menu_file));
+            File invoice_file = new File("invoice.dat");
+            ObjectInputStream input = new ObjectInputStream(new FileInputStream(invoice_file));
 
             //Reads the first object in
             Object readObject = input.readObject();

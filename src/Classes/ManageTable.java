@@ -1,12 +1,11 @@
 package Classes;
 
-import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.io.*;
+import java.text.*;
+import java.util.*;
 
-public class ManageTable implements Serializable {
+public class ManageTable implements DatabaseHandler, Serializable {
+    private static final long serialVersionUID = 1L;
     private HashMap<Integer, Table> all_tables;
     private OrderList orderList;
     private Staff curStaff;
@@ -570,5 +569,44 @@ public class ManageTable implements Serializable {
         int totalMin2 = hr2 * 60 + min2;
 
         return totalMin1 - totalMin2;
+    }
+
+    public void serializeToFile() {
+         
+        // ? serialize menu to menu.dat
+        try {      
+            File tables_file = new File("tables.dat");
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(tables_file));
+
+            output.writeObject(all_tables);
+            output.flush();
+            output.close();
+
+            //System.out.println("Tables updated.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    public void deserializeFromFile() {
+        // ? get menu from menu.dat
+        try {
+            File tables_file = new File("tables.dat");
+            ObjectInputStream input = new ObjectInputStream(new FileInputStream(tables_file));
+
+            //Reads the first object in
+            Object readObject = input.readObject();
+            input.close();
+        
+            if(!(readObject instanceof HashMap)) throw new IOException("Data is not a hashmap");
+            this.all_tables = (HashMap<Integer, Table>) readObject;
+
+            //System.out.println("Tables loaded.");
+            
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -1,13 +1,12 @@
 package Classes;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Table {
-    private static final double GST_CHARGE = 0.07; // in percentage
-    private static final double SERVICE_CHARGE = 0.10; // in percentage
-
+public class Table implements Serializable{
+    private static final long serialVersionUID = 1L;
     private int table_id;
     private int num_seats;
     private boolean occupied;
@@ -100,12 +99,6 @@ public class Table {
 
     public boolean isOccupied(){
         return this.occupied;
-    }
-
-    public void printInvoice(){
-        // TODO Some calculation and output
-        System.out.println(GST_CHARGE + SERVICE_CHARGE);
-        this.occupied = false;
     }
 
     public int cleanupReservations(String cleanupDate) {

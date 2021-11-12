@@ -1,4 +1,3 @@
-import java.text.*;
 import java.util.*;
 
 import Classes.*;
@@ -28,6 +27,8 @@ public class StaffBoundary {
         Staff curStaff = null;
         OrderList orderList = new OrderList();
         ManageTable manageTable = new ManageTable();
+        manageTable.deserializeFromFile();
+
 
         boolean login = false;
 
@@ -56,7 +57,7 @@ public class StaffBoundary {
                 break;
         }
 
-        manageTable.openRestaurant(); // Initialize tables
+        //manageTable.openRestaurant(); // Initialize tables
 
         while (true) {
             staffBoundary.printOptions();
@@ -240,6 +241,7 @@ public class StaffBoundary {
         }
         sc.close();
         menu.serializeToFile();
+        manageTable.serializeToFile();
     }
 
     // * MENU ITEMS START 

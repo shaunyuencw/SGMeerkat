@@ -257,39 +257,6 @@ public class Menu implements DatabaseHandler{
         }
     }
 
-    public void serializeToFile() {
-         
-        // ? serialize menu to menu.dat
-        try {      
-            File menu_file = new File("menu.dat");
-            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(menu_file));
-
-            output.writeObject(menu_map);
-            output.flush();
-            output.close();
-
-            System.out.println("Menu updated.");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // ? serialize menu to menu.dat
-        try {      
-            File promo_file = new File("promo.dat");
-            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(promo_file));
-
-            output.writeObject(promo_map);
-            output.flush();
-            output.close();
-
-            System.out.println("Promo menu updated.");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void resetDat(){
         // ? serialize menu to menu.dat
         try {      
@@ -316,6 +283,39 @@ public class Menu implements DatabaseHandler{
             output.close();
 
             System.out.println("Promo menu resetted.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void serializeToFile() {
+         
+        // ? serialize menu to menu.dat
+        try {      
+            File menu_file = new File("menu.dat");
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(menu_file));
+
+            output.writeObject(menu_map);
+            output.flush();
+            output.close();
+
+            //System.out.println("Menu updated.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // ? serialize menu to menu.dat
+        try {      
+            File promo_file = new File("promo.dat");
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(promo_file));
+
+            output.writeObject(promo_map);
+            output.flush();
+            output.close();
+
+            //System.out.println("Promo menu updated.");
 
         } catch (IOException e) {
             e.printStackTrace();
