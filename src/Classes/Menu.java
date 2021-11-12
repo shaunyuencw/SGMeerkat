@@ -57,9 +57,9 @@ public class Menu implements DatabaseHandler{
 
         System.out.println("Enter the new item description:");
         String desc = sc.nextLine();
-        System.out.println("desc " + desc);
         System.out.println("Enter the price of new item:");
         double price = sc.nextDouble();
+        sc.nextLine();
 
         menu.put(name.toLowerCase(), new MenuItem(name, desc, price, type));
         updateMenu(menu);
@@ -109,6 +109,7 @@ public class Menu implements DatabaseHandler{
         String desc = sc.nextLine();
         System.out.println("Enter the price of new set:");
         double price = sc.nextDouble();
+        sc.nextLine();
 
         HashMap<String, MenuItem> newPromo_map = new HashMap<String, MenuItem>();
 
@@ -116,7 +117,6 @@ public class Menu implements DatabaseHandler{
         System.out.println("-------------------------------------------");
 
         this.displayMenu();
-        sc.nextLine();
         while (true) {
             String temp_menuItemKey = sc.nextLine();
             if (temp_menuItemKey.equals("N")) {
@@ -164,7 +164,7 @@ public class Menu implements DatabaseHandler{
         this.displayPromos();
 
         System.out.println("Enter the promotion name to remove:");
-        promoToRemove = sc.next();
+        promoToRemove = sc.nextLine();
         if (promo_menu.containsKey(promoToRemove.toLowerCase())){
             promo_menu.remove(promoToRemove.toLowerCase());
             System.out.println(promoToRemove + " removed.");

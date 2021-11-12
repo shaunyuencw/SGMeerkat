@@ -112,8 +112,11 @@ public class Order implements Serializable {
 
     public int getMenuSize() { return menuItems.size(); }
     public int getPromoSize() { return promoItems.size(); }
+    public boolean getMembership() { return this.membership; }
     public void setMembership(boolean bool) { this.membership = bool; }
     public String getDate() { return this.dineDate; }
+    public ArrayList<MenuItem> getMenuItems() { return this.menuItems; }
+    public ArrayList<PromoItems> getPromoItems() { return this.promoItems; }
 
     public double getTotal() {
         this.total = 0;

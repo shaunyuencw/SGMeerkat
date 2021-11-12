@@ -609,8 +609,8 @@ public class StaffBoundary {
                 // 1. Menu Management
                 outerwhile: while (true) {
                     staffBoundary.printMenuOptions();
-                    int ch2 = sc.nextInt();
-                    switch (ch2) {
+                    int ch1 = sc.nextInt();
+                    switch (ch1) {
                     case 1:
                         menu.addMenuItem();
                         break;
@@ -739,14 +739,29 @@ public class StaffBoundary {
                 break;
 
             case 5:
-                // TODO print revenue
+                outerwhile: while(true){
+                    staffBoundary.printReport();
+                    int ch5 = sc.nextInt();
+                    switch(ch5){
+                        case 1:
+                            staffBoundary.orderList.printInvoice(true);
+                            break;
+                        case 2:
+                            staffBoundary.orderList.printInvoice(false);
+                            break;
+                        case 0:
+                            break outerwhile;
+                        default:
+                            System.out.println("Invalid Options");
+                            break;
+                    }
+                }
                 break;
-
             case 6:
                 staffBoundary.printCurrentDateTimeOptions();
-                int ch5 = sc.nextInt();
+                int ch6 = sc.nextInt();
 
-                switch(ch5){
+                switch(ch6){
                     case 1:
                         staffBoundary.displayCurDateTime();
                         break;
@@ -824,9 +839,17 @@ public class StaffBoundary {
 
     public void printCurrentDateTimeOptions(){
         System.out.println("-----------------------------------");
-        System.out.println("1. Display current date and time");
+        System.out.println("1. Display Current Date and Time");
         System.out.println("2. Change Date");
         System.out.println("3. Change Time");
+        System.out.println("0. Exit to Main");
+        System.out.println("-----------------------------------");
+    }
+
+    public void printReport(){
+        System.out.println("-----------------------------------");
+        System.out.println("1. Print by Day");
+        System.out.println("2. Print by Month");
         System.out.println("0. Exit to Main");
         System.out.println("-----------------------------------");
     }

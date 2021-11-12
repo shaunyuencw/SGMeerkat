@@ -179,6 +179,162 @@ public class OrderList {
         serializeToFile();
     }
 
+    public void printInvoice(boolean byDay){
+        int i;
+        deserializeFromFile();
+        ArrayList<String> invoiceList_keys = new ArrayList<>(invoiceList.keySet());
+        ArrayList<Order> allOrders = new ArrayList<>();
+        String choice;
+
+        if(byDay){
+            System.out.println("Available dates");
+            System.out.println("---------------------------------");
+            for(i = 1; i <= invoiceList_keys.size(); i++){
+                System.out.printf("%-15s", invoiceList_keys.get(i-1));
+                if(i%3==0) System.out.print("\n");
+            }
+            System.out.println("\nType the date to print report: (N to terminate)");
+            choice = sc.nextLine();
+            if(choice.equals("N")) return;
+            allOrders = invoiceList.get(choice);
+        } else{
+            ArrayList<String> months = new ArrayList<>();
+            for(i = 0; i < invoiceList_keys.size(); i++){
+                months.add(invoiceList_keys.get(i).split("-")[1]);
+            }
+            LinkedHashSet<String> hashSet = new LinkedHashSet<>(months);
+            ArrayList<String> noDupMonths = new ArrayList<>(hashSet);
+            System.out.println("Available months");
+            System.out.println("---------------------------------");
+            for(i = 1; i <= noDupMonths.size(); i++){
+                System.out.printf("%-8s", noDupMonths.get(i-1));
+                if(i%3==0) System.out.print("\n");
+            }
+            System.out.println("\nType the month to print report: (N to terminate)");
+            choice = sc.nextLine();
+            if(choice.equals("N")) return;
+            for(i = 0; i < invoiceList_keys.size(); i++){
+                if(invoiceList_keys.get(i).split("-")[1].equals(choice)){
+                    allOrders.addAll(invoiceList.get(invoiceList_keys.get(i)));
+                }
+            }
+        }
+
+        double totalRevenue = 0;
+        int totalMemberGiven = 0;
+        Order thisOrder;
+        ArrayList<MenuItem> mItems;
+        ArrayList<PromoItems> pItems;
+        MenuItem mItem;
+        PromoItems pItem;
+        HashMap<String, Integer> alaCartesCount = new HashMap<>();
+        HashMap<String, Integer> setPackagesCount = new HashMap<>();
+        HashMap<String, MenuItem> alaCartesItem = new HashMap<>();
+        HashMap<String, PromoItems> setPackagesItem = new HashMap<>();
+        for(i = 0; i < allOrders.size(); i++){
+            thisOrder = allOrders.get(i);
+            if(thisOrder.getMembership()) totalMemberGiven++;
+            totalRevenue += thisOrder.getTotal();
+            mItems = thisOrder.getMenuItems();
+            pItems = thisOrder.getPromoItems();
+            for(int j = 0; j < mItems.size(); j++){
+                mItem = mItems.get(j);
+                if(alaCartesCount.containsKey(mItem.getName())){
+                    alaCartesCount.put(mItem.getName(), alaCartesCount.get(mItem.getName()) + 1);
+                } else {
+                    alaCartesCount.put(mItem.getName(), 1);
+                    alaCartesItem.put(mItem.getName(), mItem);
+                }
+            }
+            for(int k = 0; k < pItems.size(); k++){
+                pItem = pItems.get(k);
+                if(setPackagesCount.containsKey(pItem.getName())){
+                    setPackagesCount.put(pItem.getName(), setPackagesCount.get(pItem.getName()) + 1);
+                } else {
+                    setPackagesCount.put(pItem.getName(), 1);
+                    setPackagesItem.put(pItem.getName(), pItem);
+                }
+            }
+        }
+        ArrayList<String> alaCartes_keys = new ArrayList<>(alaCartesItem.keySet());
+        ArrayList<String> setPackages_keys = new ArrayList<>(setPackagesItem.keySet());
+
+        System.out.println("-----------------------------------------------------");
+        System.out.print("Report Period: ");
+        switch(choice){
+            case "01":
+                System.out.print("January");
+                break;
+            case "02":
+                System.out.print("February");
+                break;
+            case "03":
+                System.out.print("March");
+                break;
+            case "04":
+                System.out.print("April");
+                break;
+            case "05":
+                System.out.print("May");
+                break;
+            case "06":
+                System.out.print("June");
+                break;
+            case "07":
+                System.out.print("July");
+                break;
+            case "08":
+                System.out.print("August");
+                break;
+            case "09":
+                System.out.print("September");
+                break;
+            case "10":
+                System.out.print("October");
+                break;
+            case "11":
+                System.out.print("November");
+                break;
+            case "12":
+                System.out.print("December");
+                break;
+            default:
+                System.out.print(choice);
+        }
+        System.out.println("\n-----------------------------------------------------");
+        System.out.printf("%-5s %-20s %-10s %-10s\n", "Qty.", "Description", "Unit P.", "Total P.");
+        System.out.printf("%-5s %-20s %-10s %-10s\n", "", "MAIN", "", "");
+        for(i = 0; i < alaCartes_keys.size(); i++){
+            if(alaCartesItem.get(alaCartes_keys.get(i)).getType() == MenuItem.Type.MAIN){
+                mItem = alaCartesItem.get(alaCartes_keys.get(i));
+                System.out.printf("%-5d %-20s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
+            }
+        }
+        System.out.printf("%-5s %-20s %-10s %-10s\n", "", "DRINK", "", "");
+        for(i = 0; i < alaCartes_keys.size(); i++){
+            if(alaCartesItem.get(alaCartes_keys.get(i)).getType() == MenuItem.Type.DRINKS){
+                mItem = alaCartesItem.get(alaCartes_keys.get(i));
+                System.out.printf("%-5d %-20s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
+            }
+        }
+        System.out.printf("%-5s %-20s %-10s %-10s\n", "", "DESSERT", "", "");
+        for(i = 0; i < alaCartes_keys.size(); i++){
+            if(alaCartesItem.get(alaCartes_keys.get(i)).getType() == MenuItem.Type.DESSERT){
+                mItem = alaCartesItem.get(alaCartes_keys.get(i));
+                System.out.printf("%-5d %-20s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
+            }
+        }
+        System.out.printf("%-5s %-20s %-10s %-10s\n", "", "SET PACKAGES", "", "");
+        for(i = 0; i < setPackages_keys.size(); i++){
+            pItem = setPackagesItem.get(setPackages_keys.get(i));
+            System.out.printf("%-5d %-20s %-10.2f %-10.2f\n", setPackagesCount.get(pItem.getName()), pItem.getName(), pItem.getPrice(), setPackagesCount.get(pItem.getName())*pItem.getPrice());
+        }
+        System.out.println("-----------------------------------------------------");
+        System.out.printf("%37s %-8d\n", "Total Membership Given: ", totalMemberGiven);
+        System.out.printf("%37s %-8.2f\n", "TOTAL: ", totalRevenue);
+        System.out.println("-----------------------------------------------------");
+    }
+
     public void serializeToFile() {
         try {
             File menu_file = new File("invoice.dat");
