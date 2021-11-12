@@ -1,18 +1,17 @@
 package Classes;
 
-import java.io.*;
-// import java.util.*; // Not used
+import java.io.Serializable;
 
 public class Member implements Serializable {
     private static final long serialVersionUID = 1L;
     private String memberName;
-    private int memberContact;
+    private long memberContact;
 
-    public Member(String memberName, int memberContact){
+    public Member(String memberName, long memberContact){
         this.memberName = memberName;
         this.memberContact = memberContact;
     }
 
     public String getMemberName(){ return this.memberName; }
-    public int getMemberContact(){ return this.memberContact; }
+    public long getMemberContact(){ return this.memberContact; }
 }

@@ -31,24 +31,18 @@ public class Order implements Serializable {
     
     public void addMenuItems(MenuItem menuItems){
         this.menuItems.add(menuItems);
-        this.total += menuItems.getPrice();
     }
 
     public void addMenuItems(PromoItems promoItem){
         this.promoItems.add(promoItem);
-        this.total += promoItem.getPrice();
     }
 
     public void removeMenuItems(int index){
-        MenuItem deleted = menuItems.get(index-1);
         this.menuItems.remove(index-1);
-        this.total -= deleted.getPrice();
     }
 
     public void removePromoItems(int index){
-        PromoItems deleted = promoItems.get(index-1);
         this.promoItems.remove(index-1);
-        this.total -= deleted.getPrice();
     }
 
     public void viewOrder() {
@@ -82,6 +76,7 @@ public class Order implements Serializable {
     }
 
     public void printOrderInvoice(){
+        this.total = getTotal();
         this.dineDate = LocalDate.now();
         this.dineTime = LocalTime.now();
         System.out.println("----------------SGMeerkat Receipt-------------------");
@@ -117,7 +112,23 @@ public class Order implements Serializable {
     public int getMenuSize() { return menuItems.size(); }
     public int getPromoSize() { return promoItems.size(); }
     public void setMembership(boolean bool) { this.membership = bool; }
-    public double getTotal() { return this.total; }
+
+    public double getTotal() {
+        this.total = 0;
+        if(menuItems!=null)
+        {
+            for (int i = 0; i < menuItems.size(); i++){
+                this.total += menuItems.get(i).getPrice();
+            }
+        }
+        if(promoItems!=null)
+        {
+            for (int i = 0; i < promoItems.size(); i++){
+                this.total += promoItems.get(i).getPrice();
+            }
+        }
+        return this.total;
+    }
 
     public void displayMenu(){
         for (int i = 0; i < menuItems.size(); i++){
