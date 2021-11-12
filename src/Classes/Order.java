@@ -17,7 +17,7 @@ public class Order implements Serializable {
     private double gst = 0.07;
     private double serviceCharge = 0.1;
 
-    private static Scanner sc = new Scanner(System.in);
+    // private static Scanner sc = new Scanner(System.in); // not needed?
 
     public Order(Staff staff, int tableNo, int noOfCust){
         this.staff = staff;

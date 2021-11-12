@@ -1,5 +1,6 @@
 package Classes;
-import java.util.*;
+
+//import java.util.*; // Not used
 
 public class Reservation {
     private String reservationDate;

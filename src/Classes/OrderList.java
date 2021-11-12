@@ -1,7 +1,7 @@
 package Classes;
 
 import java.util.*;
-import java.io.*;
+// import java.io.*; // Not used
 
 public class OrderList {
     private HashMap<Integer, Order> orderList;
@@ -13,7 +13,7 @@ public class OrderList {
         memberList = new AllMember();
     }
 
-    public void createNewOrder(Menu menu, Staff curStaff, int tableNo, int noOfCust){
+    public void createNewOrder(Staff curStaff, int tableNo, int noOfCust){
         Order newOrder = new Order(curStaff, tableNo, noOfCust);
         orderList.put(tableNo, newOrder);
     }

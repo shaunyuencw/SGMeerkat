@@ -80,15 +80,22 @@ public class Table {
 
     public boolean isReserved(String reserveKey) {
         if (reservationMap.containsKey(reserveKey)){
-            System.out.println(reserveKey + " is reserved!");
+            //System.out.println(reserveKey + " is reserved!"); // DEBUG
             return true;
         }
 
         return false; // No such reservation.
     }
 
-    public void seatGuest(String staff_name){
-
+    public boolean occupySwitch(){
+        if (!this.occupied){
+            this.occupied = true;
+            return true;
+        }
+        else{
+            this.occupied = false;
+            return false;
+        }
     }
 
     public boolean isOccupied(){

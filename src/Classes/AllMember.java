@@ -60,6 +60,7 @@ public class AllMember {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void deserializeFromFile() {
         try {
             File menu_file = new File("member.dat");
