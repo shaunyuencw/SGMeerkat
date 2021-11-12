@@ -274,6 +274,27 @@ public class StaffBoundary {
         System.out.println("-----------------------------------");
     }
 
+    public void printOrderOptions(){
+        System.out.println("---------------Select Order Options---------------");
+        System.out.println("1. Create New Order");
+        System.out.println("2. Edit Order");
+        System.out.println("3. View Order");
+        System.out.println("4. Print Order Invoice (this will close the order)");
+        System.out.println("0. Exit Menu Options");
+        System.out.println("--------------------------------------------------");
+    }
+
+    public void printNewOrderOptions(){
+        System.out.println("---------------Order---------------");
+        System.out.println("1. Order Ala Carte");
+        System.out.println("2. Remove Ala Carte");
+        System.out.println("3. Order Set Package");
+        System.out.println("4. Remove Set Package");
+        System.out.println("5. View Order");
+        System.out.println("0. Complete Order");
+        System.out.println("-----------------------------------");
+    }
+
     public void printReservationOptions(){
         System.out.println("-----------Reservation------------");
         System.out.println("1. Create Reservation");
@@ -281,10 +302,7 @@ public class StaffBoundary {
         System.out.println("3. View Reservation");
         System.out.println("4. Cleanup Reservations");
         System.out.println("-----------------------------------");
-
-
     }
-    
     
     public void printOptions() {
         System.out.println("-----------------------------------");
@@ -312,7 +330,6 @@ public class StaffBoundary {
         Menu menu = new Menu();
         menu.deserializeFromFile();
         OrderList orderList = new OrderList();
-        orderList.deserializeFromFile();
         AllStaff allStaff = new AllStaff();
         allStaff.deserializeFromFile();
         List<Staff> staffs = allStaff.getstaffList();
@@ -395,14 +412,73 @@ public class StaffBoundary {
                 break;
 
             case 2:
-                // TODO ASK IF MADE RESERVATION?
-                System.out.println("Welcome, table for: ");
-                int noOfCust = sc.nextInt();
-                // TODO GET TABLE ID FROM NUMBER OF CUST
-                int tableNo = 1;
-                orderList.createNewOrder(menu, curStaff, tableNo, noOfCust);
+                outerwhile: while(true) {
+                    staffBoundary.printOrderOptions();
+                    int ch3 = sc.nextInt();
+                    int tableNo;
+                    switch (ch3) {
+                        case 1:
+                        case 2:
+                            if(ch3 == 1){
+                                // TODO ASK IF MADE RESERVATION?
+                                System.out.println("Welcome, table for: ");
+                                int noOfCust = sc.nextInt();
+                                // TODO GET TABLE ID FROM NUMBER OF CUST
+                                tableNo = noOfCust;
+                                System.out.println("Your table number is " +tableNo+ ", this way please.");
+                                orderList.createNewOrder(menu, curStaff, tableNo, noOfCust);
+                            } else {
+                                orderList.viewAllOrder();
+                                tableNo = sc.nextInt();
+                                if(tableNo == 0) break;
+                            }
+                            innerwhile: while(true){
+                                staffBoundary.printNewOrderOptions();
+                                int ch31 = sc.nextInt();
+                                switch (ch31){
+                                    case 1:
+                                        orderList.orderAlaCarte(menu, tableNo);
+                                        break;
+                                    case 2:
+                                        orderList.removeAlaCarte(tableNo);
+                                        break;
+                                    case 3:
+                                        orderList.orderSetPackage(menu, tableNo);
+                                        break;
+                                    case 4:
+                                        orderList.removeSetPackage(tableNo);
+                                        break;
+                                    case 5:
+                                        orderList.viewCurrentOrder(tableNo);
+                                        break;
+                                    case 0:
+                                        break innerwhile;
+                                    default:
+                                        System.out.println("Invalid Options");
+                                        break;
+                                }
+                            }
+                            break;
+                        case 3:
+                            orderList.viewAllOrder();
+                            tableNo = sc.nextInt();
+                            if(tableNo == 0) break;
+                            orderList.viewCurrentOrder(tableNo);
+                            break;
+                        case 4:
+                            orderList.viewAllOrder();
+                            tableNo = sc.nextInt();
+                            if(tableNo == 0) break;
+                            orderList.generateInvoice(tableNo);
+                            break;
+                        case 0:
+                            break outerwhile;
+                        default:
+                            System.out.println("Invalid Options");
+                            break;
+                    }
+                }
                 break;
-
             case 3:
                 staffBoundary.printReservationOptions();
                 int ch4 = sc.nextInt();
@@ -424,12 +500,9 @@ public class StaffBoundary {
                         staffBoundary.cleanupReservations();
                         break;
                     default:{
-                         // TODO Reask for sub options(ZW)
-                         System.out.println("Invalid Options");
+                        System.out.println("Invalid Options");
                         break;
                     }
-                      
-
                 }
                 break;
 
@@ -443,7 +516,6 @@ public class StaffBoundary {
         
         sc.close();
         menu.serializeToFile();
-        orderList.serializeToFile();
     }
 
 

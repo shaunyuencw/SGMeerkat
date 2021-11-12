@@ -25,8 +25,6 @@ public class Order implements Serializable {
         this.noOfCust = noOfCust;
         this.menuItems = new ArrayList<>();
         this.promoItems = new ArrayList<>();
-        this.dineDate = LocalDate.now();
-        this.dineTime = LocalTime.now();
         this.membership = false;
         this.total = 0;
     }
@@ -42,20 +40,21 @@ public class Order implements Serializable {
     }
 
     public void removeMenuItems(int index){
-        MenuItem deleted = this.menuItems.remove(index-1);
+        MenuItem deleted = menuItems.get(index-1);
+        this.menuItems.remove(index-1);
         this.total -= deleted.getPrice();
     }
 
     public void removePromoItems(int index){
-        PromoItems deleted = this.promoItems.remove(index-1);
+        PromoItems deleted = promoItems.get(index-1);
+        this.promoItems.remove(index-1);
         this.total -= deleted.getPrice();
     }
 
     public void viewOrder() {
         if (menuItems.size() == 0){
-            System.out.println("Ala carte is empty :(");
+            System.out.println("No ala carte selected yet.");
         }
-
         else {
             System.out.println("---------- Ala carte ----------");
             for (int i = 0; i < menuItems.size(); i++){
@@ -67,7 +66,7 @@ public class Order implements Serializable {
         }
 
         if (promoItems.size() == 0){
-            System.out.println("Set package is empty :(");
+            System.out.println("No set package selected yet.");
         }
         else {
             System.out.println("---------- Set Package ----------");
@@ -83,12 +82,8 @@ public class Order implements Serializable {
     }
 
     public void printOrderInvoice(){
-        System.out.println("Do you have membership? (Y/N): ");
-        String isMembership = sc.nextLine();
-        if (isMembership.equals("Y")){
-            this.membership = true;
-        }
-
+        this.dineDate = LocalDate.now();
+        this.dineTime = LocalTime.now();
         System.out.println("----------------SGMeerkat Receipt-------------------");
         System.out.printf("Server: %-15s Date: %-18s \n", staff.getStaffName(), dineDate);
         System.out.printf("Table: %-16s Time: %-18s \n", tableNo, dineTime);
@@ -121,6 +116,8 @@ public class Order implements Serializable {
 
     public int getMenuSize() { return menuItems.size(); }
     public int getPromoSize() { return promoItems.size(); }
+    public void setMembership(boolean bool) { this.membership = bool; }
+    public double getTotal() { return this.total; }
 
     public void displayMenu(){
         for (int i = 0; i < menuItems.size(); i++){
