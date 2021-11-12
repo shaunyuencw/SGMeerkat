@@ -392,7 +392,6 @@ public class StaffBoundary {
                 }
             }
             else{
-                // TODO check if reservation is expired
                 int expire = isExpired(toCheck, tempTable, reserveKey, false);
                 if (expire == 0){
                     // Valid reservation (within 15 minutes of reservation) + table is ready.
@@ -761,7 +760,6 @@ public class StaffBoundary {
                         staffBoundary.changeCurrentTime();
                         break;
                 }
-                // TODO admin functions to change currentDate and currentTime
                 break;
             }     
         }
