@@ -261,6 +261,40 @@ public class StaffBoundary {
         }
     }
     
+    public void printMenuOptions() {
+        System.out.println("-------Select Menu Options--------");
+        System.out.println("1. Create Menu Item");
+        System.out.println("2. Delete Menu Item");
+        System.out.println("3. Update Menu Item");
+        System.out.println("4. Create Promo Item");
+        System.out.println("5. Delete Promo Item");
+        System.out.println("6. Update Promo Item");
+        System.out.println("7. View Menu");
+        System.out.println("0. Exit Menu Options");
+        System.out.println("-----------------------------------");
+    }
+
+    public void printReservationOptions(){
+        System.out.println("-----------Reservation------------");
+        System.out.println("1. Create Reservation");
+        System.out.println("2. Remove Reservation");
+        System.out.println("3. View Reservation");
+        System.out.println("4. Cleanup Reservations");
+        System.out.println("-----------------------------------");
+
+
+    }
+    
+    
+    public void printOptions() {
+        System.out.println("-----------------------------------");
+        System.out.println("1. Menu Management");
+        System.out.println("2. Order Management");
+        System.out.println("3. Reservation Management");
+        System.out.println("4. Reports");
+        System.out.println("0. Exit RRPSS");
+        System.out.println("-----------------------------------");
+    }
     /*
      * 1. Menu Management 2. Order Management 3. Reservation Management 4. Reports
      * 
@@ -314,7 +348,7 @@ public class StaffBoundary {
         staffBoundary.print_allTables();
 
         while (true) {
-            RRPSS.printOptions();
+            staffBoundary.printOptions();
 
             int ch = sc.nextInt();
             sc.nextLine();
@@ -326,7 +360,7 @@ public class StaffBoundary {
             case 1:
                 // 1. Menu Management
                 outerwhile: while (true) {
-                    RRPSS.printMenuOptions();
+                    staffBoundary.printMenuOptions();
                     int ch2 = sc.nextInt();
                     switch (ch2) {
                     case 1:
@@ -370,7 +404,7 @@ public class StaffBoundary {
                 break;
 
             case 3:
-                RRPSS.printReservationOptions();
+                staffBoundary.printReservationOptions();
                 int ch4 = sc.nextInt();
                 switch(ch4){
                     case 1:
