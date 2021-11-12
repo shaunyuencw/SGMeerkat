@@ -469,7 +469,7 @@ public class StaffBoundary {
                 if (tableToCheck.isOccupied()){
                     // * Table is ready
                     // TODO chase previous guest away and seat new guest.
-                    tableToCheck.occupySwitch(); // Table is not longer occupied
+                    orderList.generateInvoice(tableToCheck.getTable_id(), currentDate, currentTime);
                     System.out.println("Your table is ready! :)");
                 }
                

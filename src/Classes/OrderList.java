@@ -6,10 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.*;
 
-public class OrderList {
+public class OrderList implements Serializable {
     private HashMap<Integer, Order> orderList;
     private HashMap<String, ArrayList<Order>> invoiceList;
     private AllMember memberList;
