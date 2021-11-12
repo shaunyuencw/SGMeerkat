@@ -79,7 +79,7 @@ public class Order implements Serializable {
     public void printOrderInvoice(String date, String time){
         this.dineDate = date;
         this.dineTime = time;
-        this.total = getTotal();
+        this.total = countSubTotal();
         System.out.println("----------------SGMeerkat Receipt-------------------");
         System.out.printf("Server: %-15s Date: %-18s \n", staff.getStaffName(), dineDate);
         System.out.printf("Table: %-16s Time: %-18s \n", tableNo, dineTime);
@@ -117,8 +117,9 @@ public class Order implements Serializable {
     public String getDate() { return this.dineDate; }
     public ArrayList<MenuItem> getMenuItems() { return this.menuItems; }
     public ArrayList<PromoItems> getPromoItems() { return this.promoItems; }
+    public double getTotal() { return this.total; }
 
-    public double getTotal() {
+    public double countSubTotal() {
         this.total = 0;
         if(menuItems!=null)
         {

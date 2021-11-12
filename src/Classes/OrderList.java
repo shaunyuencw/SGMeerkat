@@ -142,7 +142,7 @@ public class OrderList {
             } else {
                 System.out.println("Membership not valid.");
             }
-        } else if (newOrder.getTotal() >= 100) {
+        } else if (newOrder.countSubTotal() >= 100) {
             System.out.println("You've spend more than $100 and is eligible to be a member.");
             System.out.println("Do you want to create a membership? (Y/N): ");
             String wantMembership = sc.nextLine();
@@ -302,36 +302,36 @@ public class OrderList {
                 System.out.print(choice);
         }
         System.out.println("\n-----------------------------------------------------");
-        System.out.printf("%-5s %-20s %-10s %-10s\n", "Qty.", "Description", "Unit P.", "Total P.");
-        System.out.printf("%-5s %-20s %-10s %-10s\n", "", "MAIN", "", "");
+        System.out.printf("%-5s %-25s %-10s %-10s\n", "Qty.", "Description", "Unit P.", "Total P.");
+        System.out.printf("%-5s %-25s %-10s %-10s\n", "", "MAIN", "", "");
         for(i = 0; i < alaCartes_keys.size(); i++){
             if(alaCartesItem.get(alaCartes_keys.get(i)).getType() == MenuItem.Type.MAIN){
                 mItem = alaCartesItem.get(alaCartes_keys.get(i));
-                System.out.printf("%-5d %-20s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
+                System.out.printf("%-5d %-25s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
             }
         }
-        System.out.printf("%-5s %-20s %-10s %-10s\n", "", "DRINK", "", "");
+        System.out.printf("%-5s %-25s %-10s %-10s\n", "", "DRINK", "", "");
         for(i = 0; i < alaCartes_keys.size(); i++){
             if(alaCartesItem.get(alaCartes_keys.get(i)).getType() == MenuItem.Type.DRINKS){
                 mItem = alaCartesItem.get(alaCartes_keys.get(i));
-                System.out.printf("%-5d %-20s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
+                System.out.printf("%-5d %-25s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
             }
         }
-        System.out.printf("%-5s %-20s %-10s %-10s\n", "", "DESSERT", "", "");
+        System.out.printf("%-5s %-25s %-10s %-10s\n", "", "DESSERT", "", "");
         for(i = 0; i < alaCartes_keys.size(); i++){
             if(alaCartesItem.get(alaCartes_keys.get(i)).getType() == MenuItem.Type.DESSERT){
                 mItem = alaCartesItem.get(alaCartes_keys.get(i));
-                System.out.printf("%-5d %-20s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
+                System.out.printf("%-5d %-25s %-10.2f %-10.2f\n", alaCartesCount.get(mItem.getName()), mItem.getName(), mItem.getPrice(), alaCartesCount.get(mItem.getName())*mItem.getPrice());
             }
         }
-        System.out.printf("%-5s %-20s %-10s %-10s\n", "", "SET PACKAGES", "", "");
+        System.out.printf("%-5s %-25s %-10s %-10s\n", "", "SET PACKAGES", "", "");
         for(i = 0; i < setPackages_keys.size(); i++){
             pItem = setPackagesItem.get(setPackages_keys.get(i));
-            System.out.printf("%-5d %-20s %-10.2f %-10.2f\n", setPackagesCount.get(pItem.getName()), pItem.getName(), pItem.getPrice(), setPackagesCount.get(pItem.getName())*pItem.getPrice());
+            System.out.printf("%-5d %-25s %-10.2f %-10.2f\n", setPackagesCount.get(pItem.getName()), pItem.getName(), pItem.getPrice(), setPackagesCount.get(pItem.getName())*pItem.getPrice());
         }
         System.out.println("-----------------------------------------------------");
-        System.out.printf("%37s %-8d\n", "Total Membership Given: ", totalMemberGiven);
-        System.out.printf("%37s %-8.2f\n", "TOTAL: ", totalRevenue);
+        System.out.printf("%42s %-8d\n", "Total Membership Given: ", totalMemberGiven);
+        System.out.printf("%42s %-8.2f\n", "(Include GST & Service Charge) TOTAL: ", totalRevenue);
         System.out.println("-----------------------------------------------------");
     }
 
