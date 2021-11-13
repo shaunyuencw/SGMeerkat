@@ -59,7 +59,7 @@ public class PromoItems implements Serializable{
      * gets the price of the promoitem
      * @return Double
      */
-    public Double getPrice(){
+    public double getPrice(){
         return this.price;
     }
 
