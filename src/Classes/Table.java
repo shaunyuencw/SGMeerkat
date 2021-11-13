@@ -109,7 +109,7 @@ public class Table implements Serializable{
             for (String reserveKey : reservationMap.keySet()) {
                 Reservation toCheck = reservationMap.get(reserveKey);
                 try{
-                    if (sdf.parse(toCheck.getReservationDate()).before(sdf.parse(cleanupDate))){
+                    if (sdf.parse(toCheck.getReservationDate()).before(sdf.parse(cleanupDate)) || toCheck.getReservationDate().equals(cleanupDate)){
                         reservationMap.remove(reserveKey);
                         reservationCleared++;
                     }
