@@ -4,6 +4,9 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 
+/**
+ * Control class for tables containing a list of all tables
+ */
 public class ManageTable implements DatabaseHandler, Serializable {
     private static final long serialVersionUID = 1L;
     private HashMap<Integer, Table> all_tables;
@@ -41,7 +44,11 @@ public class ManageTable implements DatabaseHandler, Serializable {
         }
     }
 
-    // DIEGO
+    /**
+     * @param orderList List of current existing orders
+     * @param curStaff The staff that is using the system currently
+     * Method to control how to manage the walk-in customer
+     */
     public void welcomeGuest(OrderList orderList, Staff curStaff) {
         this.orderList = orderList;
         this.curStaff = curStaff;
@@ -72,6 +79,10 @@ public class ManageTable implements DatabaseHandler, Serializable {
         }
     }
 
+    /**
+     * @return String The rounded off time
+     * Method to get time and round off time to nearest 30th mins
+     */
     private String getRoundedTimeslot(){
         String time;
         int timeInt, hrs = 0, mins = 0;
@@ -139,6 +150,11 @@ public class ManageTable implements DatabaseHandler, Serializable {
         return returnStr;
     }
 
+    /**
+     * @param currentTime The current time
+     * @return String The rounded off time
+     * Method to round off given current time to nearest 30th mins
+     */
     private String getRoundedTimeslot(String currentTime){
         int hrs = 0, mins = 0;
         int timeInt;
@@ -205,6 +221,9 @@ public class ManageTable implements DatabaseHandler, Serializable {
         return returnStr;
     }
 
+    /**
+     * Method to get contact details for reservation
+     */
     public void reserveTable(){
         // This method will get infomation required from the user to make a reservation
         // name, numPax, and the timeslot of their reservation.
@@ -265,6 +284,10 @@ public class ManageTable implements DatabaseHandler, Serializable {
         }
     }
 
+    /**
+     * @return String
+     * Method to format the date
+     */
     public String inputDate(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String returnStr = "";
@@ -281,6 +304,12 @@ public class ManageTable implements DatabaseHandler, Serializable {
         }
     }
 
+    /**
+     * @param reservationKey
+     * @param toReserve
+     * @return int
+     * Method to find the next available table for reservation
+     */
     private int reservationAllocator(String reservationKey, Reservation toReserve) {
         // Finds the next available table for reservation, upsize table if needed.
         // Tables are assumed to be sorted.
@@ -297,7 +326,10 @@ public class ManageTable implements DatabaseHandler, Serializable {
         return -1; // Return allocation table, - 1 if no tables available
     }
 
-    // DORA2
+    /**
+     * @return int
+     * Method to allocate walk in customer to a seat
+     */
     private int walkinAllocator(){
         int numPax = -1;
 
@@ -337,19 +369,28 @@ public class ManageTable implements DatabaseHandler, Serializable {
         return -1;
     }
 
+    /**
+     * Method to print current date and time
+     */
     public void displayCurDateTime(){
         System.out.println("System date is " + this.currentDate + ", time is " + this.currentTime);
     }
-
+    /**
+     * Method to change current date
+     */
     public void changeCurrentDate(){
         this.currentDate = inputDate();
     }
-
+    /**
+     * Method to change current time
+     */
     public void changeCurrentTime(){
         System.out.println("What time?: ");
         this.currentTime = sc.next();
     }
-
+    /**
+     * Method to clear all old reservations
+     */
     public void cleanupReservations(){
         //String date = inputDate();
         int reservationsCleared = 0;
@@ -363,7 +404,10 @@ public class ManageTable implements DatabaseHandler, Serializable {
 
         System.out.printf("%d old reservations cleared. \n", reservationsCleared);
     }
-
+    /**
+     * @param reservation
+     * Method to print all tables info
+     */
     public void print_allTables(boolean reservation){
 
         if (reservation){
@@ -399,7 +443,11 @@ public class ManageTable implements DatabaseHandler, Serializable {
         }
     }
 
-    // Checks the reservation and returns the table id if valid reservation, -1 if not.
+    /**
+     * @param action
+     * @return int
+     * Method to check the reservation and returns the table id if valid reservation, -1 if not.
+     */
     public int checkReservation(String action){
         String reserveName;
         int reservedTableId;
@@ -495,6 +543,14 @@ public class ManageTable implements DatabaseHandler, Serializable {
         }
     }
 
+    /**
+     * @param toCheck
+     * @param tableToCheck
+     * @param reserveKey
+     * @param retry
+     * @return int
+     * Method to check if the reservation under the table is expired
+     */
     private int isExpired(Reservation toCheck, Table tableToCheck, String reserveKey, boolean retry){
         String timeToCheckAgainst;
         if (!retry){
@@ -556,6 +612,12 @@ public class ManageTable implements DatabaseHandler, Serializable {
         return 1;
     }
 
+    /**
+     * @param reservationTime Time of reservation
+     * @param entryTime Time of entry
+     * @return int
+     * Method to return the time difference between time of reservation and time of entry
+     */
     private static int calcTimeDiff(String reservationTime, String entryTime){
         int time1 = Integer.valueOf(reservationTime);
         int time2 = Integer.valueOf(entryTime);
@@ -572,6 +634,9 @@ public class ManageTable implements DatabaseHandler, Serializable {
         return totalMin1 - totalMin2;
     }
 
+    /**
+     * Method to serialize table list
+     */
     public void serializeToFile() {
          
         // ? serialize menu to menu.dat
@@ -589,7 +654,10 @@ public class ManageTable implements DatabaseHandler, Serializable {
             e.printStackTrace();
         }
     }
-    
+
+    /**
+     * Method to deserialize table list
+     */
     @SuppressWarnings("unchecked")
     public void deserializeFromFile() {
         // ? get menu from menu.dat
