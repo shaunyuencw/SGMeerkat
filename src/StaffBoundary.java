@@ -16,7 +16,10 @@ public class StaffBoundary {
      * 3.1 Create Reservation 3.2 - 3 RD Reservation 12 Check if table is available
      * 13 Print Order invoice (Order will be closed) 14 Print Sales report
      */
-
+    /**
+     * Main User Interface 
+     * @param args
+     */
     public static void main(String[] args) {
         StaffBoundary staffBoundary = new StaffBoundary();
         Menu menu = new Menu();

@@ -2,7 +2,9 @@ package Classes;
 
 import java.io.*;
 import java.util.*;
-
+/**
+ * The main Menu of the restaurant containing all the menuitems and promotional items
+ */
 public class Menu implements DatabaseHandler{
     private HashMap<String, MenuItem> menu_map;
     private HashMap<String, PromoItems> promo_map;
@@ -10,14 +12,18 @@ public class Menu implements DatabaseHandler{
     private List<String> promo_keys;
 
     private static Scanner sc = new Scanner(System.in);
-
+    /**
+     * default constructor for the menu
+     */
     public Menu(){
         menu_map = new HashMap<>();
         promo_map = new HashMap<>();
         menu_keys = new ArrayList<>();
         promo_keys = new ArrayList<>();
     };
-
+    /**
+     * Method to add a new menuitem to the menu
+     */
     public void addMenuItem() {
         HashMap<String, MenuItem> menu = this.getMenu();
         // HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
@@ -65,6 +71,9 @@ public class Menu implements DatabaseHandler{
         updateMenu(menu);
     }
 
+    /**
+     * Method to remove an existing menuitem to the menu
+     */
     public void removeMenuItem() {
         this.displayMenu();
         HashMap<String, MenuItem> menu = this.getMenu();
@@ -87,7 +96,10 @@ public class Menu implements DatabaseHandler{
 
         updateMenu(menu);
     }
-
+    
+    /**
+     * Method to edit an existing menuitem from the menu
+     */
     public void editMenuItem(){
         System.out.println("Menu Items");
         System.out.println("---------------------------------");
@@ -100,6 +112,9 @@ public class Menu implements DatabaseHandler{
         addMenuItem();
     }
 
+     /**
+     * Method to add a new promotional item to the menu
+     */
     public void createNewPromo() {
         HashMap<String, MenuItem> menu = this.getMenu();
         HashMap<String, PromoItems> promo_menu = this.getPromo();
@@ -167,7 +182,10 @@ public class Menu implements DatabaseHandler{
 
         updatePromoMenu(promo_menu);
     }
-
+    
+     /**
+     * Method to remove an existing promotional item from the menu
+     */
     public void removePromo() {
         //HashMap<String, MenuItem> menu = menuObj.getMenu();
         HashMap<String, PromoItems> promo_menu = this.getPromo();
@@ -192,6 +210,9 @@ public class Menu implements DatabaseHandler{
         updatePromoMenu(promo_menu);
     }
 
+    /**
+     * Method to edit an existing promotional item from the menu
+     */
     public void editPromo(){
         System.out.println("Promo Items");
         System.out.println("---------------------------------");
@@ -204,54 +225,105 @@ public class Menu implements DatabaseHandler{
         createNewPromo();
     }
 
+    
+    /** 
+     * fetch and update the menuitems in the menu
+     * @param newMenu hashmap of menuitems
+     */
     public void updateMenu(HashMap<String, MenuItem> newMenu){
         this.menu_map = newMenu;
         menu_keys = new ArrayList<String>(menu_map.keySet());
         serializeToFile();
     }
 
+    
+    /** 
+     * fetch and update the promotional items in the menu
+     * @param newPromoMenu hashmap of promotional items
+     */
     public void updatePromoMenu(HashMap<String, PromoItems> newPromoMenu){
         this.promo_map = newPromoMenu;
         promo_keys = new ArrayList<String>(promo_map.keySet());
         serializeToFile();
     }
 
+    
+    /** 
+     * Method to obtain hashmapkey
+     * @param index
+     * @return String, Returns the key of the hashmap for menuitems
+     */
     public String getMenu_key(int index){
         return menu_keys.get(index);
     }
 
+    
+    /** 
+     * Method to obtain hashmapkey
+     * @param index
+     * @return String, returns the key of the hashmap for promotional items
+     */
     public String getPromo_key(int index){
         return promo_keys.get(index);
     }
 
+    
+    /** 
+     * Method to fetch all menuitems in the menu
+     * @return HashMap<String, MenuItem>
+     */
     public HashMap<String, MenuItem> getMenu(){
         return menu_map;
     }
 
+    
+    /** 
+     * Method to fetch all promotional items in the menu
+     * @return HashMap<String, PromoItems>
+     */
     public HashMap<String, PromoItems> getPromo(){
         return promo_map;
     }
 
+    
+    /** 
+     * Sets the menu
+     * @param menu
+     */
     public void setMenu(HashMap<String, MenuItem> menu){
 		this.menu_map = menu;
 	}
 
+    
+    /** 
+     * sets the promoitems in the menu
+     * @param promo
+     */
     public void setPromo(HashMap<String, PromoItems> promo){
 		this.promo_map = promo;
 	}
 
+    /** 
+     * displays the menu
+     */
     public void displayMenu(){
         for (int i = 0; i < menu_keys.size(); i++){
             System.out.println("(" + (i+1) + ") " + menu_map.get(menu_keys.get(i)).getName() + " - $" + menu_map.get(menu_keys.get(i)).getPrice());
         }
     }
 
+    /** 
+     * displays the promotional items
+     */
     public void displayPromos(){
         for (int i = 0; i < promo_keys.size(); i++){
             System.out.println("(" + (i+1) + ") " + promo_map.get(promo_keys.get(i)).getName() + " - $" + promo_map.get(promo_keys.get(i)).getPrice());
         }
     }
 
+    /** 
+     * displays the menu
+     */
     public void viewMenu() {
         if (menu_map.size() == 0){
             System.out.println("Menu is empty :(");
@@ -283,6 +355,9 @@ public class Menu implements DatabaseHandler{
         }
     }
 
+
+
+    
     public void resetDat(){
         // ? serialize menu to menu.dat
         try {      
