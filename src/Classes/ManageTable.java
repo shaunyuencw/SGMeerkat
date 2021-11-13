@@ -210,7 +210,7 @@ public class ManageTable implements DatabaseHandler, Serializable {
         // name, numPax, and the timeslot of their reservation.
         String reservationName, reservationContact;
         String dateStr, reserveTimeslot;
-        int reservePax;
+        int reservePax = -1;
 
         System.out.println("Can I get a name for the reservation?: ");
         reservationName = sc.next();
@@ -218,21 +218,22 @@ public class ManageTable implements DatabaseHandler, Serializable {
         System.out.println("Contact number for the reservation?: ");
         reservationContact = sc.next();
 
-        while (true){
-            System.out.println("How many persons will be dining? (Max 10): ");
+        while(true) {
             try {
+                System.out.println("How many persons will be dining? (Max 10): ");
                 reservePax = sc.nextInt();
 
                 if (reservePax < 0 || reservePax > 10){
                     System.out.println("We do not have a table that sits that number of guest.");
-                    continue;
                 }
-                break;
-
+                else{
+                    break;
+                }
+                
             } catch (Exception e) {
                 System.out.println("Invalid input, only numbers allowed");
-
-            }
+                sc.next();
+            }   
         }
 
         dateStr = inputDate();
