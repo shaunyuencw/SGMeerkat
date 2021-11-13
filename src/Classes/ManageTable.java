@@ -351,14 +351,14 @@ public class ManageTable implements DatabaseHandler, Serializable {
     }
 
     public void cleanupReservations(){
-        String date = inputDate();
+        //String date = inputDate();
         int reservationsCleared = 0;
 
-        System.out.println("Cleaning up reservations before " + date);
+        System.out.println("Cleaning up reservations before " + currentDate);
 
         for (int tableid : all_tables.keySet()){
             Table tempTable = all_tables.get(tableid);
-            reservationsCleared += tempTable.cleanupReservations(date);
+            reservationsCleared += tempTable.cleanupReservations(currentDate);
         }
 
         System.out.printf("%d old reservations cleared. \n", reservationsCleared);

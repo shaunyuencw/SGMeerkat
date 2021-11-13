@@ -104,19 +104,22 @@ public class Table implements Serializable{
     public int cleanupReservations(String cleanupDate) {
         int reservationCleared = 0;
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        for (String reserveKey : reservationMap.keySet()) {
-            Reservation toCheck = reservationMap.get(reserveKey);
-            try{
-                if (sdf.parse(toCheck.getReservationDate()).before(sdf.parse(cleanupDate))){
-                    reservationMap.remove(reserveKey);
-                    reservationCleared++;
+
+        if (reservationMap.size() > 0){
+            for (String reserveKey : reservationMap.keySet()) {
+                Reservation toCheck = reservationMap.get(reserveKey);
+                try{
+                    if (sdf.parse(toCheck.getReservationDate()).before(sdf.parse(cleanupDate))){
+                        reservationMap.remove(reserveKey);
+                        reservationCleared++;
+                    }
+                }
+                catch (ParseException e){
+                    System.out.println("Something went wrong");
                 }
             }
-            catch (ParseException e){
-                System.out.println("Something went wrong");
-            }
         }
-
+    
         return reservationCleared;
     }
 }

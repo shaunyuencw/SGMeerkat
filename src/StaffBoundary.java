@@ -243,6 +243,7 @@ public class StaffBoundary {
             }     
         }
         sc.close();
+        manageTable.cleanupReservations();
         manageTable.serializeToFile();
     }
 
