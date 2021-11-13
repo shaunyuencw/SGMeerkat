@@ -47,8 +47,17 @@ public class Menu implements DatabaseHandler{
             System.out.println("1. Main");
             System.out.println("2. Drinks");
             System.out.println("3. Dessert");
-            int typein = sc.nextInt();
-            sc.nextLine();
+            int typein;
+            while(true){
+                try{
+                    typein = sc.nextInt();
+                    sc.nextLine();
+                    break;
+                } catch(Exception e){
+                    System.out.println("Invalid input.");
+                }
+                sc.nextLine();
+            }
             if (typein == 1) {
                 type = MenuItem.Type.MAIN;
                 break;
@@ -65,9 +74,17 @@ public class Menu implements DatabaseHandler{
         System.out.println("Enter the new item description:");
         String desc = sc.nextLine();
         System.out.println("Enter the price of new item:");
-        double price = sc.nextDouble();
-        sc.nextLine();
-
+        double price;
+        while(true){
+            try{
+                price = sc.nextDouble();
+                sc.nextLine();
+                break;
+            } catch(Exception e){
+                System.out.println("Invalid input.");
+            }
+            sc.nextLine();
+        }
         menu.put(name.toLowerCase(), new MenuItem(name, desc, price, type));
         updateMenu(menu);
     }
@@ -80,19 +97,19 @@ public class Menu implements DatabaseHandler{
         HashMap<String, MenuItem> menu = this.getMenu();
         // HashMap<String, PromoItems> promo_menu = menuObj.getPromo();
         System.out.println("---------------Removing a MenuItem---------------");
-        System.out.println("Enter the item name to remove:");
+        System.out.println("Enter the item number to remove:");
 
-        String nameToRemove = sc.nextLine();
-
-        if (menu.containsKey(nameToRemove.toLowerCase())) {
-            menu.remove(nameToRemove);
-            System.out.println(nameToRemove + " removed.");
-        } else if (menu.containsKey(this.getMenu_key(Integer.parseInt(nameToRemove) - 1))) {
-            nameToRemove = this.getMenu_key(Integer.parseInt(nameToRemove) - 1);
-            menu.remove(nameToRemove);
-            System.out.println(nameToRemove + " removed.");
-        } else {
-            System.out.println("No such items exist");
+        try{
+            String nameToRemove = sc.nextLine();
+            if (menu.containsKey(this.getMenu_key(Integer.parseInt(nameToRemove) - 1))) {
+                nameToRemove = this.getMenu_key(Integer.parseInt(nameToRemove) - 1);
+                menu.remove(nameToRemove);
+                System.out.println(nameToRemove + " removed.");
+            } else {
+                System.out.println("No such items exist.");
+            }
+        } catch (Exception e){
+            System.out.println("Invalid input.");
         }
 
         updateMenu(menu);
@@ -106,9 +123,16 @@ public class Menu implements DatabaseHandler{
         System.out.println("---------------------------------");
         displayMenu();
         System.out.println("Select menu item to edit: (N to terminate)");
-        String selection = sc.nextLine();
-        if(selection.equals("N")) return;
-        String name = menu_keys.get(Integer.parseInt(selection)-1);
+        String selection;
+        String name;
+        try{
+            selection = sc.nextLine();
+            if(selection.equals("N")) return;
+            name = menu_keys.get(Integer.parseInt(selection)-1);
+        } catch (Exception e){
+            System.out.println("Invalid input.");
+            return;
+        }
         menu_map.remove(name);
         addMenuItem();
     }
@@ -136,12 +160,20 @@ public class Menu implements DatabaseHandler{
         System.out.println("Enter the new set description:");
         String desc = sc.nextLine();
         System.out.println("Enter the price of new set:");
-        double price = sc.nextDouble();
-        sc.nextLine();
-
+        double price;
+        while(true){
+            try{
+                price = sc.nextDouble();
+                sc.nextLine();
+                break;
+            } catch(Exception e){
+                System.out.println("Invalid input.");
+            }
+            sc.nextLine();
+        }
         HashMap<String, MenuItem> newPromo_map = new HashMap<String, MenuItem>();
 
-        System.out.println("Enter the MenuItems to include in the set: (N to terminate)");
+        System.out.println("Enter the MenuItems number to include in the set: (N to terminate)");
         System.out.println("-------------------------------------------");
 
         this.displayMenu();
@@ -152,13 +184,7 @@ public class Menu implements DatabaseHandler{
             }
 
             try {
-                if (menu.containsKey(temp_menuItemKey.toLowerCase())) {
-                    newPromo_map.put(temp_menuItemKey.toLowerCase(), menu.get(temp_menuItemKey));
-
-                    System.out.println(temp_menuItemKey + " added to " + name + " promo.");
-                }
-                // Check if such a index key exist
-                else if (menu.containsKey(this.getMenu_key(Integer.parseInt(temp_menuItemKey) - 1))) {
+                if (menu.containsKey(this.getMenu_key(Integer.parseInt(temp_menuItemKey) - 1))) {
                     temp_menuItemKey = this.getMenu_key(Integer.parseInt(temp_menuItemKey) - 1);
                     newPromo_map.put(temp_menuItemKey.toLowerCase(), menu.get(temp_menuItemKey));
 
@@ -167,7 +193,6 @@ public class Menu implements DatabaseHandler{
                     System.out.println("No such menu item.");
                 }
             }
-
             catch (Exception e) {
                 System.out.println("No such menu item.");
             }
@@ -190,22 +215,22 @@ public class Menu implements DatabaseHandler{
     public void removePromo() {
         //HashMap<String, MenuItem> menu = menuObj.getMenu();
         HashMap<String, PromoItems> promo_menu = this.getPromo();
-        String promoToRemove = "";
         System.out.println("---------------Removing a Promotion---------------");
         this.displayPromos();
 
         System.out.println("Enter the promotion name to remove:");
-        promoToRemove = sc.nextLine();
-        if (promo_menu.containsKey(promoToRemove.toLowerCase())){
-            promo_menu.remove(promoToRemove.toLowerCase());
-            System.out.println(promoToRemove + " removed.");
-        }
 
-        else if (promo_menu.containsKey(this.getPromo_key(Integer.parseInt(promoToRemove) - 1))){
-            promoToRemove = this.getPromo_key(Integer.parseInt(promoToRemove) - 1);
-            promo_menu.remove(promoToRemove.toLowerCase());
-
-            System.out.println(promoToRemove + " removed.");
+        try{
+            String promoToRemove = sc.nextLine();
+            if (promo_menu.containsKey(this.getPromo_key(Integer.parseInt(promoToRemove) - 1))) {
+                promoToRemove = this.getPromo_key(Integer.parseInt(promoToRemove) - 1);
+                promo_menu.remove(promoToRemove.toLowerCase());
+                System.out.println(promoToRemove + " removed.");
+            } else {
+                System.out.println("No such items exist.");
+            }
+        } catch (Exception e){
+            System.out.println("Invalid input.");
         }
 
         updatePromoMenu(promo_menu);
@@ -219,11 +244,18 @@ public class Menu implements DatabaseHandler{
         System.out.println("---------------------------------");
         displayPromos();
         System.out.println("Select promo item to edit: (N to terminate)");
-        String selection2 = sc.nextLine();
-        if(selection2.equals("N")) return;
-        String name = promo_keys.get(Integer.parseInt(selection2)-1);
-        promo_map.remove(name);
-        createNewPromo();
+        String selection;
+        String name;
+        try{
+            selection = sc.nextLine();
+            if(selection.equals("N")) return;
+            name = promo_keys.get(Integer.parseInt(selection)-1);
+        } catch (Exception e){
+            System.out.println("Invalid input.");
+            return;
+        }
+        menu_map.remove(name);
+        addMenuItem();
     }
 
     
