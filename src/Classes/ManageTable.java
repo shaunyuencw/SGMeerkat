@@ -473,7 +473,6 @@ public class ManageTable implements DatabaseHandler, Serializable {
     public int checkReservation(String action){
         String reserveName;
         int reservedTableId;
-        String dateStr, reserveTimeslot;
 
         System.out.println("Under what name was the reservation made under?: ");
         reserveName = sc.next();
@@ -518,7 +517,7 @@ public class ManageTable implements DatabaseHandler, Serializable {
                 }
             }
             else{
-                int expire = isExpired(toCheck, tempTable, reserveKey, false);
+                int expire = isExpired(toCheck, tempTable, reserveKey);
                 if (expire == 0){
                     // Valid reservation (within 15 minutes of reservation) + table is ready.
                     // return assigned table id
@@ -560,14 +559,8 @@ public class ManageTable implements DatabaseHandler, Serializable {
      * @return int
      * Method to check if the reservation under the table is expired
      */
-    private int isExpired(Reservation toCheck, Table tableToCheck, String reserveKey, boolean retry){
-        String timeToCheckAgainst;
-        if (!retry){
-            timeToCheckAgainst = currentTime;
-        }
-        else{
-            timeToCheckAgainst = getRoundedTimeslot();
-        }
+    private int isExpired(Reservation toCheck, Table tableToCheck, String reserveKey){
+        String timeToCheckAgainst = currentTime;
 
         if(currentDate.equals(toCheck.getReservationDate())){
             int timeDiff = calcTimeDiff(toCheck.getReservationTimeSlot(), timeToCheckAgainst);
