@@ -444,6 +444,28 @@ public class ManageTable implements DatabaseHandler, Serializable {
     }
 
     /**
+     * 
+     * @param action
+     * @return String
+     */
+    private String getReserveKey(String action){
+        String dateStr, reserveTimeslot;
+        if (action.toLowerCase().equals("remove")){
+            dateStr = inputDate();
+            reserveTimeslot = getRoundedTimeslot();
+        }
+        else{
+            dateStr = currentDate;
+            reserveTimeslot = getRoundedTimeslot(currentTime);
+
+            if (reserveTimeslot.equals("invalid")){
+                return "invalid"; // ! something went wrong...
+            }
+        }
+        return dateStr + "," + reserveTimeslot;
+    }
+
+    /**
      * @param action
      * @return int
      * Method to check the reservation and returns the table id if valid reservation, -1 if not.
@@ -477,20 +499,7 @@ public class ManageTable implements DatabaseHandler, Serializable {
 
         Table tempTable = all_tables.get(reservedTableId);
 
-        if (action.toLowerCase().equals("remove")){
-            dateStr = inputDate();
-            reserveTimeslot = getRoundedTimeslot();
-        }
-        else{
-            dateStr = currentDate;
-            reserveTimeslot = getRoundedTimeslot(currentTime);
-
-            if (reserveTimeslot.equals("invalid")){
-                return -1; // ! something went wrong...
-            }
-        }
-
-        String reserveKey = dateStr + "," + reserveTimeslot;
+        String reserveKey = getReserveKey(action); // Returns a fully constructed key
 
         Reservation toCheck = tempTable.getReservation(reserveKey);
 
