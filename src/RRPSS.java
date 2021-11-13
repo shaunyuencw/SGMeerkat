@@ -2,7 +2,7 @@ import java.util.*;
 
 import Classes.*;
 
-public class StaffBoundary {
+public class RRPSS {
     // Jumpstart
     public static Scanner sc = new Scanner(System.in);
 
@@ -21,7 +21,7 @@ public class StaffBoundary {
      * @param args
      */
     public static void main(String[] args) {
-        StaffBoundary staffBoundary = new StaffBoundary();
+        RRPSS RRPSS = new RRPSS();
         Menu menu = new Menu();
         menu.deserializeFromFile();
         AllStaff allStaff = new AllStaff();
@@ -63,7 +63,7 @@ public class StaffBoundary {
         //manageTable.openRestaurant(); // Initialize tables
 
         while (true) {
-            staffBoundary.printOptions();
+            RRPSS.printOptions();
 
             int ch = sc.nextInt();
             sc.nextLine();
@@ -75,7 +75,7 @@ public class StaffBoundary {
             case 1:
                 // 1. Menu Management
                 outerwhile: while (true) {
-                    staffBoundary.printMenuOptions();
+                    RRPSS.printMenuOptions();
                     int ch1 = sc.nextInt();
                     switch (ch1) {
                     case 1:
@@ -117,7 +117,7 @@ public class StaffBoundary {
             case 3:
                 // Order Management
                 outerwhile: while(true) {
-                    staffBoundary.printOrderOptions();
+                    RRPSS.printOrderOptions();
                     int ch3 = sc.nextInt();
                     int tableNo = 0;
                     switch (ch3) {
@@ -126,7 +126,7 @@ public class StaffBoundary {
                             tableNo = sc.nextInt();
                             if(tableNo == 0) break;
                             innerwhile: while(true){
-                                staffBoundary.printNewOrderOptions();
+                                RRPSS.printNewOrderOptions();
                                 int ch31 = sc.nextInt();
                                 switch (ch31){
                                     case 1:
@@ -175,7 +175,7 @@ public class StaffBoundary {
                 break;
             case 4:
                 // Reservation Management
-                staffBoundary.printReservationOptions();
+                RRPSS.printReservationOptions();
                 int ch4 = sc.nextInt();
                 switch(ch4){
                     case 1:
@@ -207,7 +207,7 @@ public class StaffBoundary {
 
             case 5:
                 outerwhile: while(true){
-                    staffBoundary.printReport();
+                    RRPSS.printReport();
                     int ch5 = sc.nextInt();
                     switch(ch5){
                         case 1:
@@ -225,7 +225,7 @@ public class StaffBoundary {
                 }
                 break;
             case 6:
-                staffBoundary.printCurrentDateTimeOptions();
+                RRPSS.printCurrentDateTimeOptions();
                 int ch6 = sc.nextInt();
 
                 switch(ch6){
