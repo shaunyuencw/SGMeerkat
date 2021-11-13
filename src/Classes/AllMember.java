@@ -24,9 +24,18 @@ public class AllMember {
     public boolean checkIfMember(){
         System.out.println("May i have your name: ");
         String memName = sc.nextLine();
-        System.out.println("May i have your contact number: ");
-        long memContact = sc.nextLong();
-        sc.nextLine();
+        long memContact;
+        while(true){
+            System.out.println("May i have your contact number: ");
+            try{
+                memContact = sc.nextLong();
+                sc.nextLine();
+                break;
+            } catch (Exception e){
+                System.out.println("Invalid input.");
+            }
+            sc.nextLine();
+        }
         for(int i = 0; i < memberList.size(); i++){
             Member checkMember = memberList.get(i);
             if(checkMember.getMemberName().equals(memName) && checkMember.getMemberContact() == memContact){
@@ -42,9 +51,18 @@ public class AllMember {
     public void addNewMember(){
         System.out.println("May i have your name: ");
         String memName = sc.nextLine();
-        System.out.println("May i have your contact number: ");
-        long memContact = sc.nextLong();
-        sc.nextLine();
+        long memContact;
+        while(true){
+            System.out.println("May i have your contact number: ");
+            try{
+                memContact = sc.nextLong();
+                sc.nextLine();
+                break;
+            } catch (Exception e){
+                System.out.println("Invalid input.");
+            }
+            sc.nextLine();
+        }
         Member newMember = new Member(memName, memContact);
         memberList.add(newMember);
         this.serializeToFile();
