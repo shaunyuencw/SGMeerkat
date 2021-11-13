@@ -13,14 +13,15 @@ public class Menu implements DatabaseHandler{
 
     private static Scanner sc = new Scanner(System.in);
     /**
-     * default constructor for the menu
+     * Default constructor for the menu
      */
     public Menu(){
         menu_map = new HashMap<>();
         promo_map = new HashMap<>();
         menu_keys = new ArrayList<>();
         promo_keys = new ArrayList<>();
-    };
+    }
+
     /**
      * Method to add a new menuitem to the menu
      */
@@ -250,7 +251,7 @@ public class Menu implements DatabaseHandler{
     
     /** 
      * Method to obtain hashmapkey
-     * @param index
+     * @param index index of an item
      * @return String, Returns the key of the hashmap for menuitems
      */
     public String getMenu_key(int index){
@@ -260,7 +261,7 @@ public class Menu implements DatabaseHandler{
     
     /** 
      * Method to obtain hashmapkey
-     * @param index
+     * @param index index of an item
      * @return String, returns the key of the hashmap for promotional items
      */
     public String getPromo_key(int index){
@@ -288,7 +289,7 @@ public class Menu implements DatabaseHandler{
     
     /** 
      * Sets the menu
-     * @param menu
+     * @param menu all the ala carte in a hashmap
      */
     public void setMenu(HashMap<String, MenuItem> menu){
 		this.menu_map = menu;
@@ -297,7 +298,7 @@ public class Menu implements DatabaseHandler{
     
     /** 
      * sets the promoitems in the menu
-     * @param promo
+     * @param promo all the promo set in a hashmap
      */
     public void setPromo(HashMap<String, PromoItems> promo){
 		this.promo_map = promo;
@@ -355,9 +356,9 @@ public class Menu implements DatabaseHandler{
         }
     }
 
-
-
-    
+    /**
+     * Method to reset menu list
+     */
     public void resetDat(){
         // ? serialize menu to menu.dat
         try {      
@@ -390,6 +391,9 @@ public class Menu implements DatabaseHandler{
         }
     }
 
+    /**
+     * Method to serialize menu list
+     */
     public void serializeToFile() {
          
         // ? serialize menu to menu.dat
@@ -422,7 +426,10 @@ public class Menu implements DatabaseHandler{
             e.printStackTrace();
         }
     }
-    
+
+    /**
+     * Method to deserialize menu list
+     */
     @SuppressWarnings("unchecked")
     public void deserializeFromFile() {
         // ? get menu from menu.dat

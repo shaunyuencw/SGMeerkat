@@ -11,8 +11,8 @@ public class Member implements Serializable {
 
     /**
      * default constructor for the menu
-     * @param memberName
-     * @param memberContact
+     * @param memberName name of the customer
+     * @param memberContact contact number of the customer
      */
     public Member(String memberName, long memberContact){
         this.memberName = memberName;

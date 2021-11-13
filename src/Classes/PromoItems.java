@@ -14,10 +14,10 @@ public class PromoItems implements Serializable{
     private String desc;
     /**
      * A constructor for the promotional item
-     * @param promo_map
-     * @param name
-     * @param desc
-     * @param price
+     * @param promo_map store all promo items
+     * @param name name of the promo item
+     * @param desc description of the promo item
+     * @param price price of the promo item
      */
     public PromoItems(HashMap<String, MenuItem> promo_map, String name, String desc, double price){
         this.promo_map = promo_map;

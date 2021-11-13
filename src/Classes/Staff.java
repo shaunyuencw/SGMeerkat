@@ -15,10 +15,10 @@ public class Staff implements Serializable {
     JobTitle job;
     /** 
      * Constructor for Staff
-    *@param employeeID 
-    *@param staffName 
-    *@param gender 
-    *@param job 
+    *@param employeeID id of the employee
+    *@param staffName name of the staff
+    *@param gender gender of the staff
+    *@param job job of the staff
      */
     Staff(int employeeID, String staffName, Gender gender, JobTitle job)
     {

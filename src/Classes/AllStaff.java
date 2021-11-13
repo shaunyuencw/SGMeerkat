@@ -31,6 +31,9 @@ public class AllStaff implements DatabaseHandler {
 		this.staffList = lst;
 	}
 
+	/**
+	 * Method to serialize staff list
+	 */
     public void serializeToFile() {
         FileOutputStream fos = null;
 		ObjectOutputStream out = null;
@@ -46,6 +49,9 @@ public class AllStaff implements DatabaseHandler {
 
     }
 
+	/**
+	 * Method to deserialize staff list
+	 */
 	@SuppressWarnings("unchecked")
     public void deserializeFromFile(){
         List<Staff> staffDetails = null;
@@ -64,8 +70,9 @@ public class AllStaff implements DatabaseHandler {
     }
 
 
-    
-	
+	/**
+	 * Main to pre-create 2 staff into the system
+	 */
 	public static void main(String[] args) {
 		Staff s1 = new Staff(1001, "Mr Meerkat",Gender.M , JobTitle.WAITER);
 		Staff s2 = new Staff(1002, "Ms Meerkat",Gender.F , JobTitle.MANAGER);

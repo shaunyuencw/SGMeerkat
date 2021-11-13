@@ -246,9 +246,7 @@ public class StaffBoundary {
         manageTable.serializeToFile();
     }
 
-    // * MENU ITEMS START 
-        
-    
+    // * MENU ITEMS START
 
     public void printMenuOptions() {
         System.out.println("-------Select Menu Options--------");

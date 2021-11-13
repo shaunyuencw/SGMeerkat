@@ -63,7 +63,7 @@ public class MenuItem implements Serializable{
 
     
     /** 
-     * @param type
+     * @param type type of the menu item
      * Sets the category of the menuitem
      */
     public void setType(Type type){

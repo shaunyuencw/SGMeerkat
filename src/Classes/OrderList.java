@@ -11,17 +11,29 @@ public class OrderList implements Serializable {
     private AllMember memberList;
     private static Scanner sc = new Scanner(System.in);
 
+    /**
+     * Constructor for OrderList
+     */
     public OrderList(){
         orderList = new HashMap<>();
         memberList = new AllMember();
         invoiceList = new HashMap<>();
     }
-
+    /**
+     * @param curStaff staff who created the order
+     * @param tableNo table number of the order from
+     * @param noOfCust number of customer dining
+     * Method will create new order
+     */
     public void createNewOrder(Staff curStaff, int tableNo, int noOfCust){
         Order newOrder = new Order(curStaff, tableNo, noOfCust);
         orderList.put(tableNo, newOrder);
     }
-
+    /**
+     * @param menu the current menu
+     * @param tableNo the servicing table number
+     * Method to show menu and order ala carte
+     */
     public void orderAlaCarte(Menu menu, int tableNo){
         Order newOrder = orderList.get(tableNo);
         System.out.println("Enter the Ala Carte to include in the order: (N to terminate)");
@@ -46,7 +58,10 @@ public class OrderList implements Serializable {
             }
         }
     }
-
+    /**
+     * @param tableNo the servicing table number
+     * Method to remove ala carte
+     */
     public void removeAlaCarte(int tableNo){
         Order newOrder = orderList.get(tableNo);
         if(newOrder.getMenuSize() == 0){
@@ -71,7 +86,11 @@ public class OrderList implements Serializable {
             }
         }
     }
-
+    /**
+     * @param menu the current menu
+     * @param tableNo the servicing table number
+     * Method to show menu and order set package
+     */
     public void orderSetPackage(Menu menu, int tableNo){
         Order newOrder = orderList.get(tableNo);
         System.out.println("Enter the Set Package to include in the order: (N to terminate)");
@@ -96,7 +115,10 @@ public class OrderList implements Serializable {
             }
         }
     }
-
+    /**
+     * @param tableNo the servicing table number
+     * Method to remove set package
+     */
     public void removeSetPackage(int tableNo){
         Order newOrder = orderList.get(tableNo);
         if(newOrder.getPromoSize() == 0){
@@ -121,12 +143,20 @@ public class OrderList implements Serializable {
             }
         }
     }
-
+    /**
+     * @param tableNo the servicing table number
+     * Method to show current order list
+     */
     public void viewCurrentOrder(int tableNo){
         Order newOrder = orderList.get(tableNo);
         newOrder.viewOrder();
     }
-
+    /**
+     * @param tableNo the servicing table number
+     * @param date the current date
+     * @param time the current time
+     * Method to ask for membership and generate invoice
+     */
     public void generateInvoice(int tableNo, String date, String time){
         Order newOrder = orderList.get(tableNo);
         System.out.println("Do you have membership? (Y/N): ");
@@ -152,7 +182,9 @@ public class OrderList implements Serializable {
         storeInvoice(orderList.get(tableNo));
         orderList.remove(tableNo);
     }
-
+    /**
+     * Method to print all occupied tables
+     */
     public void viewAllOrder() {
         System.out.println("Select a table number: ");
         System.out.println("------------------------");
@@ -162,7 +194,9 @@ public class OrderList implements Serializable {
             System.out.println("(" + (orderList_keys.get(i)) + ") Table " + orderList_keys.get(i));
         }
     }
-
+    /**
+     * Method to store invoice in file
+     */
     public void storeInvoice(Order deletedOrder){
         deserializeFromFile();
         if(invoiceList.get(deletedOrder.getDate()) == null){
@@ -174,7 +208,9 @@ public class OrderList implements Serializable {
         }
         serializeToFile();
     }
-
+    /**
+     * Method to print invoice reports
+     */
     public void printInvoice(boolean byDay){
         int i;
         deserializeFromFile();
@@ -331,6 +367,9 @@ public class OrderList implements Serializable {
         System.out.println("----------------------------------------------------------");
     }
 
+    /**
+     * Method to serialize invoice list
+     */
     public void serializeToFile() {
         try {
             File invoice_file = new File("invoice.dat");
@@ -345,6 +384,9 @@ public class OrderList implements Serializable {
         }
     }
 
+    /**
+     * Method to deserialize invoice list
+     */
     @SuppressWarnings("unchecked")
     public void deserializeFromFile() {
         try {
