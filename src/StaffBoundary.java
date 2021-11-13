@@ -74,7 +74,6 @@ public class StaffBoundary {
                 outerwhile: while (true) {
                     staffBoundary.printMenuOptions();
                     int ch1 = sc.nextInt();
-                    String selection;
                     switch (ch1) {
                     case 1:
                         menu.addMenuItem();
@@ -83,13 +82,7 @@ public class StaffBoundary {
                         menu.removeMenuItem();
                         break;
                     case 3:
-                        System.out.println("Menu Items");
-                        System.out.println("---------------------------------");
-                        menu.displayMenu();
-                        System.out.println("Select menu item to edit: (N to terminate)");
-                        selection = sc.nextLine();
-                        if(selection.equals("N")) break;
-                        menu.editMenuItem(selection);
+                        menu.editMenuItem();
                         break;
                     case 4:
                         menu.createNewPromo();
@@ -98,13 +91,7 @@ public class StaffBoundary {
                         menu.removePromo();
                         break;
                     case 6:
-                        System.out.println("Promo Items");
-                        System.out.println("---------------------------------");
-                        menu.displayPromos();
-                        System.out.println("Select promo item to edit: (N to terminate)");
-                        selection = sc.nextLine();
-                        if(selection.equals("N")) break;
-                        menu.editPromo(selection);
+                        menu.editPromo();
                         break;
                     case 7:
                         menu.viewMenu();

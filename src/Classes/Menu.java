@@ -88,7 +88,13 @@ public class Menu implements DatabaseHandler{
         updateMenu(menu);
     }
 
-    public void editMenuItem(String selection){
+    public void editMenuItem(){
+        System.out.println("Menu Items");
+        System.out.println("---------------------------------");
+        displayMenu();
+        System.out.println("Select menu item to edit: (N to terminate)");
+        String selection = sc.nextLine();
+        if(selection.equals("N")) return;
         String name = menu_keys.get(Integer.parseInt(selection)-1);
         menu_map.remove(name);
         addMenuItem();
@@ -186,8 +192,14 @@ public class Menu implements DatabaseHandler{
         updatePromoMenu(promo_menu);
     }
 
-    public void editPromo(String selection){
-        String name = promo_keys.get(Integer.parseInt(selection)-1);
+    public void editPromo(){
+        System.out.println("Promo Items");
+        System.out.println("---------------------------------");
+        displayPromos();
+        System.out.println("Select promo item to edit: (N to terminate)");
+        String selection2 = sc.nextLine();
+        if(selection2.equals("N")) return;
+        String name = promo_keys.get(Integer.parseInt(selection2)-1);
         promo_map.remove(name);
         createNewPromo();
     }
