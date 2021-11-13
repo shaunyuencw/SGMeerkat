@@ -15,11 +15,19 @@ public class AllStaff implements DatabaseHandler {
 
     public AllStaff(){}
 
-    public List<Staff> getstaffList(){
+    
+	/** 
+	 * @return List<Staff> retreives the list of staffs
+	 */
+	public List<Staff> getstaffList(){
         return this.staffList;
     }
 
-    public void setStaff(List<Staff> lst){
+    
+	/** 
+	 * @param lst sets the list of staffs
+	 */
+	public void setStaff(List<Staff> lst){
 		this.staffList = lst;
 	}
 
@@ -56,7 +64,9 @@ public class AllStaff implements DatabaseHandler {
     }
 
 
-    public static void main(String[] args) {
+    
+	
+	public static void main(String[] args) {
 		Staff s1 = new Staff(1001, "Mr Meerkat",Gender.M , JobTitle.WAITER);
 		Staff s2 = new Staff(1002, "Ms Meerkat",Gender.F , JobTitle.MANAGER);
 

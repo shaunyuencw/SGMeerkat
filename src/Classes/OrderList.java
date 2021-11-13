@@ -2,7 +2,9 @@ package Classes;
 
 import java.io.*;
 import java.util.*;
-
+/**
+ * control class for orders containing a List of orders
+ */
 public class OrderList implements Serializable {
     private HashMap<Integer, Order> orderList;
     private HashMap<String, ArrayList<Order>> invoiceList;
