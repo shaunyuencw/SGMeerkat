@@ -161,7 +161,7 @@ public class OrderList implements Serializable {
         Order newOrder = orderList.get(tableNo);
         System.out.println("Do you have membership? (Y/N): ");
         String isMembership = sc.nextLine();
-        if (isMembership.equals("Y")){
+        if (isMembership.equalsIgnoreCase("Y")){
             if(memberList.checkIfMember()){
                 System.out.println("Membership confirmed, 10% discount will be given.");
                 newOrder.setMembership(true);
@@ -172,7 +172,7 @@ public class OrderList implements Serializable {
             System.out.println("You've spend more than $100 and is eligible to be a member.");
             System.out.println("Do you want to create a membership? (Y/N): ");
             String wantMembership = sc.nextLine();
-            if(wantMembership.equals("Y")){
+            if(wantMembership.equalsIgnoreCase("Y")){
                 memberList.addNewMember();
                 System.out.println("Membership created, 10% discount will be given.");
                 newOrder.setMembership(true);
@@ -226,9 +226,18 @@ public class OrderList implements Serializable {
                 if(i%3==0) System.out.print("\n");
             }
             System.out.println("\nType the date to print report: (N to terminate)");
-            choice = sc.nextLine();
-            if(choice.equals("N")) return;
-            allOrders = invoiceList.get(choice);
+            while(true){
+                choice = sc.nextLine();
+                if(choice.equals("N")) return;
+                allOrders = invoiceList.get(choice);
+                try{
+                    if(allOrders.size() != 0)
+                        break;
+                }catch(Exception e){
+                    // Do nothing
+                }
+                System.out.println("Invalid input.");
+            }
         } else{
             ArrayList<String> months = new ArrayList<>();
             for(i = 0; i < invoiceList_keys.size(); i++){
@@ -243,12 +252,21 @@ public class OrderList implements Serializable {
                 if(i%3==0) System.out.print("\n");
             }
             System.out.println("\nType the month to print report: (N to terminate)");
-            choice = sc.nextLine();
-            if(choice.equals("N")) return;
-            for(i = 0; i < invoiceList_keys.size(); i++){
-                if(invoiceList_keys.get(i).split("-")[1].equals(choice)){
-                    allOrders.addAll(invoiceList.get(invoiceList_keys.get(i)));
+            while(true){
+                choice = sc.nextLine();
+                if(choice.equals("N")) return;
+                for(i = 0; i < invoiceList_keys.size(); i++){
+                    if(invoiceList_keys.get(i).split("-")[1].equals(choice)){
+                        allOrders.addAll(invoiceList.get(invoiceList_keys.get(i)));
+                    }
                 }
+                try{
+                    if(allOrders.size() != 0)
+                        break;
+                } catch (Exception e){
+                    // Do Nothing
+                }
+                System.out.println("Invalid input.");
             }
         }
 
