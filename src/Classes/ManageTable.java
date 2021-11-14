@@ -555,7 +555,6 @@ public class ManageTable implements DatabaseHandler, Serializable {
      * @param toCheck
      * @param tableToCheck
      * @param reserveKey
-     * @param retry
      * @return int
      * Method to check if the reservation under the table is expired
      */

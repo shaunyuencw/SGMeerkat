@@ -1,4 +1,5 @@
 package Classes;
+
 import java.util.*;
 import java.io.Serializable;
 /**
@@ -21,10 +22,10 @@ public class Order implements Serializable {
     // private static Scanner sc = new Scanner(System.in); // not needed?
 
     /**
+     * @param staff The object of staff that took the order
+     * @param tableNo The order placed by the table
+     * @param noOfCust The number of customer dining in this table
      * Constructor for Order
-     *@param staff The object of staff that took the order
-     *@param tableNo The order placed by the table
-     *@param noOfCust The number of customer dining in this table
      */
     public Order(Staff staff, int tableNo, int noOfCust){
         this.staff = staff;
@@ -169,7 +170,7 @@ public class Order implements Serializable {
      */
     public boolean getMembership() { return this.membership; }
     /**
-     * @param bool true => is member, false => not member
+     * @param bool true means is member, false means not member
      * Set the membership status to the parameter
      */
     public void setMembership(boolean bool) { this.membership = bool; }
