@@ -189,7 +189,6 @@ public class RRPSS {
                         manageTable.checkReservation("remove");
                         break;
                     case 3:
-                        // TODO print all reservation today.
                         manageTable.print_allTables(true);
                         break;
                     case 4:
